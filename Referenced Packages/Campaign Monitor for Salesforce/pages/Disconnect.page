@@ -1,0 +1,15 @@
+<apex:page standardController="Campaign" extensions="wbsendit.DisconnectController"  >
+<apex:sectionHeader title="Campaign Monitor Connection" subtitle="Disconnect Campaign" help="{!$Label.SupportLink_Connect}" />
+<apex:form >
+
+    <apex:pageBlock title="Disconnect">
+        <apex:pageMessages escape="false"/>
+        <apex:pageBlockButtons location="bottom">
+            <apex:commandButton action="{!disconnect}" value="Confirm"/>
+            <apex:commandButton action="{!cancel}" value="Cancel"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

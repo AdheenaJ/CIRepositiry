@@ -1,0 +1,104 @@
+<apex:page id="communitiesSelfRegPage" standardStylesheets="false" showHeader="false" sidebar="false" controller="shoponklik.CommunitiesSelfRegController" title="ShopOnKlik Registration">
+    
+    <style>
+        body{
+        background:url('http://cdn2.business2community.com/wp-content/uploads/2014/12/Holiday-Shopping.jpg');
+        }
+        .divClass{
+        float: left !important;
+        height: 100%;
+        width: 100%;
+        margin-top:8%;
+        background:url('http://cdn2.business2community.com/wp-content/uploads/2014/12/Holiday-Shopping.jpg');
+        background-size:100%;
+        }
+        .inputClass{
+        width: 550px !important;
+        height: 30px;
+        font-size: medium;
+        padding: 10px;
+        color: #1f5454;
+        outline: none;
+        background: white;
+        border: none;
+        border-bottom: 1px solid #000;
+        }
+        .labelClass{
+        font-size: larger;
+        padding: 15px;
+        font-family: sans-serif;
+        color: #009688;
+        }
+        .buttonClass{
+        width: 570px;
+        height: 50px;
+        outline: none;
+        font-size: medium;
+        background: #009688;;
+        border: none;
+        margin-top: 50px;
+        color: white;
+        }
+        .buttonClass:hover{
+        background: #fff;
+        color:#009688;
+        font-size: xx-large;
+        
+        }
+        .messageTable{
+        font-size: medium;
+        font-family: sans-serif;
+        color: red;
+        width:100%;
+        background: whitesmoke;
+        }
+        .titleClass{
+        font-size: 50px;
+        font-style: normal;
+        font-family: sans-serif;
+        color: teal;
+        margin: 80px;
+        float: left;
+        }
+        .messageClass{
+        color: #f7f1b3;
+        font-size: medium;
+        font-family: cursive;
+        }
+    </style>
+    
+    <apex:define name="body">  
+        <center>
+            
+            
+            <div class="divClass">
+                <label class="titleClass">ShopOnKlik SignUp</label>
+                <apex:form id="theForm" forceSSL="true">
+                    <apex:pageMessages id="error"/>
+                    <apex:panelGrid columns="2" style="margin-top:1em;">
+                        <apex:outputLabel styleClass="labelClass" value="First Name" for="firstName"/>
+                        <apex:inputText styleClass="inputClass" required="true" id="firstName" value="{!firstName}" label="First Name"/>
+                        <apex:outputLabel styleClass="labelClass" value="Last Name" for="lastName"/>
+                        <apex:inputText styleClass="inputClass" required="true" id="lastName" value="{!lastName}" label="Last Name"/>
+                        <apex:outputLabel styleClass="labelClass" value="{!$Label.site.community_nickname}" for="communityNickname"/>
+                        <apex:inputText styleClass="inputClass" required="true" id="communityNickname" value="{!communityNickname}" label="{!$Label.site.community_nickname}"/>
+                        <apex:outputLabel styleClass="labelClass" value="{!$Label.site.email}" for="email"/>
+                        <apex:inputText styleClass="inputClass" required="true" id="email" value="{!email}" label="{!$Label.site.email}"/>                        
+                        <apex:outputLabel styleClass="labelClass" value="{!$Label.site.password}" for="password"/>
+                        <apex:inputSecret styleClass="inputClass" id="password" value="{!password}"/>
+                        <apex:outputLabel styleClass="labelClass" value="{!$Label.site.confirm_password}" for="confirmPassword"/>
+                        <apex:inputSecret styleClass="inputClass" id="confirmPassword" value="{!confirmPassword}"/>
+                        <apex:outputText value=""/>
+                        <apex:commandButton styleClass="buttonClass" action="{!registerUser}" value="SignUp" id="submit"/>
+                    </apex:panelGrid>
+                    <apex:outputLabel styleClass="messageClass" value="***Your Email will be Your Username"/>
+                    <br/>
+                    
+                </apex:form>
+            </div>
+            
+        </center>
+        <br/>
+    </apex:define>
+    
+</apex:page>

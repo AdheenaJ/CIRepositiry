@@ -1,0 +1,2326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Add_Field_Based_On</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Add Field Based On</shortDescription>
+        <value>Add Campaign Monitor field based on Salesforce</value>
+    </labels>
+    <labels>
+        <fullName>Add_Row</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Add Row</shortDescription>
+        <value>Add Row</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Account_Trigger</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Account Triiger</shortDescription>
+        <value>Account changes fire auto subs</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Add_Page_Layouts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Add Page Layouts</shortDescription>
+        <value>Add to Page Layouts</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_All_Actions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings All Actions</shortDescription>
+        <value>All Actions</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Bulk_Actions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Bulk Actions</shortDescription>
+        <value>Bulk Actions</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Bulk_Autoresponders</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Bulk Autoresponders</shortDescription>
+        <value>Bulk AutoResponders</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Clean_Page_Layouts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Clean Page Layouts</shortDescription>
+        <value>Removing components from page layouts...</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Configuration_Data</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Configuration Data</shortDescription>
+        <value>Configuration Data</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Header</shortDescription>
+        <value>Advanced</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Members</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Members</shortDescription>
+        <value>Subscriber List Members</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_No</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Remove_Page_Layouts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Remove Page Layouts</shortDescription>
+        <value>Remove from Page Layouts</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Run</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Run</shortDescription>
+        <value>Run</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Tracking_Data</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Tracking Data</shortDescription>
+        <value>Tracking Data</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Unavailable</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Unavailable</shortDescription>
+        <value>Unavailable</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Updating_Page_Layouts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Updating Page Layouts</shortDescription>
+        <value>Updating Page Layouts...</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Settings_Yes</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Advanced Settings Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>Apply_Lists</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Apply Lists</shortDescription>
+        <value>Apply Field Mapping to other Subscriber Lists</value>
+    </labels>
+    <labels>
+        <fullName>AutoSubs_Premium_Message</fullName>
+        <categories>AutoSubs</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Premium Message</shortDescription>
+        <value>Automatic Subscriptions is a Premium Feature.</value>
+    </labels>
+    <labels>
+        <fullName>AutoSubs_Upgrade_Now</fullName>
+        <categories>AutoSubs</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Upgrade Now</shortDescription>
+        <value>Buy now</value>
+    </labels>
+    <labels>
+        <fullName>Back</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Back</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>Billing_1000_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$1000 USD</shortDescription>
+        <value>$1000 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_100_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$100 USD</shortDescription>
+        <value>$100 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_150_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$150 USD</shortDescription>
+        <value>$150 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_15_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$15 USD</shortDescription>
+        <value>$15 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_200_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$200 USD</shortDescription>
+        <value>$200 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_250_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$250 USD</shortDescription>
+        <value>$250 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_25_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$25 USD</shortDescription>
+        <value>$25 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_300_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$300 USD</shortDescription>
+        <value>$300 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_40_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$40 USD</shortDescription>
+        <value>$40 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_450_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$450 USD</shortDescription>
+        <value>$450 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_550_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$550 USD</shortDescription>
+        <value>$550 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_650_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$650 USD</shortDescription>
+        <value>$650 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_65_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$65 USD</shortDescription>
+        <value>$65 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_775_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$775 USD</shortDescription>
+        <value>$775 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_875_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$875 USD</shortDescription>
+        <value>$875 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_8_USD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>$8 USD</shortDescription>
+        <value>$8 (USD)</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Active_Subscribers</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Active Subscribers</shortDescription>
+        <value>Active Subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_10000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 10000</shortDescription>
+        <value>5001 to 10000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_100000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 100000</shortDescription>
+        <value>75001 to 100000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_15000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 15000</shortDescription>
+        <value>10001 to 15000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_150000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 150000</shortDescription>
+        <value>100001 to 150000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_200000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 200000</shortDescription>
+        <value>150001 to 200000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_2500</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 2500</shortDescription>
+        <value>501 to 2500 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_25000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 25000</shortDescription>
+        <value>15001 to 25000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_250000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 250000</shortDescription>
+        <value>200001 to 250000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_300000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 300000</shortDescription>
+        <value>250001 to 300000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_350000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 350000</shortDescription>
+        <value>300001 to 350000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_400000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 400000</shortDescription>
+        <value>350001 to 400000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_500</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 500</shortDescription>
+        <value>Less than 500 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_5000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 5000</shortDescription>
+        <value>2501 to 5000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_50000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 50000</shortDescription>
+        <value>25001 to 50000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_500000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 500000</shortDescription>
+        <value>400001 to 500000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_550000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 550000</shortDescription>
+        <value>500001 to 550000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Band_75000</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Band 75000</shortDescription>
+        <value>50001 to 75000 active subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Contact_Us</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contact Us</shortDescription>
+        <value>Contact us</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Current_Band</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Current Band</shortDescription>
+        <value>Current Band</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Billing Header</shortDescription>
+        <value>Billing</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Monthly_Cost</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Monthly Cost</shortDescription>
+        <value>Cost Per Month</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Trial</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Trial Message</shortDescription>
+        <value>Your Campaign Monitor for Salesforce trial ends in &lt;b&gt; %%DAYS%% &lt;/b&gt; days. See: &lt;a href=&quot;http://help.campaignmonitor.com/topic.aspx?t=1375&quot;  target=&quot;_blank&quot;&gt;Purchasing Campaign Monitor for Salesforce&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CM_Campaign_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Campaign Processing</shortDescription>
+        <value>Processing tracking stats</value>
+    </labels>
+    <labels>
+        <fullName>CM_Campaign_Refresh_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Campaign Refresh Processing</shortDescription>
+        <value>Processing tracking statistics refresh</value>
+    </labels>
+    <labels>
+        <fullName>CM_Campaign_Refresh_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Campaign Refresh Start</shortDescription>
+        <value>Preparing to refresh tracking statistics</value>
+    </labels>
+    <labels>
+        <fullName>CM_Campaign_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Campaign Start</shortDescription>
+        <value>Preparing to process tracking statistics</value>
+    </labels>
+    <labels>
+        <fullName>CM_Campaign_Stats_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Campaign Stats Processing</shortDescription>
+        <value>Updating campaign statistics</value>
+    </labels>
+    <labels>
+        <fullName>CM_Campaign_Stats_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Campaign Stats Start</shortDescription>
+        <value>Preparing to update campaign statistics</value>
+    </labels>
+    <labels>
+        <fullName>CM_Config_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Config Processing</shortDescription>
+        <value>Updating the configuration data</value>
+    </labels>
+    <labels>
+        <fullName>CM_Config_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Config Start</shortDescription>
+        <value>Preparing to update the configuration data</value>
+    </labels>
+    <labels>
+        <fullName>CM_Email_Opt_Out_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Email Opt Out Processing</shortDescription>
+        <value>Processing email opt outs</value>
+    </labels>
+    <labels>
+        <fullName>CM_Email_Opt_Out_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Email Opt Out Start</shortDescription>
+        <value>Preparing to process email opt outs</value>
+    </labels>
+    <labels>
+        <fullName>CM_Subscriber_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Subscriber Processing</shortDescription>
+        <value>Updating subscribers</value>
+    </labels>
+    <labels>
+        <fullName>CM_Subscriber_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Subscriber Start</shortDescription>
+        <value>Preparing to update subscribers</value>
+    </labels>
+    <labels>
+        <fullName>CM_Subscriber_Stats_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Subscriber Stats Processing</shortDescription>
+        <value>Getting the subscriber statistics</value>
+    </labels>
+    <labels>
+        <fullName>CM_Subscriber_Stats_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CM Subscriber Stats Start</shortDescription>
+        <value>Preparing to get the subscriber statistics</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Always</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Always</shortDescription>
+        <value>Always</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Auto_Create</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Auto Create</shortDescription>
+        <value>Auto Create Missing Statuses</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_CM_Activity</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings CM Activity</shortDescription>
+        <value>Campaign Monitor Activity</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Header</shortDescription>
+        <value>Salesforce Campaigns</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Never</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Never</shortDescription>
+        <value>Never</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_No</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Once</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Once</shortDescription>
+        <value>Once</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Refresh</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Refresh</shortDescription>
+        <value>Refresh</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Responded</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Responded</shortDescription>
+        <value>Responded</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_SFDC_Status</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings SFDC Status</shortDescription>
+        <value>Salesforce Member Status</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Update_Campaigns</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Update Campaigns</shortDescription>
+        <value>Update Salesforce Campaigns</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_Settings_Yes</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Campaign Settings Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Contact</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contact</shortDescription>
+        <value>Contact</value>
+    </labels>
+    <labels>
+        <fullName>Create_Only</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Only create subscribers, do not update</shortDescription>
+        <value>Only use mapping when creating a Salesforce record</value>
+    </labels>
+    <labels>
+        <fullName>Default_Contact</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Default Contact</shortDescription>
+        <value>Default Contact Value</value>
+    </labels>
+    <labels>
+        <fullName>Default_Field_Too_Long</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Default Field Too Long</shortDescription>
+        <value>You have exceeded the maximum number of characters in this field.</value>
+    </labels>
+    <labels>
+        <fullName>Default_Lead</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Default Lead</shortDescription>
+        <value>Default Lead Value</value>
+    </labels>
+    <labels>
+        <fullName>Delete_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Delete Field</shortDescription>
+        <value>Delete unmapped fields from Campaign Monitor</value>
+    </labels>
+    <labels>
+        <fullName>Delete_Field_Mapping</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Delete Field Mapping</shortDescription>
+        <value>The following Campaign Monitor field and all its data will be deleted on save:</value>
+    </labels>
+    <labels>
+        <fullName>Edit_Link</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Edit Link</shortDescription>
+        <value>(edit)</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_Clicked</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity Clicked</shortDescription>
+        <value>Clicked:</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_Clicked_Assistive</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity Clicked Assistive</shortDescription>
+        <value>Clicked</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_IPAddress</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity IPAddress</shortDescription>
+        <value>IP Address:</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_Location</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity Location</shortDescription>
+        <value>Location:</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_Location_Unknown</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity Location Unknown</shortDescription>
+        <value>Unknown</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_No_Mesage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity No Message</shortDescription>
+        <value>There is no Smart Email data associated with this Task.</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_Opened</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity Opened</shortDescription>
+        <value>Opened using:</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_Opened_Assistive</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity Opened Assistive</shortDescription>
+        <value>Opened</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_Sent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity Sent</shortDescription>
+        <value>Sent:</value>
+    </labels>
+    <labels>
+        <fullName>Email_Activity_Sent_Assistive</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Activity Sent Assistive</shortDescription>
+        <value>Sent</value>
+    </labels>
+    <labels>
+        <fullName>Email_System</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email System</shortDescription>
+        <value>Campaign Monitor</value>
+    </labels>
+    <labels>
+        <fullName>Error_Creating_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Creating Field</shortDescription>
+        <value>Sorry, it looks like something went wrong when creating the field</value>
+    </labels>
+    <labels>
+        <fullName>Error_Data_Storage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Data Storage</shortDescription>
+        <value>The sync job was terminated to prevent exceeding your Salesforce storage limits.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Generic</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Generic</shortDescription>
+        <value>Received the message:</value>
+    </labels>
+    <labels>
+        <fullName>Example_Contact</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Example Contact</shortDescription>
+        <value>Example Contact</value>
+    </labels>
+    <labels>
+        <fullName>Example_Lead</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Example Lead</shortDescription>
+        <value>Example Lead</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Default_Value</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Default Value</shortDescription>
+        <value>Default value:</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Email_Label</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Label</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Full_Name</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Full Name</shortDescription>
+        <value>Full Name</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Header</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header</shortDescription>
+        <value>Custom Field Mappings</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Help_for_this_Page</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help for this Page</shortDescription>
+        <value>Help for this Page</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Name_Label</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Name Label</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Next</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Premium_Message</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Premium Message</shortDescription>
+        <value>Custom Field Mappings is a Premium Feature.</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Setup_Free_Integration</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Setup Free Integration</shortDescription>
+        <value>Setup Campaign Monitor for Salesforce</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Subscriber_List</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Subscriber List</shortDescription>
+        <value>Subscriber List:</value>
+    </labels>
+    <labels>
+        <fullName>FieldMapping_Upgrade_Now</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Upgrade Now</shortDescription>
+        <value>Buy now</value>
+    </labels>
+    <labels>
+        <fullName>General_Setting_Chatter</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Setting Chatter</shortDescription>
+        <value>When a contact or lead is added to a subscriber list using automatic subscriptions I want a chatter post created.</value>
+    </labels>
+    <labels>
+        <fullName>General_Settings_All_Lists_Opt_Out</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Settings All Lists Opt Out</shortDescription>
+        <value>When a contact or lead is unsubscribed from all lists update the Salesforce email opt out field.</value>
+    </labels>
+    <labels>
+        <fullName>General_Settings_CM_Tabs</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Settings CM Tabs</shortDescription>
+        <value>I want to see the Campaign Monitor Tabs in Salesforce.</value>
+    </labels>
+    <labels>
+        <fullName>General_Settings_Delete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Settings Delete</shortDescription>
+        <value>When I delete a contact or lead I want to update any linked records in Campaign Monitor to show a deleted status.</value>
+    </labels>
+    <labels>
+        <fullName>General_Settings_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Settings Header</shortDescription>
+        <value>General Options</value>
+    </labels>
+    <labels>
+        <fullName>General_Settings_No</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Settings No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>General_Settings_Opt_Out_No_Add</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Settings Opt Out No Add</shortDescription>
+        <value>If the email opt out field is checked stop the record being added to any subscriber lists.</value>
+    </labels>
+    <labels>
+        <fullName>General_Settings_Opt_Out_Unsubscribe</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Settings Opt Out Unsubscribe</shortDescription>
+        <value>When I click the email opt out field I want to update any linked subscriber list records to show an unsubscribed status.</value>
+    </labels>
+    <labels>
+        <fullName>General_Settings_Yes</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Settings Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>Help_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Header</shortDescription>
+        <value>Help for this page</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Advanced_Settings</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Advanced Settings</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Billing_Settings</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Billing Settings</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_General_Options</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url General Options</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Messages</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Messages</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Salesforce_Campaigns</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Salesforce Campaigns</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Smart_Email</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Smart Email</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Smart_Email_Template</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Smart Email Template</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Smart_Email_View</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Smart Email View</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Sync_Settings</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Sync Settings</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Help_Url_Tracking_Data</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help Url Tracking Data</shortDescription>
+        <value>http://help.campaignmonitor.com/support</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Date</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Invalid Date</shortDescription>
+        <value>Invalid date. Use YYYY-MM-DD hh:mm:ss E.g. 2015-01-31 23:59:59</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_ID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Invalid ID</shortDescription>
+        <value>You have entered an invalid Salesforce ID. Expecting something like 5003000000D8cuI</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Invalid Number</shortDescription>
+        <value>You have entered an invalid number. Please enter a valid number.</value>
+    </labels>
+    <labels>
+        <fullName>Lead</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Lead</shortDescription>
+        <value>Lead</value>
+    </labels>
+    <labels>
+        <fullName>Link_Premium_Package_Link</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Premium Package Link</shortDescription>
+        <value>https://appexchange.salesforce.com/listingDetail?listingId=a0N30000000qEvAEAU&amp;tab=g&amp;w=buy</value>
+    </labels>
+    <labels>
+        <fullName>Load_Mappings</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Load Mappings</shortDescription>
+        <value>Loading field mappings...</value>
+    </labels>
+    <labels>
+        <fullName>Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Loading</shortDescription>
+        <value>Loading...</value>
+    </labels>
+    <labels>
+        <fullName>Map_MS_to_SF</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Map MS to SF</shortDescription>
+        <value>Map Campaign Monitor to Salesforce</value>
+    </labels>
+    <labels>
+        <fullName>Map_SF_to_MS</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Map SF to MS</shortDescription>
+        <value>Map Salesforce to Campaign Monitor</value>
+    </labels>
+    <labels>
+        <fullName>Message_Settings_Code</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message Settings Code</shortDescription>
+        <value>Code</value>
+    </labels>
+    <labels>
+        <fullName>Message_Settings_Date</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message Settings Date</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>Message_Settings_Message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message Settings Message</shortDescription>
+        <value>Message</value>
+    </labels>
+    <labels>
+        <fullName>Messages_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message Header</shortDescription>
+        <value>Messages</value>
+    </labels>
+    <labels>
+        <fullName>Multiple_Clients_Premium_Message</fullName>
+        <categories>AutoSubs</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Multiple Clients Premium Message</shortDescription>
+        <value>Support for Multiple Clients is a Premium Feature.</value>
+    </labels>
+    <labels>
+        <fullName>New_Sub_Contact</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Sub Contact</shortDescription>
+        <value>Create Contact</value>
+    </labels>
+    <labels>
+        <fullName>New_Sub_Lead</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Sub Lead</shortDescription>
+        <value>Create Lead</value>
+    </labels>
+    <labels>
+        <fullName>New_Sub_None</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Sub None</shortDescription>
+        <value>Don&apos;t Create</value>
+    </labels>
+    <labels>
+        <fullName>New_Subscriber_Rule</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Subscriber Rule</shortDescription>
+        <value>New Subscriber Rule:</value>
+    </labels>
+    <labels>
+        <fullName>None</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>None Selected</shortDescription>
+        <value>-- None --</value>
+    </labels>
+    <labels>
+        <fullName>Reached_Custom_Field_Limit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Reached Custom Field Limit</shortDescription>
+        <value>Sorry, you have reached your limit of up to 50 custom fields</value>
+    </labels>
+    <labels>
+        <fullName>Refresh_Subscribers_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Refresh Subscribers Processing</shortDescription>
+        <value>Removing existing subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Refresh_Subscribers_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Refresh Subscribers Start</shortDescription>
+        <value>Preparing to refresh subscribers</value>
+    </labels>
+    <labels>
+        <fullName>Related_Field_Update</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Related Field Update</shortDescription>
+        <value>Note: Related fields will only be updated in Campaign Monitor when the following record changes in Salesforce:</value>
+    </labels>
+    <labels>
+        <fullName>Required_Mapping_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Required Mapping Field</shortDescription>
+        <value>This is a required Salesforce field. Please enter in a default value.</value>
+    </labels>
+    <labels>
+        <fullName>Restricted_Mapping_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Restricted Mapping Field</shortDescription>
+        <value>You do not have permission to see this Salesforce field.</value>
+    </labels>
+    <labels>
+        <fullName>Retrospective_Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Retrospective Save</shortDescription>
+        <value>Retrospective Save</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>Select</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>Select_Link</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select Link</shortDescription>
+        <value>(Map)</value>
+    </labels>
+    <labels>
+        <fullName>Select_a_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select a Field</shortDescription>
+        <value>Select a Field</value>
+    </labels>
+    <labels>
+        <fullName>Settings_Add_Page_Layouts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Settings Add Page Layouts</shortDescription>
+        <value>Preparing to update the page layouts</value>
+    </labels>
+    <labels>
+        <fullName>Settings_No_Permissions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Settings No Permissions</shortDescription>
+        <value>You don&apos;t have access to this page</value>
+    </labels>
+    <labels>
+        <fullName>Settings_Not_Saved</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Settings Not Saved</shortDescription>
+        <value>You have unsaved changes.</value>
+    </labels>
+    <labels>
+        <fullName>Settings_Remove_Page_Layouts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Settings Remove Page Layouts</shortDescription>
+        <value>Preparing to update the page layouts</value>
+    </labels>
+    <labels>
+        <fullName>Settings_Reset_Config</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Settings Reset Config</shortDescription>
+        <value>Preparing to reset the config data</value>
+    </labels>
+    <labels>
+        <fullName>Settings_Reset_Subscribers</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Settings Reset Subscribers</shortDescription>
+        <value>Preparing to reset the subscriber data</value>
+    </labels>
+    <labels>
+        <fullName>Settings_Reset_Tracking_Data</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Settings Reset Tracking Data</shortDescription>
+        <value>Preparing to reset the tracking data</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_All_Done_Message</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>All Done Message</shortDescription>
+        <value>Thanks, all done. We will email you once we have finished the initial sync of your data.</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Auto_Add_Components</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Auto Add Components</shortDescription>
+        <value>Automatically add the Campaign Monitor buttons and related lists to the Salesforce Contact, Lead and Campaign objects.</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_By_Label</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>By Label</shortDescription>
+        <value>By Campaign Monitor</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Connect</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Connect</shortDescription>
+        <value>Connect</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Connect_to_Salesforce</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Connect to Salesforce</shortDescription>
+        <value>Connect your Campaign Monitor account to Salesforce.</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Disable_Sync</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Disable Sync</shortDescription>
+        <value>Disable the sync with Campaign Monitor</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Enable_Sync</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Enable Sync</shortDescription>
+        <value>Enable the sync with Campaign Monitor - we&apos;ll start syncing your data immediately.</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Finalising_Connection</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Finalising Connection</shortDescription>
+        <value>Finalising Connection…</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Finish</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Finish</shortDescription>
+        <value>Finish</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Next</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Setup_Free_Integration</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Setup Free Integration</shortDescription>
+        <value>Setup Campaign Monitor for Salesforce</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Skip</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Skip</shortDescription>
+        <value>skip</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Start</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Start</shortDescription>
+        <value>Start</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Sync_Data</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Data</shortDescription>
+        <value>Sync Campaign Monitor Data</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Update_Page_Layouts</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update Page Layouts</shortDescription>
+        <value>Update Page Layouts</value>
+    </labels>
+    <labels>
+        <fullName>SetupWizard_Updating_Page_Layouts</fullName>
+        <categories>SetupWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Updating Page Layouts</shortDescription>
+        <value>Updating Page Layouts...</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Contains</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Contains</shortDescription>
+        <value>Contains</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Clone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Clone</shortDescription>
+        <value>Clone</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Copy_Id</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Copy Id</shortDescription>
+        <value>Copy Id</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Delete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Delete</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Delete_Confirm</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Delete Confirm</shortDescription>
+        <value>Are you sure you want to delete this mapping?</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Edit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Label</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Label</shortDescription>
+        <value>Select Smart Email to Send</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Send</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Send</shortDescription>
+        <value>Send</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Send_More</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Send More</shortDescription>
+        <value>Send More</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Action_Sent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Action Sent</shortDescription>
+        <value>Smart Email Sent</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Add_Recipient</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Add Recipient</shortDescription>
+        <value>Add a recipient</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Ascending</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Ascending</shortDescription>
+        <value>Ascending</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_DateTime_Placeholder</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email DateTime Placeholder</shortDescription>
+        <value>M/D/YYYY hh:mm A</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Date_Placeholder</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Date Placeholder</shortDescription>
+        <value>M/D/YYYY</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Descending</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Descending</shortDescription>
+        <value>Descending</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_False</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email False</shortDescription>
+        <value>False</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Field_Mappings</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Field Mappings</shortDescription>
+        <value>Field mappings</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Filter_Filter</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Filter Filter</shortDescription>
+        <value>Filter:</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Filter_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Filter Header</shortDescription>
+        <value>Select a Field</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Filter_Logic</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Filter Logic</shortDescription>
+        <value>Logic:</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Filter_Row</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Filter Row</shortDescription>
+        <value>Add row</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Filter_Sort</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Filter Sort</shortDescription>
+        <value>Sort By:</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Header_Email_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Header Email Field</shortDescription>
+        <value>Smart Email Variable</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Header_Example</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email header Example</shortDescription>
+        <value>Example</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Header_SF_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Header Field</shortDescription>
+        <value>Mapped Salesforce Field</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Id_Copy</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Id Copy</shortDescription>
+        <value>Smart email mapping id copied to clipboard</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Premium_Message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Premium Message</shortDescription>
+        <value>Smart Emails are a Premium Feature.</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipient_Type_Reference</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipient Type Reference</shortDescription>
+        <value>Reference</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipient_Type_Text</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipient Type Text</shortDescription>
+        <value>Text</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipients_Category</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipients Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipients_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipients Title</shortDescription>
+        <value>Recipients</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipients_Type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipients Type</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipients_Value</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipients Value</shortDescription>
+        <value>Value</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipients_Value_BCC</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipients Value BCC</shortDescription>
+        <value>BCC</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipients_Value_CC</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipients Value CC</shortDescription>
+        <value>CC</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Recipients_Value_To</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Recipients Value To</shortDescription>
+        <value>To</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Select_Object</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Select Object</shortDescription>
+        <value>Select object...</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Template_Action_Delete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Template Action Delete</shortDescription>
+        <value>Del</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Template_Action_Edit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Template Action Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Template_Action_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Template Action Header</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Template_New_Mappings</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Template New Mappings</shortDescription>
+        <value>New</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_True</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email True</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Email_Upgrade_Now</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Email Upgrade Now</shortDescription>
+        <value>Buy now</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Ends_With</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Ends With</shortDescription>
+        <value>Ends with</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Equals</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Equals</shortDescription>
+        <value>Equals</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Greater</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Greater</shortDescription>
+        <value>Greater than</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Greater_Equals</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Greater Equals</shortDescription>
+        <value>Greater than or equal</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Less</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Less</shortDescription>
+        <value>Less than</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Less_Equals</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Less Equals</shortDescription>
+        <value>Less than or equal</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Not_Equals</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Not Equals</shortDescription>
+        <value>Does not equal</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Null</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Null</shortDescription>
+        <value>Is null</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Refresh_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Refresh Processing</shortDescription>
+        <value>Refreshing the smart emails.</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Refresh_Start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Refresh Start</shortDescription>
+        <value>Preparing to refresh the smart emails.</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Select_One</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Select One</shortDescription>
+        <value>Select One</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Starts_With</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Smart Starts With</shortDescription>
+        <value>Starts with</value>
+    </labels>
+    <labels>
+        <fullName>Standard_Mapped_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Standard Mapped Field</shortDescription>
+        <value>This field is always mapped to Campaign Monitor.</value>
+    </labels>
+    <labels>
+        <fullName>Subscriber_List_Does_Not_Exist</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Subscriber List Does Not Exist</shortDescription>
+        <value>Subscriber List does not exist. It may have been deleted from Campaign Monitor. Try resyncing.</value>
+    </labels>
+    <labels>
+        <fullName>Subscriber_List_Not_Setup</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Subscriber List Not Setup</shortDescription>
+        <value>There are no subscriber lists setup</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Add_Contacts_or_Leads</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Add Contacts or Leads</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1316</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Bulk_Import_Subscriber</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Bulk Import Subscriber</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1316</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Connect</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Connect</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1369</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Create_Lead_or_Contact</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Lead or Contact</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1316</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Field_Mappings_Help_Link</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Field Mappings Help Link</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1327</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_General_Setup</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General Setup</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1313</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Generic_Support</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Generic Support</shortDescription>
+        <value>http://help.campaignmonitor.com</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Link_Campaign</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Link Campaign</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1331</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Map_Statuses</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Map Statuses</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1358</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Membership_Detail</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Membership Detail</shortDescription>
+        <value>http://help.campaignmonitor.com</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Premium_Features_Link</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Premium Features Link</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1318</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Setup_Auto_Subscriptions</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Setup Auto Subscriptions</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1320</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Setup_a_Subscriber_List</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Setup a Subscriber List</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1354</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Unsubscribe</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Unsubscribe</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1335</value>
+    </labels>
+    <labels>
+        <fullName>SupportLink_Upgrade_Help</fullName>
+        <categories>SupportLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Upgrade Help</shortDescription>
+        <value>http://help.campaignmonitor.com/topic.aspx?t=1367</value>
+    </labels>
+    <labels>
+        <fullName>Switch_Mapping_Warning</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Switch Mapping Message</shortDescription>
+        <value>Note: A field can only be mapped in one direction per subscriber list. Mapping the same field here, will override the other field/direction/subscriber list mapping.</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Connect</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Connect</shortDescription>
+        <value>Connect</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Connected_As</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Connected As</shortDescription>
+        <value>Connected As:</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Disable_All_Actions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Disable All Actions</shortDescription>
+        <value>Unable to start the job as you have &quot;Disable All Actions&quot; checked.</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Disconnect</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Disconnect</shortDescription>
+        <value>Disconnect</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Frequency_Daily</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Frequency Daily</shortDescription>
+        <value>Daily</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Frequency_Hourly</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Frequency Hourly</shortDescription>
+        <value>Hourly</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Frequency_Monthly</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Frequency Monthly</shortDescription>
+        <value>Monthly</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Frequency_Never</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Frequency Never</shortDescription>
+        <value>Never</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Frequency_Weekly</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Frequency Weekly</shortDescription>
+        <value>Weekly</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync_Settings_Header</shortDescription>
+        <value>Synchronisation</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Last_Run_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Last Run Header</shortDescription>
+        <value>Last Run</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Never_Run</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Never Run</shortDescription>
+        <value>Never Run</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Next_Run_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Next Run Header</shortDescription>
+        <value>Next Run</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Not_Scheduled</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Not Scheduled</shortDescription>
+        <value>Not Scheduled</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Run</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Run</shortDescription>
+        <value>Run</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Subscriber_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Subscriber Header</shortDescription>
+        <value>Subscriber Lists &amp; Members</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Subscriber_Header_Premium</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Subscriber Header Premium</shortDescription>
+        <value>Subscriber Lists, Members &amp; Statistics</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Settings_Too_Many_Jobs</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Settings Too Many Jobs</shortDescription>
+        <value>Unable to start the job as there are too many batch jobs currently running</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Smart_Emails</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Smart Emails</shortDescription>
+        <value>Sync Smart Emails</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Smart_Emails_Close</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sync Smart Emails Close</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>Tooltip_Apply_Lists</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tooltip Apply Lists</shortDescription>
+        <value>Apply this same Field Mapping to other Subscriber Lists. This will overwrite any matching field mappings, however it won&apos;t remove mappings where they don&apos;t match.</value>
+    </labels>
+    <labels>
+        <fullName>Tooltip_Delete_Field</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tooltip Delete Field</shortDescription>
+        <value>Delete all unmapped custom fields from Campaign Monitor (i.e. any fields in the other lists that are not present in this one). Warning: this will also permanently delete any data in those Campaign Monitor fields. Use with caution.</value>
+    </labels>
+    <labels>
+        <fullName>Tooltip_New_Sub_Rules</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tooltip New Sub Rules</shortDescription>
+        <value>Add new Campaign Monitor subscribers as new Contacts or Leads in Salesforce. Typically used to capture subscribers that have signed up via Campaign Monitor.</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Bounced</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Bounced</shortDescription>
+        <value>Bounced</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Clicked</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Clicked</shortDescription>
+        <value>Clicked</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Days_To_Keep</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Days To Keep</shortDescription>
+        <value>How Many Days to Keep</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Free</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Free</shortDescription>
+        <value>Free</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Header</shortDescription>
+        <value>Tracking Data</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Opened</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Opened</shortDescription>
+        <value>Opened</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Other_Data</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Other Data</shortDescription>
+        <value>All Other Data</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Premium_Message</fullName>
+        <categories>FieldMapping</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Premium Message</shortDescription>
+        <value>Tracking Data is a Premium Feature.</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Restrict_By_Type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Restrict By Type</shortDescription>
+        <value>Restrict By Transaction Types:</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Sent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Sent</shortDescription>
+        <value>Sent</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Sync_Everything</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Sync Everything</shortDescription>
+        <value>Everything</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Sync_Nothing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Sync Nothing</shortDescription>
+        <value>Nothing</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Sync_Selective</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Sync Selective</shortDescription>
+        <value>Selective</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_Total_Space</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data Total Space</shortDescription>
+        <value>Total Space</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Data_sendIT_Data</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tracking Data sendIT Data</shortDescription>
+        <value>Campaign Monitor for Salesforce Email Tracking Data</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Buy_Now</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Buy Now</shortDescription>
+        <value>Buy now</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Help_for_this_Page</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Help for this Page</shortDescription>
+        <value>Help for this page</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Install_Package_Permissions</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Install Package Permissions</shortDescription>
+        <value>Upgrading to premium requires the &quot;Modify All Data&quot; and &quot;API Enabled&quot; Permissions in Salesforce. Please contact your Salesforce Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Install_Step</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Install Step</shortDescription>
+        <value>Step 1: Install premium features</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Installing_premium</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Installing premium</shortDescription>
+        <value>Installing premium features of Campaign Monitor for Salesforce...</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Premium_Features</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Premium Features</shortDescription>
+        <value>Upgrade to access premium features like custom field mappings, automatic list subscriptions, and transactional email.</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Premium_Tooltip</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Premium Tooltip</shortDescription>
+        <value>This feature only works on the premium edition of Campaign Monitor for Salesforce.</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Preparing_Installation</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Preparing Installation</shortDescription>
+        <value>Preparing Installation…</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Purchase_Step</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Purchase Step</shortDescription>
+        <value>Step 2: Purchase and upgrade</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Read_More_Here</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Read More Here</shortDescription>
+        <value>More information on premium features</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Refresh</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Refresh</shortDescription>
+        <value>Refresh</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_SFDC_Confirmation_Email</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SFDC Confirmation Email</shortDescription>
+        <value>Please wait for a confirmation email from Salesforce and press refresh</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Thanks_for_Purchasing</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Thanks for Purchasing</shortDescription>
+        <value>Thanks for purchasing the Premium Campaign Monitor Integration</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Upgrade</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Upgrade</shortDescription>
+        <value>Buy now</value>
+    </labels>
+    <labels>
+        <fullName>UpgradeWizard_Upgrade_to_Premium_Header</fullName>
+        <categories>UpgradeWizard</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Upgrade to Premium Header</shortDescription>
+        <value>Upgrade to the Premium version of Campaign Monitor for Salesforce</value>
+    </labels>
+</CustomLabels>

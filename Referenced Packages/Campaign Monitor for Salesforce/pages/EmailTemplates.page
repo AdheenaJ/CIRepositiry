@@ -1,0 +1,24 @@
+<apex:page controller="wbsendit.SendItReportController" showChat="false" sidebar="false" action="{!checkSetup}">
+<style type="text/css">
+    .noSidebarCell, .sidebarCell .fixed {padding: 0px;}
+</style>
+<apex:form >
+<apex:pageMessages escape="false" />
+	<apex:pageBlock rendered="{!showClientList}">
+        <apex:pageBlockSection columns="2">
+            <apex:pageBlockSectionItem >
+                <apex:selectList id="clientID" value="{!clientID}" size="1" title="Clients">
+                    <apex:selectOptions value="{!ClientList}"></apex:selectOptions>
+                     <apex:actionSupport event="onchange" reRender="Details" action="{!initPage}"/>
+                </apex:selectList>
+			</apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+	<apex:panelGroup >
+            <apex:outputPanel id="Details" rendered="{!valildUrl}">
+<iframe height="800px" id="idCMIFrame" name="idCMIFrame" src="{!frameURL}" width="100%" frameborder="false" style="border: 0px solid #ffffff;">Campaign Monitor could not be loaded. Contact support.</iframe>
+ 			</apex:outputPanel>
+	</apex:panelGroup>
+</apex:form>
+
+</apex:page>

@@ -1,0 +1,98 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" controller="wbsendit.SmartEmailActionController">
+
+	<head>
+    	<apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+    	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"/>
+
+    	<script type="text/javascript">
+
+    		var action = action || {};
+    		var j$ = jQuery.noConflict();
+
+    		action.sendemail = function(){
+
+    			var emailId = j$('select[id$="emailIds"]').val();
+
+    			if(emailId === '')
+    				return;
+
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.SmartEmailActionController.sendSmartEmail}',
+		            emailId, '{!RecordId}',
+		            function(result, event){
+                        j$('#sent-name').html(j$('select[id$="emailIds"] option:selected').text());
+		                j$('#emails').hide();
+		                j$('#save-modal').hide();
+		                j$('#sent').show();
+		            },
+		            {timeout: 60000});    		
+
+			};
+
+            action.sendMore = function(){
+
+                j$('select[id$="emailIds"]').val('');
+                j$('#sent').hide();
+                j$('#emails').show();
+                j$('#save-modal').show();
+
+            };
+
+    	</script>
+        <style>
+            form {
+                float: left;
+            }
+        </style>
+
+	</head>
+
+
+        <body ng-controller="MainCtrl">
+
+            <div class="b12-frame">
+
+                <div class="b12-content">
+
+                    <div class="b12-layout" id="emails">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$Label.Smart_Email_Action_Label}</p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+									<apex:form >	
+										<apex:selectList id="emailIds" value="{!SelectedEmail}" size="1" multiselect="false" style="width:300px;">
+											<apex:selectOptions value="{!AvailableEmails}" />
+										</apex:selectList>
+									</apex:form>
+                                    <div class="b12-action-save">
+                                        <button class="b12-btn b12-btn-do" id="save-modal" onclick="action.sendemail()">{!$Label.Smart_Email_Action_Send}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b12-layout" id="sent" style="display:none;">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$Label.Smart_Email_Action_Sent}</p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <span id="sent-name"></span>
+                                    <div class="b12-action-save">
+                                        <button class="b12-btn b12-btn-do" id="send-more" onclick="action.sendMore()">{!$Label.Smart_Email_Action_Send_More}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </body>
+
+
+
+</apex:page>

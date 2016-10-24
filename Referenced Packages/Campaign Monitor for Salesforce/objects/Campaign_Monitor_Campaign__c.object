@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <content>CampaignMonitorCampaign</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <content>CampaignMonitorCampaign</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>CampaignMonitorCampaign</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>CampaignMonitorCampaign</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Campaign_ID__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <label>Campaign ID</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Client_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The Campaign Monitor Client the Campaign relates to.</description>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/&quot; &amp; Client__r.Id , Client__r.Client_Name__c,&quot;_top&quot; )</formula>
+        <inlineHelpText>The Campaign Monitor Client the Campaign relates to.</inlineHelpText>
+        <label>Client Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Client__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Client</label>
+        <referenceTo>Client__c</referenceTo>
+        <relationshipLabel>Campaign Monitor Campaigns</relationshipLabel>
+        <relationshipName>Campaign_Monitor_Campaigns</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>From_Email__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>From Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>From_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>From Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Bounced__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of bounced emails for the Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of bounced emails for the Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Bounced</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Clicks__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of clicks for the Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of clicks for the Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Clicks</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Forwards__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of forwarded emails for the Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of forwarded emails for the Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Forwards</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Likes__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of likes for the Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of likes for the Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Likes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Mentions__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of &quot;Mentions&quot; for the Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of &quot;Mentions&quot; for the Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Mentions</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Opens__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of open emails for the associated Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of open emails for the associated Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Opens</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Recipients__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of recipients for the associated Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of recipients for the associated Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Recipients</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Spam_Complaints__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of Spam Complaints for the Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of Spam Complaints for the Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Spam Complaints</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Unique_Opens__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of unique open emails for the associated Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of unique open emails for the associated Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Unique Opens</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Num_Unsubscribed__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of unsubscribes for the Campaign Monitor campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of unsubscribes for the Campaign Monitor campaign.</inlineHelpText>
+        <label>Num Unsubscribed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pct_Opened__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(Num_Unique_Opens__c, 0)  /  BLANKVALUE( Total_Recipients__c , 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Percentage of emails that were opened for this campaign.</inlineHelpText>
+        <label>% Opened</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Reply_To__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Reply To</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Salesforce_Campaign__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Related Salesforce Campaign (Optional)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related Salesforce Campaign (Optional)</inlineHelpText>
+        <label>Salesforce Campaign</label>
+        <referenceTo>Campaign</referenceTo>
+        <relationshipLabel>Campaign Monitor Campaigns</relationshipLabel>
+        <relationshipName>Campaign_Monitor_Campaigns</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sent_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sent Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Subject__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Subject</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Recipients__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Total Recipients</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Web_Version_Text_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Web Version Text URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Web_Version_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Link to the email template that was used for this campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Link to the email template that was used for this campaign.</inlineHelpText>
+        <label>Web Version URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>World_View_Email_Tracking__c</fullName>
+        <deprecated>false</deprecated>
+        <description>World view of the email campaign tracking.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>World view of the email campaign tracking.</inlineHelpText>
+        <label>World View Email Tracking</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <label>Campaign Monitor Campaign</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>World_View_Email_Tracking__c</columns>
+        <columns>Salesforce_Campaign__c</columns>
+        <columns>Client__c</columns>
+        <columns>Sent_Date__c</columns>
+        <columns>Subject__c</columns>
+        <columns>Total_Recipients__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Campaign Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Campaign Monitor Campaigns</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

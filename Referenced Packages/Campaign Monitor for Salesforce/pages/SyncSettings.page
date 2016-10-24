@@ -1,0 +1,223 @@
+<apex:page showHeader="true" sidebar="false" controller="wbsendit.SyncSettingsController" action="{!checkJobs}">
+
+    <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+    <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+    <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/settings.min.js')}" />
+
+    <apex:outputPanel >
+		<script>
+
+			var j$ = j$ || jQuery.noConflict();
+
+			var setupWizard = setupWizard || {};
+
+			setupWizard.openPopup = function(url){
+				setupWizard.popupWindow = window.open(url, 'CMConnect', 'width=800, height=600, menubar=0, location=0');
+			};
+
+			setupWizard.closePopup = function(){
+
+				Visualforce.remoting.Manager.invokeAction(
+		        	settings.sync.VFBindings.retrieveCurrentClientIds,
+		        	function(result, event){
+						settings.sync.newData.clientIds = result;
+						refresh();
+						setupWizard.popupWindow.close();
+		        	});
+			};
+
+			settings.sync.VFBindings.startSubscriberSync = '{!$RemoteAction.SyncSettingsController.startSubscriberSync}';
+			settings.sync.VFBindings.checkRunningJobs = '{!$RemoteAction.SyncSettingsController.checkRunningJobs}';
+			settings.sync.VFBindings.updateSyncFrequency = '{!$RemoteAction.SyncSettingsController.updateSyncFrequency}';
+			settings.sync.VFBindings.saveClients = '{!$RemoteAction.SyncSettingsController.saveClients}';
+			settings.sync.VFBindings.retrieveCurrentClientIds = '{!$RemoteAction.SyncSettingsController.retrieveCurrentClientIds}';
+			settings.sync.VFBindings.retrieveAvailableClients = '{!$RemoteAction.SyncSettingsController.retrieveAvailableClients}';
+
+			settings.sync.currentFrequency = '{!CurrentFrequency}';
+			settings.sync.newData.syncFrequency = '{!CurrentFrequency}';
+			settings.sync.newData.clientIds = '{!CurrentClientIds}';
+			settings.sync.isPremium = {!IsPremium};
+			settings.sync.isMultiClient = {!IsMultiClient}; 
+			settings.sync.isConnected = {!IsConnected};
+			settings.sync.hasMultiClients = {!HasMultiClients};
+
+			settings.labels.unsaved = '{!$Label.Settings_Not_Saved}';
+
+			j$(document).ready(settings.sync.documentReady);
+
+		</script>
+	</apex:outputPanel>
+
+	<apex:form >
+
+
+	    <div class="b12-frame">
+
+	    	<div class="b12-overlay"></div>
+
+			<div id="popupClients" class="b12-modal b12-modal-responsive">
+				<div class="b12-modal-header">
+					<h2>Select clients</h2>
+					<a href="" class="b12-modal-close" id="cancelClients"><i class="fa fa-times"></i></a>
+				</div>
+				<div class="b12-layout b12-layout-30" id="clientsInCM" style="margin-top:20px;margin-left:20px;">
+				</div>
+				<div class="b12-modal-footer">
+					<button class="b12-btn b12-btn-do" type="button" id="closeClients">OK</button>
+					<button class="b12-btn" type="button" id="cancelClients">Cancel</button>
+				</div>
+			</div>
+
+	        <div class="b12-header">
+	            <h1>{!HTMLENCODE($Label.Sync_Settings_Header)}</h1>
+	            <div class="b12-help"><a href="{!$Label.Help_Url_Sync_Settings}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+	        </div>
+
+	        <apex:outputPanel rendered="{!IsTrial}">
+	            <div class="b12-messages b12-messages-info" style="">
+	                <span class="b12-message-info-icon"><i class="fa fa-info"></i></span>
+	                <p class="b12-messages-text">{!$Label.Multiple_Clients_Premium_Message} <a href="{!$Page.UpgradeWizard}">{!$Label.FieldMapping_Upgrade_Now}</a></p>
+	            </div>
+	        </apex:outputPanel>
+
+	        <apex:outputPanel >
+
+		        <div class="b12-messages b12-messages-info" style="display: none;">
+		            <p class="b12-messages-text"></p>
+		            <a href="#" class="b12-message-close"><i class="fa fa-times"></i></a>
+		        </div>
+
+		        <div class="b12-content">
+
+					<apex:actionFunction name="disconnect" action="{!disconnect}" reRender="connection"/>
+					<apex:actionFunction name="refresh" action="{!refresh}" reRender="connection, syncDetails, clients, popupClients"/>
+
+					<script type="text/javascript">
+						settings.sync.disconnect = disconnect;
+					</script>
+
+
+					<div class="b12-layout b12-layout-30">
+						<apex:outputPanel id="connection">
+							<apex:outputPanel id="connected" rendered="{!IsConnected}">
+								<div class="b12-layout-col">
+									<div class="b12-layout-group">
+										<div class="b12-layout-group-header">
+											<p>{!HTMLENCODE($Label.Sync_Settings_Connected_As)}</p>
+										</div>
+										<div class="b12-layout-group-content">
+											<p>{!ConnectedUser}</p>
+											<button class="b12-btn" id="disconnect" type="button">{!HTMLENCODE($Label.Sync_Settings_Disconnect)}</button>
+										</div>
+									</div>
+								</div>
+							</apex:outputPanel>
+
+							<apex:outputPanel id="disconnected" rendered="{!NOT(IsConnected)}">
+								<div class="b12-layout-col">
+									<div class="b12-layout-group">
+										<div class="b12-layout-group-header">
+											<p>{!HTMLENCODE($Label.Sync_Settings_Connected_As)}</p>
+										</div>
+										<div class="b12-layout-group-content">
+											<button class="b12-btn b12-btn-do" id="connectButton" type="button" onclick="setupWizard.openPopup('{!$Page.Connect}');">{!HTMLENCODE($Label.Sync_Settings_Connect)}</button>
+										</div>
+									</div>
+								</div>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{!IsConnected}" id="clients">
+								<script type="text/javascript">
+									settings.sync.populateClients();
+									j$('[id$="freq' + settings.sync.currentFrequency + '"]').prop('checked', true);
+									j$('[id$="freq' + settings.sync.currentFrequency + '"]').parent().addClass('radio-selected');
+								</script>
+								<div class="b12-layout-col">
+									<div class="b12-layout-group" id="clientList" style="display:none">
+										<div class="b12-layout-group-header">
+											<p>Clients</p>
+										</div>
+										<div class="b12-layout-group-content">
+											<p id="listNames" class="truncate">{!HTMLENCODE(CurrentClientNames)}</p>
+											<button class="b12-btn" id="clients" type="button">Select Clients</button>
+										</div>
+									</div>
+								</div>
+							</apex:outputPanel>
+						</apex:outputPanel>
+					</div>
+
+					<apex:outputPanel id="syncDetails">
+						<div class="b12-layout b12-layout-30">
+							<div class="b12-layout-col">
+								<div class="b12-layout-group">
+									<div class="b12-layout-group-header">
+										<p>
+											<apex:outputText rendered="{!NOT(isPremium)}" escape="false" value="{!$Label.Sync_Settings_Subscriber_Header}"/>
+											<apex:outputText rendered="{!isPremium}" escape="false" value="{!$Label.Sync_Settings_Subscriber_Header_Premium}"/>
+										</p>
+									</div>
+									<div class="b12-layout-group-content">
+										<button class="b12-btn" id="runSubscribers" type="button">{!HTMLENCODE($Label.Sync_Settings_Run)}</button>
+										<div id="subscriberProgress">
+											<p class="b12-loader b12-loader-status"></p>
+						                    <div class="b12-loader b12-loader-bar">
+						                        <div class="b12-loaded" style="width:0%;"></div>
+						                    </div>
+										</div>
+										<p><em>{!HTMLENCODE($Label.Sync_Settings_Last_Run_Header)}:</em>&nbsp;<span id="subscriberLastRun">{!SyncLastRun}</span></p>
+										<p><em>{!HTMLENCODE($Label.Sync_Settings_Next_Run_Header)}:</em>&nbsp;<span id="subscriberNextRun">{!SyncNextRun}</span></p>
+									</div>
+								</div>
+							</div>
+							<div class="b12-layout-col">
+								<div class="b12-layout-group">
+									<div class="b12-layout-group-header">
+										<p>Frequency</p>
+									</div>
+									<div class="b12-layout-group-content">
+										<label class="b12-radio-button b12-radio-button-left">
+											<input id="freqNever" name="sync" type="radio" value="{!HTMLENCODE($Label.Sync_Settings_Frequency_Never)}" />
+											{!HTMLENCODE($Label.Sync_Settings_Frequency_Never)}
+										</label>
+										<label class="b12-radio-button">
+											<input id="freqHourly" name="sync" type="radio" value="{!HTMLENCODE($Label.Sync_Settings_Frequency_Hourly)}" />
+											{!HTMLENCODE($Label.Sync_Settings_Frequency_Hourly)}
+										</label>
+										<label class="b12-radio-button b12-radio-button-center">
+											<input id="freqDaily" name="sync" type="radio" value="{!HTMLENCODE($Label.Sync_Settings_Frequency_Daily)}" />
+											{!HTMLENCODE($Label.Sync_Settings_Frequency_Daily)}
+										</label>
+										<label class="b12-radio-button">
+											<input id="freqWeekly" name="sync" type="radio" value="{!HTMLENCODE($Label.Sync_Settings_Frequency_Weekly)}" />
+											{!HTMLENCODE($Label.Sync_Settings_Frequency_Weekly)}
+										</label>
+										<label class="b12-radio-button b12-radio-button-right">
+											<input id="freqMonthly" name="sync" type="radio" value="{!HTMLENCODE($Label.Sync_Settings_Frequency_Monthly)}" />
+											{!HTMLENCODE($Label.Sync_Settings_Frequency_Monthly)}
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</apex:outputPanel>
+
+
+		        </div>
+
+		        <div class="b12-footer">
+		            <div class="b12-action">
+		                <div class="b12-action-save">
+		                    <button class="b12-btn b12-btn-do" id="saveButton" type="button">{!HTMLENCODE($Label.Save)}</button>
+		                </div>
+		            </div>
+		        </div>
+
+	        </apex:outputPanel>
+
+	    </div>
+
+	</apex:form>
+
+
+</apex:page>

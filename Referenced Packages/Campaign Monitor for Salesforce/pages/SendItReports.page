@@ -1,0 +1,44 @@
+<apex:page controller="wbsendit.SendItReportController" showChat="false" sidebar="{!showSidebar}" tabStyle="Sendit__tab" action="{!checkSetup}">
+<apex:stylesheet value="{!URLFOR($Resource.wbsendit__slds080, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+<style type="text/css">
+    .outer td.oRight {padding: 0px;}
+    body {padding: 0px !important;}
+</style>
+<div class="slds">
+
+    <div class="{!showUpgradeMsg}">
+        <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
+          <span class="slds-assistive-text">Info</span>
+        <h2>
+            <span class="slds-p-right--xx-small">Your premium trial has expired - <a href="https://appexchange.salesforce.com/listingDetail?listingId=a0N30000000qEvAEAU" target="_blank">Upgrade now</a></span></h2>
+        </div>
+    </div>
+
+    <apex:form >
+    <apex:pageMessages escape="false" />
+    	<apex:pageBlock rendered="{!showClientList}">
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:selectList id="clientID" value="{!clientID}" size="1" title="Clients">
+                        <apex:selectOptions value="{!ClientList}"></apex:selectOptions>
+                         <apex:actionSupport event="onchange" reRender="Details" action="{!initPage}"/>
+                    </apex:selectList>
+    			</apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    	<apex:panelGroup >
+                <apex:outputPanel id="Details" rendered="{!valildUrl}">
+    <iframe height="800px" id="idCMIFrame" name="idCMIFrame" src="{!frameURL}" width="100%" frameborder="false" style="border: 0px solid #ffffff;">Campaign Monitor could not be loaded. Contact support.</iframe>
+     			</apex:outputPanel>
+    	</apex:panelGroup>
+    </apex:form>
+
+    <section class="slds-clearfix">
+        <div class="slds-float--right">
+            <p style="opacity: 0.5;" class="slds-text-body--small slds-m-right--small">Connected as: {!username}</p>
+        </div>
+    </section>
+
+</div>
+
+</apex:page>

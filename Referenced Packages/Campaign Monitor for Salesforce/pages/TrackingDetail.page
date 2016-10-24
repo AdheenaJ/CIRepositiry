@@ -1,0 +1,41 @@
+<apex:page showHeader="true" sidebar="true" standardController="wbsendit__Campaign_Activity__c" extensions="wbsendit.TrackingDetailController">
+    <apex:sectionHeader title="Tracking Detail" subtitle="Email Tracking Record" help="{!$Label.SupportLink_Membership_Detail}"/>
+
+    <apex:form id="trackingForm">
+        <apex:pageMessages id="messages" escape="false" />
+        <apex:outputLink id="idBack" rendered="{!retObject != null}" value="/{!retObject.Id}" style="font-family: 'Verdana','Geneva',sans-serif;font-size: 91.3%;text-decoration: none;">&nbsp;«&nbsp;Back to {!retObject['Name']}</apex:outputLink>
+        <br/>
+        <apex:pageBlock title="Email Tracking Statistics Detail" mode="maindetail">
+            <apex:pageBlockSection columns="2">
+
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.Name}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Contact__c}" rendered="{!wbsendit__Campaign_Activity__c.wbsendit__Contact__c != null}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Lead__c}" rendered="{!wbsendit__Campaign_Activity__c.wbsendit__Lead__c != null}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Email_Address__c}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Activity__c}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Activity_Date__c}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Bounce_Reason__c}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Campaign_Report__c}"/>
+                <!-- <apex:outputField value="{!Campaign_Activity__c.Location__c}"/> -->
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__URL_Clicked__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock title="Location" mode="maindetail">
+            <apex:pageBlockSection columns="2">
+
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__City__c}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Country_Code__c}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__Country_Name__c}"/>
+                <apex:outputField value="{!wbsendit__Campaign_Activity__c.wbsendit__IP_Address__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Email Web Version" mode="maindetail">
+		<apex:panelGroup >
+            <apex:outputPanel id="Details" rendered="{!valildUrl}">
+				<iframe height="800px" id="idCMIFrame" name="idCMIFrame" src="{!frameURL}" width="100%" frameborder="false" style="border: 0px solid #ffffff;">Campaign Monitor could not be loaded. Contact support.</iframe>
+ 			</apex:outputPanel>
+		</apex:panelGroup>
+		</apex:pageBlock>
+    </apex:form>
+</apex:page>

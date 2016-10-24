@@ -1,0 +1,76 @@
+<apex:page controller="wbsendit.CustomMappingRemoteController" showheader="true" sidebar="false" standardStylesheets="true" action="{!init}">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="{!URLFOR($Resource.SendItAssets, 'css/mapping.min.css')}" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="{!URLFOR($Resource.SendItAssets, 'js/mapping.min.js')}" />
+
+    <script>
+
+        var RemoteActions = {};
+        RemoteActions.subscriberLists = '{!$RemoteAction.CustomMappingRemoteController.getSubscriberLists}';
+
+        // Page references
+        var PageRef = {};
+        PageRef.CreateSubscriberListPageUrl = '{!CreateSubscriberListUrl}';
+        PageRef.FieldMappingUrl = '{!FieldMappingUrl}';
+
+        j$(document).ready(mappings.tab.documentReady);
+
+    </script>
+
+
+    <div class="b12-frame">
+
+        <!-- Main Custom Field Mapping Body -->
+
+        <div class='b12-overlay'></div>
+
+        <div class="b12-header">
+            <!-- Subscriber List Name -->
+            <h1>{!$Label.FieldMapping_Header}</h1>
+
+            <!-- Help -->
+            <div class="b12-help"><a href="{!$Label.SupportLink_Field_Mappings_Help_Link}" target="_blank">{!$Label.FieldMapping_Help_for_this_Page} <i class="fa fa-question-circle"></i></a></div>
+
+        </div>
+
+        <apex:variable rendered="{!UPPER(licenceDetail.status) == 'TRIAL'}" value="p" var="o">
+            <div class="b12-messages b12-messages-info ng-hide" ng-show="!stencil">
+                <a class="b12-message-info-icon"><i class="fa fa-info"></i></a>
+                <p class="b12-messages-text">{!$Label.FieldMapping_Premium_Message} <a href="{!$Page.UpgradeWizard}">{!$Label.FieldMapping_Upgrade_Now}</a></p>
+            </div>
+        </apex:variable>
+
+
+        <div class="b12-content">
+            <div class="b12-centered-container">
+
+                <div class="b12-centered-list b12-subscriber-list-loading">{!$Label.Loading}</div>
+                <button class="b12-centered-list b12-btn b12-btn-do b12-btn-create-sublist" style="display: none;" id="create-list" type="button">
+                <apex:outputLabel value="Create your first subscriber list "/><i class="fa fa-arrow-right"></i></button>
+
+                <div class="b12-centered-list b12-subscriber-list-details" style="display: none;">{!$Label.FieldMapping_Subscriber_List}</div>
+                <div class="b12-centered-list b12-subscriber-list-details" style="display: none;">
+                    <select id='b12-salesforce-list'>
+                        <option value=""><apex:outputLabel value="{!$Label.Loading}"/></option>
+                    </select>
+                </div>
+            </div>
+
+            <hr class="b12-hrline"></hr>
+
+        </div>
+
+        <div class="b12-footer">
+            <div class="b12-action">
+                <div class="b12-action-save">
+                    <button class="b12-btn b12-btn-next b12-btn-do" style="display: none;" id="save-form" type="button"><apex:outputLabel value="{!$Label.FieldMapping_Next} "/><i class="fa fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</apex:page>

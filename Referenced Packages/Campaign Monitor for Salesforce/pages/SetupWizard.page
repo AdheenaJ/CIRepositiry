@@ -1,0 +1,635 @@
+<apex:page showHeader="{!ShowHeaders}" sidebar="{!ShowHeaders}" controller="wbsendit.SetupWizardController">
+
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"/>
+	<apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/jsforce/1.4.1/jsforce.min.js"/>
+	<apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js" />
+	<apex:pageMessages />
+
+	<script>
+
+
+		var setupWizard = setupWizard || {};
+
+
+		setupWizard.canModifyAll = {!canModifyAll};
+		setupWizard.listViewButtonName = '{!Namespace}' + 'Add_Emails_to_List';
+		setupWizard.noLayouts = !setupWizard.canModifyAll;
+		setupWizard.configBatchId = '';
+		setupWizard.layoutBatchId = '';
+		setupWizard.isNewCM = false;
+		setupWizard.completeSteps = '{!CompleteSteps}';
+
+
+		setupWizard.mungeListView = function(z, fileName){
+			var file = z.file(fileName).asText();
+			var idxSrt = file.indexOf('<listViewButtons>');
+			var idxEnd = file.indexOf('</listViewButtons>');
+
+			if(idxSrt == -1){
+
+				z.remove(fileName);
+				z.file(fileName, file.replace('<searchLayouts>', '<searchLayouts><listViewButtons>' + setupWizard.listViewButtonName + '</listViewButtons>'));
+				return true;
+
+			}else{
+
+				if(file.indexOf('<listViewButtons>' + setupWizard.listViewButtonName + '</listViewButtons>') == -1){
+					z.remove(fileName);
+					var idx = file.lastIndexOf('</listViewButtons>');
+					var newfile = file.substring(0, idx) + '</listViewButtons><listViewButtons>' + setupWizard.listViewButtonName + file.substring(idx);
+					z.file(fileName, newfile);
+					return true;
+				}
+			}
+
+			return false;
+		};
+
+		setupWizard.updateListViews = function(){
+
+	        var conn = new jsforce.Connection({ accessToken: '{!$Api.Session_Id}', callOptions: {client: 'Beaufort/Beaufort/'} });
+			conn.metadata.retrieve({apiVersion:33.0, unpackaged:{version:33.0, types:[{members:'Contact', name:'CustomObject'}, {members:'Lead', name:'CustomObject'}]}})
+				.complete().then(function(res){
+					console.log(res);
+
+					var z = new JSZip(res.zipFile, {base64:true});
+					var changed = setupWizard.mungeListView(z, 'unpackaged/objects/Contact.object');
+					changed |= setupWizard.mungeListView(z, 'unpackaged/objects/Lead.object');
+
+
+					if(changed){
+						var z2 = z.generate({base64:true});
+
+						conn.metadata.deploy(z2, {rollbackOnError: true})
+							.complete(function(err, result){
+								console.log(err);
+								console.log(result);
+							});
+					}
+
+				});
+
+		};
+
+		setupWizard.openPopup = function (url){
+			setupWizard.popupWindow = window.open(url, 'CMConnect', 'width=800, height=600, menubar=0, location=0');
+		};
+
+		setupWizard.closePopup = function(isNewCM){
+			setupWizard.popupWindow.close();
+			setupWizard.isNewCM = isNewCM;
+
+			// TODO: what about failed connection
+
+
+			Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.SetupWizardController.startConfigSync}',
+	            setupWizard.handleConfigSyncResult,
+	            {buffer: false}
+	        );
+
+			Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.SetupWizardController.installPremium}',
+	            function(result, event){},
+	            {buffer: false}
+	        );
+
+
+		};
+
+		setupWizard.handleConfigSyncResult = function(result, event){
+
+			setupWizard.configBatchId = result;
+			window.setTimeout(setupWizard.updateSyncProgress, 500);
+
+			//Show progress, hide button blah blah
+
+			$('#step-connect > .b12-loader').addClass('active');
+			$('#step-connect').addClass('loader');
+
+		};
+
+		setupWizard.updateSyncProgress = function(){
+
+			Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.SetupWizardController.updateSyncProgressBar}',
+	            setupWizard.configBatchId,
+	            setupWizard.handleSyncProgressResult,
+	            {buffer: false}
+	        );
+
+
+		};
+
+		setupWizard.handleSyncProgressResult = function(result, event){
+
+			$('#step-connect .b12-loaded').width(result.Percentage + '%');
+			$('#step-connect .b12-loader-status').text(result.Status);
+
+			if(result.Percentage != 100){
+				window.setTimeout(setupWizard.updateSyncProgress, 1000);
+			}else{
+				$('#step-connect .b12-loaded').addClass('done');
+				window.setTimeout(setupWizard.connectCompleted, 1500);
+			}
+
+		};
+
+		setupWizard.connectCompleted = function(){
+
+			$('#step-connect > .b12-loader').removeClass('active');
+			$('#step-connect').removeClass('loader');
+			$('#step-connect').addClass('complete');
+
+
+			$('#step-sync').removeClass('inactive');
+			$('input[name=sync]').removeAttr('disabled');
+
+			Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.SetupWizardController.addCompletedStep}',
+	            'step-connect',
+	            function(){},
+	            {buffer: false}
+	        );
+
+		};
+
+		setupWizard.startLayoutBatch = function(){
+
+			Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.SetupWizardController.startLayoutBatch}',
+	            setupWizard.handleStartLayoutResult,
+	            {buffer: false}
+	        );
+
+		};
+
+		setupWizard.handleStartLayoutResult = function(result, event){
+
+			setupWizard.layoutBatchId = result;
+
+			window.setTimeout(setupWizard.updateLayoutProgress, 500);
+
+			$('#step-layouts > .b12-loader').addClass('active');
+			$('#step-layouts').addClass('loader');
+		};
+
+		setupWizard.updateLayoutProgress = function(){
+
+			Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.SetupWizardController.updateLayoutProgressBar}',
+	            setupWizard.layoutBatchId,
+	            setupWizard.handleLayoutProgressResult,
+	            {buffer: false}
+	        );
+
+		};
+
+		setupWizard.handleLayoutProgressResult = function(result, event){
+
+			$('#step-layouts .b12-loaded').width(result.Percentage + '%');
+			$('#step-layouts .b12-loader-status').text(result.Status);
+
+			if(result.Percentage != 100){
+				window.setTimeout(setupWizard.updateLayoutProgress, 1000);
+			}else{
+				$('#step-layouts .b12-loaded').addClass('done');
+				window.setTimeout(setupWizard.layoutComplete, 1500);
+			}
+
+		};
+
+		setupWizard.layoutComplete = function(){
+			$('#step-layouts > .b12-loader').removeClass('active');
+			$('#step-layouts').removeClass('loader');
+			$('#step-layouts').addClass('complete');
+			$('#step-final').removeClass('inactive');
+
+			Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.SetupWizardController.addCompletedStep}',
+	            'step-layouts',
+	            function(){},
+	            {buffer: false}
+	        );
+
+		};
+
+		setupWizard.handleSyncJobsResult = function(result, event){
+
+		};
+
+		setupWizard.skipPageLayout = function(){
+			$('#step-layouts').addClass('complete');
+			$('#step-final').removeClass('inactive');
+
+			Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.SetupWizardController.addCompletedStep}',
+	            'step-layouts',
+	            setupWizard.handleFinish,
+	            {buffer: false}
+	        );
+
+		};
+
+		setupWizard.handleNextButton = function(){
+			var c = $('input[name=sync]:checked').val();
+			if(c == 'true'){
+				Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.SetupWizardController.startSync}',
+		            setupWizard.startSyncResult,
+		            {buffer: false}
+		        );
+			}else{
+				setupWizard.startSyncResult(null, {status:true});
+			}
+
+
+		};
+
+		setupWizard.startSyncResult = function(result, event){
+
+			if(event.status){
+
+				$('#step-sync').addClass('complete');
+				$('input[name=sync]').attr('disabled', 'disabled');
+
+				if(setupWizard.noLayouts){
+					$('#step-final').removeClass('inactive');
+				}else{
+					$('#step-layouts').removeClass('inactive');
+				}
+
+				Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.SetupWizardController.addCompletedStep}',
+		            'step-sync',
+		            function(){},
+		            {buffer: false}
+		        );
+			}
+
+		};
+
+        setupWizard.handleFinish = function(result, event){
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.SetupWizardController.markCompleted}',
+                function(){},
+                {buffer: false}
+            );
+
+        };
+
+		$(document).ready(function(){
+			if(setupWizard.noLayouts){
+
+				$('#step-layouts').hide();
+				if(setupWizard.completeSteps == null)
+					setupWizard.completeSteps = 'step-layouts';
+
+				Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.SetupWizardController.addCompletedStep}',
+		            'step-layouts',
+		            function(){},
+		            {buffer: false}
+		        );
+			}
+
+			if(setupWizard.completeSteps == ''){
+				$('#step-connect').removeClass('inactive');
+			}else{
+				var completed = setupWizard.completeSteps.split(';');
+				var connectCompleted = false;
+				var layoutCompleted = false;
+				var syncCompleted = false;
+
+				for(var i=0; i<completed.length; i++){
+					$('#' + completed[i]).removeClass('inactive');
+					$('#' + completed[i]).addClass('complete');
+
+					if(completed[i] == 'step-connect')
+						connectCompleted = true;
+
+					if(completed[i] == 'step-sync')
+						syncCompleted = true;
+
+					if(completed[i] == 'step-layouts')
+						layoutCompleted = true;
+				}
+
+				if(connectCompleted && !syncCompleted){
+					$('#step-sync').removeClass('inactive');
+					$('input[name=sync]').removeAttr('disabled');
+				}
+
+				if(!setupWizard.noLayouts && syncCompleted && !layoutCompleted)
+					$('#step-layouts').removeClass('inactive');
+
+				if((!setupWizard.noLayouts && layoutCompleted) || (setupWizard.noLayouts && syncCompleted))
+					$('#step-final').removeClass('inactive');
+			}
+
+		});
+
+	</script>
+
+    <style>
+        .container {
+            font-family: Arial,Helvetica,sans-serif;
+            color: #222;
+            width: 100%;
+            margin: 20px auto;
+        }
+        .b12-header {
+            border-bottom: solid 1px #dddddd;
+            height: 1%;
+            overflow: hidden;
+            clear: both;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .b12-header img {
+            float: left;
+        }
+        .b12-header-text {
+            float:left;
+        }
+        .b12-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #555555;
+            margin: 0 15px;
+	        display: block;
+        }
+        .b12-header h2 {
+            font-size: 18px;
+            color: #757575;
+            margin: 10px 15px 0 15px;
+        }
+        .b12-steps {
+
+        }
+        .b12-step {
+            width: 280px;
+            border-radius: 5px;
+            border: solid 1px #d0d5d9;
+            margin: 10px 5px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            margin: 30px auto;
+            padding-bottom: 60px;
+        }
+        .b12-step.loader{
+        	padding-bottom: 12px;
+        }
+        .b12-step.inactive {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            opacity: 0.3;
+        }
+        .b12-step.inactive .b12-btn {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            opacity: 0.3;
+        }
+        .b12-step.complete {
+            border-color: #03b603;
+        }
+        .b12-step.complete .b12-step-actions {
+            background: #03b603;
+        }
+        .b12-step.complete .b12-step-actions a {
+            display: none;
+        }
+        .b12-step.complete .b12-step-actions img {
+            display: block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            margin: 0 auto;
+            background: none;
+        }
+        .b12-step .b12-step-actions img {
+            display: none;
+        }
+		.b12-step.loader .b12-step-actions{
+			display: none;
+		}
+        .b12-step-actions {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .b12-step h1 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        	display: block;
+        }
+        .b12-step p {
+            font-weight: normal;
+            font-size: 12px;
+			padding: 10px;
+        }
+        .b12-step img {
+            text-align: center;
+        }
+        .b12-btn {
+            display: inline-block;
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F8F8F9), to(#DDDFE1));
+            background: -webkit-linear-gradient(#F8F8F9,#DDDFE1);
+            background: #dddfe1;
+            background: linear-gradient(#F8F8F9,#DDDFE1);
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            border: 1px solid #dadee2;
+            border-radius: .3125rem;
+            height: 35px;
+            line-height: 35px;
+            min-width: 80px;
+            margin: 0;
+            box-shadow: none;
+            margin-right: 5px;
+	        cursor: pointer;
+        }
+        .b12-btn:hover {
+            background: #137cbd;
+        }
+        .b12-btn.b12-btn-do {
+            border: 1px solid #137cbd;
+            background: #137cbd;
+            color: #fff;
+        }
+        .b12-btn.b12-btn-skp {
+            border: none;
+            background: none;
+            min-width: 0;
+            color: #ADABAB;
+            font-weight: normal;
+	        margin-right: -30px;
+        }
+        .inactive a.b12-btn{
+        	display: none;
+        }
+        span.b12-btn{
+        	display: none;
+        }
+        .inactive span.b12-btn{
+        	display: inline-block;
+        	cursor: default;
+        }
+        .b12-loader {
+	        display: none;
+        }
+        .b12-loader.active {
+        	display: block;
+        }
+        .b12-loader-bar{
+            height: 12px;
+            width: 260px;
+            margin: 0 auto;
+            background: #E0E0E0;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);
+            -moz-box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);
+            box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);
+        }
+        .b12-loaded {
+          background: #72d0eb;
+          height: 12px;
+          border-radius: 4px 0 0 4px;
+        }
+        .b12-loaded.done {
+            border-radius: 4px;
+        }
+        .b12-step input[type="text"] {
+          width: 240px;
+          margin-bottom: 10px;
+          border: solid 1px #ccc;
+          border-radius: 4px;
+          padding: 5px;
+        }
+        .b12-step label {
+            text-align: left;
+            font-weight: normal;
+            font-size: 12px;
+            display: block;
+            padding: 0 0 5px 15px;
+        }
+        .b12-step .radios {
+            padding: 10px;
+        }
+        .b12-step .radios label {
+            position: relative;
+            padding: 0 0 10px 30px;
+            line-height: 16px;
+        }
+        .b12-step input[type="radio"] {
+            margin: 0;
+            position: absolute;
+            left: 10px;
+            top: 1px;
+        }
+    </style>
+
+	<apex:form >
+
+		<apex:outputPanel id="holding"/>
+
+        <div class="container">
+        	<apex:outputPanel rendered="{!ShowHeaders}">
+	            <div class="b12-header">
+	                <img src="{!URLFOR($Resource.SendItAssets, '/img/logo.png')}" alt="Campaign Monitor for Salesforce" />
+	                <div class="b12-header-text">
+	                    <h1>{!$Label.SetupWizard_Setup_Free_Integration}</h1>
+	                    <h2>{!$Label.SetupWizard_By_Label}</h2>
+	                </div>
+	            </div>
+            </apex:outputPanel>
+
+            <div class="b12-steps">
+
+                <div class="b12-step" id="step-connect">
+                    <h1>{!$Label.FieldMapping_Setup_Free_Integration}</h1>
+                    <img src="{!URLFOR($Resource.SendItAssets, 'img/step-connect.png')}" />
+                    <p class="exp">{!$Label.SetupWizard_Connect_to_Salesforce}</p>
+					<p class="b12-loader b12-loader-status">{!$Label.SetupWizard_Finalising_Connection}</p>
+                    <div class="b12-loader b12-loader-bar">
+                        <div class="b12-loaded" style="width:0%;"></div>
+                    </div>
+                    <div class="b12-step-actions">
+                        <a href="" class="b12-btn b12-btn-do" id="connect" onclick="setupWizard.openPopup('{!$Page.Connect}');" >{!$Label.SetupWizard_Connect}</a>
+                        <img src="{!URLFOR($Resource.SendItAssets, 'img/b12-check.png')}" alt =""/>
+                    </div>
+                </div>
+
+                <div class="b12-step inactive" id="step-sync">
+                    <h1>{!$Label.SetupWizard_Sync_Data}</h1>
+                    <img src="{!URLFOR($Resource.SendItAssets, 'img/step-sync.png')}" />
+                    <div class="radios">
+                        <label>
+	                    	<input disabled="disabled" type="radio" name="sync" value="true" checked="checked"/>{!$Label.SetupWizard_Enable_Sync}
+                        </label>
+                        <label>
+	                    	<input disabled="disabled" type="radio" name="sync" value="false"/>{!$Label.SetupWizard_Disable_Sync}
+                        </label>
+                    </div>
+
+                    <div class="b12-step-actions">
+                        <span class="b12-btn b12-btn-do">{!$Label.SetupWizard_Next}</span>
+                    	<a class="b12-btn b12-btn-do" onclick="setupWizard.handleNextButton();">{!$Label.SetupWizard_Next}</a>
+                        <img src="{!URLFOR($Resource.SendItAssets, 'img/b12-check.png')}" alt =""/>
+                    </div>
+                </div>
+
+                <div class="b12-step inactive" id="step-layouts">
+                    <h1>{!$Label.SetupWizard_Update_Page_Layouts}</h1>
+                    <img src="{!URLFOR($Resource.SendItAssets, 'img/step-page.png')}" />
+                    <p class="exp">{!$Label.SetupWizard_Auto_Add_Components}</p>
+
+					<p class="b12-loader">{!$Label.SetupWizard_Updating_Page_Layouts}</p>
+                    <div class="b12-loader b12-loader-bar">
+                        <div class="b12-loaded" style="width:0%;"></div>
+                    </div>
+                    <div class="b12-step-actions">
+                        <span class="b12-btn b12-btn-do">{!$Label.SetupWizard_Start}</span>
+                        <a href="" class="b12-btn b12-btn-do" onclick="setupWizard.updateListViews();setupWizard.startLayoutBatch();">{!$Label.SetupWizard_Start}</a>
+                        <span class="b12-btn b12-btn-skp">{!$Label.SetupWizard_Skip}</span>
+                        <a href="" class="b12-btn b12-btn-skp" onclick="setupWizard.skipPageLayout();">{!$Label.SetupWizard_Skip}</a>
+                        <img src="{!URLFOR($Resource.SendItAssets, 'img/b12-check.png')}" alt =""/>
+                    </div>
+                </div>
+
+                <div class="b12-step inactive" id="step-final">
+                    <h1>Finally</h1>
+                    <img src="{!URLFOR($Resource.SendItAssets, 'img/step-done.png')}" />
+
+                    <p class="exp">{!$Label.SetupWizard_All_Done_Message}</p>
+
+                    <div class="b12-step-actions">
+                        <span class="b12-btn b12-btn-do">{!$Label.SetupWizard_Finish}</span>
+                        <a href="{!FinishedUrl}" class="b12-btn b12-btn-do">{!$Label.SetupWizard_Finish}</a>
+						<img src="{!URLFOR($Resource.SendItAssets, 'img/b12-check.png')}" alt =""/>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+		<br/>
+		<br/>
+		<br/>
+
+
+
+	</apex:form>
+
+</apex:page>

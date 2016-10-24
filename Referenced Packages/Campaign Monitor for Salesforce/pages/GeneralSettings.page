@@ -1,0 +1,127 @@
+<apex:page showHeader="true" sidebar="false" controller="wbsendit.GeneralSettingsController" action="{!checkSetup}">
+
+    <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+    <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" />
+    <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/settings.min.js')}" />
+
+    <apex:outputPanel >
+		<script type="text/javascript">
+
+			var j$ = j$ || jQuery.noConflict();
+
+			settings.general.VFBindings.saveSettings = '{!$RemoteAction.GeneralSettingsController.SaveSettings}';
+
+			settings.general.orgSettings = JSON.parse('{!Settings}');
+			settings.labels.unsaved = '{!$Label.Settings_Not_Saved}';
+
+			j$(document).ready(settings.general.documentReady);
+
+		</script>
+	</apex:outputPanel>
+
+    <div class="b12-frame">
+
+        <div class="b12-header">
+            <h1>{!HTMLENCODE($Label.General_Settings_Header)}</h1>
+            <div class="b12-help"><a href="{!$Label.Help_Url_General_Options}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+        </div>
+
+        <apex:outputPanel >
+
+	        <div class="b12-messages b12-messages-info" style="display: none;">
+	            <p class="b12-messages-text"></p>
+	            <a href="" class="b12-message-close"><i class="fa fa-times"></i></a>
+	        </div>
+
+	        <div class="b12-content">
+	        	<div class="b12-layout">
+	        		<div class="b12-layout-group">
+						<ul>
+							<li>
+								<label class="b12-radio-button b12-radio-button-left">
+							        <input id="allListsOptOutYes" name="allListsOptOut" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_Yes)}
+							    </label>
+							    <label class="b12-radio-button b12-radio-button-right">
+							        <input id="allListsOptOutNo" name="allListsOptOut" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_No)}
+							    </label>
+							    <p>{!HTMLENCODE($Label.General_Settings_All_Lists_Opt_Out)}</p>
+							</li>
+							<li>
+								<label class="b12-radio-button b12-radio-button-left">
+							        <input id="optOutUnsubscribeYes" name="optOutUnsubscribe" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_Yes)}
+							    </label>
+							    <label class="b12-radio-button b12-radio-button-right">
+							        <input id="optOutUnsubscribeNo" name="optOutUnsubscribe" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_No)}
+							    </label>
+							    <p>{!HTMLENCODE($Label.General_Settings_Opt_Out_Unsubscribe)}</p>
+							</li>
+							<li>
+								<label class="b12-radio-button b12-radio-button-left">
+							        <input id="optOutNoAddYes" name="optOutNoAdd" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_Yes)}
+							    </label>
+							    <label class="b12-radio-button b12-radio-button-right">
+							        <input id="optOutNoAddNo" name="optOutNoAdd" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_No)}
+							    </label>
+							    <p>{!HTMLENCODE($Label.General_Settings_Opt_Out_No_Add)}</p>
+							</li>
+							<li>
+								<label class="b12-radio-button b12-radio-button-left">
+							        <input id="deleteCascadeYes" name="deleteCascade" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_Yes)}
+							    </label>
+							    <label class="b12-radio-button b12-radio-button-right">
+							        <input id="deleteCascadeNo" name="deleteCascade" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_No)}
+							    </label>
+							    <p>{!HTMLENCODE($Label.General_Settings_Delete)}</p>
+							</li>
+							<li>
+								<label class="b12-radio-button b12-radio-button-left">
+							        <input id="cmTabsYes" name="cmTabs" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_Yes)}
+							    </label>
+							    <label class="b12-radio-button b12-radio-button-right">
+							        <input id="cmTabsNo" name="cmTabs" type="radio" />
+							        {!HTMLENCODE($Label.General_Settings_No)}
+							    </label>
+							    <p>{!HTMLENCODE($Label.General_Settings_CM_Tabs)}</p>
+							</li>
+							<apex:variable rendered="{!IsPremium}" value="d" var="k">
+								<li>
+									<label class="b12-radio-button b12-radio-button-left">
+										<input id="chatterYes" name="chatter" type="radio" />
+										{!HTMLENCODE($Label.General_Settings_Yes)}
+									</label>
+									<label class="b12-radio-button b12-radio-button-right">
+										<input id="chatterNo" name="chatter" type="radio" />
+										{!HTMLENCODE($Label.General_Settings_No)}
+									</label>
+									<p>{!HTMLENCODE($Label.General_Setting_Chatter)}<i class="fa fa-info-circle b12-tooltip" title="{!$Label.UpgradeWizard_Premium_Tooltip}"></i></p>
+								</li>
+							</apex:variable>
+						</ul>
+					</div>
+	        	</div>
+	    	</div>
+
+	        <div class="b12-footer">
+	            <div class="b12-action">
+	                <div class="b12-action-save">
+	                    <button class="b12-btn b12-btn-do" id="saveButton" type="button">{!HTMLENCODE($Label.Save)}</button>
+	                </div>
+	            </div>
+	        </div>
+
+        </apex:outputPanel>
+
+	</div>
+
+</apex:page>

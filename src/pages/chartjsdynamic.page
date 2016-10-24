@@ -1,0 +1,30 @@
+<apex:page controller="MyChart" tabStyle="Qualification__c" showHeader="false" sidebar="false">
+    <title>Months</title>
+    <body>
+      
+    <canvas id="mypie" width="400" height="400"> </canvas>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+        <script>
+        var ctx = document.getElementById("mypie").getContext("2d");
+        // <apex:variable value="{!month[0].Jan__c}" var="v"/>
+            var data = [               
+        {
+            value: {!month[0].Jan__c},
+            color: "lightgreen",
+            highlight: "darkgreen",
+            label: "JAN"
+                
+        },
+                {
+            value: {!month[0].Feb__c},
+            color: "orange",
+            highlight: "red",
+            label: "FEB"
+                
+        }
+                
+        ];
+        var piechart =new Chart(ctx).Pie(data);
+     </script>
+    </body>
+</apex:page>

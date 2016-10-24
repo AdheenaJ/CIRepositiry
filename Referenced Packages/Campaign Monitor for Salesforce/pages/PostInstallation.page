@@ -1,0 +1,118 @@
+<apex:page showHeader="false" showChat="false" sidebar="false" standardStylesheets="false">
+
+    <style>
+
+        .thebutton{
+      		  -webkit-appearance: none;
+          	-webkit-background-clip: border-box;
+            -webkit-background-origin: padding-box;
+            -webkit-background-size: auto;
+          	-webkit-box-shadow: none;
+          	-webkit-writing-mode: horizontal-tb;
+          	align-items: flex-start;
+          	background-attachment: scroll;
+          	background-clip: border-box;
+          	background-color: rgb(19, 124, 189);
+          	background-image: none;
+          	background-origin: padding-box;
+          	background-size: auto;
+          	border-bottom-color: rgb(19, 124, 189);
+          	border-bottom-left-radius: 5px;
+          	border-bottom-right-radius: 5px;
+          	border-bottom-style: solid;
+          	border-bottom-width: 1px;
+          	border-collapse: separate;
+          	border-image-outset: 0px;
+            border-image-repeat: stretch;
+            border-image-slice: 100%;
+            border-image-source: none;
+            border-image-width: 1;
+            border-left-color: rgb(19, 124, 189);
+            border-left-style: solid;
+            border-left-width: 1px;
+            border-right-color: rgb(19, 124, 189);
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-top-color: rgb(19, 124, 189);
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            border-top-style: solid;
+            border-top-width: 1px;
+            box-shadow: none;
+            box-sizing: border-box;
+            color: rgb(51, 51, 51);
+            cursor: pointer;
+            display: inline-block;
+            font-family: '.HelveticaNeueDeskInterface-Regular';
+            font-size: 10.8000001907349px;
+            font-style: normal;
+            font-variant: normal;
+            font-weight: bold;
+            letter-spacing: normal;
+            line-height: normal;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: 10px;
+            margin-top: 0px;
+            min-width: 80px;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            padding-bottom: 4px;
+            padding-left: 6px;
+            padding-right: 6px;
+            padding-top: 4px;
+            text-align: center;
+            text-decoration: none;
+            text-indent: 0px;
+            text-shadow: rgb(255, 255, 255) 0px 1px 1px;
+            text-transform: none;
+            vertical-align: top;
+            width: 400px;
+            word-spacing: 0px;
+            writing-mode: lr-tb;
+  		  }
+
+        .thespan{
+            margin: 15px 0px;
+            border-collapse: separate;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            direction: ltr;
+            display: block;
+            font-family: '.HelveticaNeueDeskInterface-Regular';
+            font-size: 30px;
+            font-style: normal;
+            font-variant: normal;
+            font-weight: bold;
+            height: 100%;
+            letter-spacing: normal;
+            line-height: normal;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            text-align: center;
+            text-indent: 0px;
+            text-shadow: none;
+            text-transform: none;
+            unicode-bidi: embed;
+            vertical-align: top;
+            white-space: nowrap;
+            width: 100%;
+            word-spacing: 0px;
+            text-decoration:none;
+        }
+
+        .container{
+            width: 100%;
+            text-align: center;
+            margin-top: 100px;
+        }
+    </style>
+
+    <div class="container">
+        <button class="thebutton" onclick="window.open('{!$Label.SupportLink_General_Setup}', '_blank')">
+            <span class="thespan">Open Setup Guide</span>
+        </button>
+
+    </div>
+
+</apex:page>

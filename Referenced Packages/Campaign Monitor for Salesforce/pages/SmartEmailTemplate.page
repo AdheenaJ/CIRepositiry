@@ -1,0 +1,158 @@
+<apex:page showHeader="true" sidebar="false" standardController="wbsendit__Smart_Email_Template__c" extensions="wbsendit.SmartEmailTemplateExtension" action="{!checkSetup}">
+
+    <html>
+
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+            <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+        </head>
+
+        <body>
+            <div class="b12-frame">
+
+                <div class="b12-header">
+                    <h1>{!$ObjectType.Smart_Email_Template__c.Label}</h1>
+                    <div class="b12-help"><a href="{!$Label.Help_Url_Smart_Email_Template}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+                </div>
+
+                <apex:variable rendered="{!IsTrial}" value="p" var="o">
+                    <div class="b12-messages b12-messages-info ng-hide" ng-show="!stencil">
+                        <a class="b12-message-info-icon"><i class="fa fa-info"></i></a>
+                        <p class="b12-messages-text">{!$Label.Smart_Email_Premium_Message} <a href="{!$Page.UpgradeWizard}">{!$Label.Smart_Email_Upgrade_Now}</a></p>
+                    </div>
+                </apex:variable>
+
+
+                <div class="b12-content">
+
+                    <div class="b12-layout b12-layout-50">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email_Template__c.fields.Name__c.Label}</p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p>{!Smart_Email_Template__c.Name__c}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email_Template__c.fields.Campaign_Monitor_Client__c.Label}</p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p><a href="{!URLFOR($Action.Client__c.View, Smart_Email_Template__c.Campaign_Monitor_Client__c)}">{!Smart_Email_Template__c.Campaign_Monitor_Client__r.Client_Name__c}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b12-layout b12-layout-50">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email_Template__c.fields.Subject__c.Label}</p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p>{!Smart_Email_Template__c.Subject__c}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email_Template__c.fields.From__c.Label}</p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p>{!Smart_Email_Template__c.From__c}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b12-layout b12-layout-50">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email_Template__c.fields.Status__c.Label}</p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p>{!Smart_Email_Template__c.Status__c}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b12-layout-col">
+                        </div>
+                    </div>
+
+
+                    <div class="b12-layout b12-layout-30">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email__c.LabelPlural}&nbsp;
+                                    <apex:variable rendered="{!wbsendit__Smart_Email_Template__c.Id != NULL}" value="p" var="i">
+                                        <a class="b12-btn b12-btn-cancel" href="{!URLFOR($Action.Smart_Email__c.New, $ObjectType.Smart_Email__c, [pid=wbsendit__Smart_Email_Template__c.id,pname=wbsendit__Smart_Email_Template__c.wbsendit__Name__c])}">{!$Label.Smart_Email_Template_New_Mappings}</a>
+                                    </apex:variable>
+                                    </p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                     <div id="customMappingContainer">
+                                        <table class="b12-table">
+                                            <tr>
+                                                <th>{!$Label.Smart_Email_Template_Action_Header}</th>
+                                                <th>{!$ObjectType.wbsendit__Smart_Email__c.fields.Name.Label}</th>
+                                                <th>{!$ObjectType.wbsendit__Smart_Email__c.fields.wbsendit__Root_Object__c.Label}</th>
+                                                <th>{!$ObjectType.wbsendit__Smart_Email__c.fields.wbsendit__Description__c.Label}</th>
+                                            </tr>
+                                            <apex:repeat value="{!wbsendit__Smart_Email_Template__c.Smart_Email_Mappings__r}" var="mapping">
+                                                <tr>
+                                                    <td>
+                                                        <apex:variable rendered="{!canUpdateMapping}" value="p" var="o"><a href="{!URLFOR($Action.Smart_Email__c.Edit, mapping.Id)}">{!$Label.Smart_Email_Template_Action_Edit}</a></apex:variable><apex:variable rendered="{!canDeleteMapping}" value="r" var="t">&nbsp;|&nbsp;<a href="{!URLFOR($Action.Smart_Email__c.Delete, mapping.Id, [retURL=URLFOR($Action.Smart_Email_Template__c.view, Smart_Email_Template__c.Id)])}">{!$Label.Smart_Email_Template_Action_Delete}</a></apex:variable>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{!URLFOR($Action.Smart_Email__c.View, mapping.Id)}">
+                                                            {!mapping.Name}
+                                                        </a>
+                                                    </td>
+                                                    <td >
+                                                        <span>{!$ObjectType[mapping.Root_Object__c].Label}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span>{!mapping.Description__c}</span>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="b12-footer">
+                    <div class="b12-action">
+                        <div class="b12-action-save">
+                        	<apex:variable rendered="{!$CurrentPage.parameters.retURL != NULL}" value="p" var="o">
+                            	<a class="b12-btn b12-btn-cancel" href="{!$CurrentPage.parameters.retURL}">{!$Label.Back}</a>
+                        	</apex:variable>
+                        	<apex:variable rendered="{!$CurrentPage.parameters.retURL == NULL}" value="p" var="o">
+                            	<a class="b12-btn b12-btn-cancel" href="{!URLFOR($Action.Smart_Email_Template__c.Tab, $ObjectType.Smart_Email_Template__c)}">{!$Label.Back}</a>
+                        	</apex:variable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </body>
+
+    </html>
+
+
+</apex:page>

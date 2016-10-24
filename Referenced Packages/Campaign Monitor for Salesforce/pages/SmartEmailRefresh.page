@@ -1,0 +1,291 @@
+<apex:page showHeader="true" sidebar="false" standardController="wbsendit__Smart_Email_Template__c" extensions="wbsendit.SmartEmailRefreshExtension" recordSetVar="notused" action="{!runRefresh}">
+	
+    <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+    <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+
+	<style>
+		.b12-btn-do:disabled{
+			cursor: default;
+			color: #aaa;
+			background: #5E99BD;
+			border-color: #5E99BD;
+		}
+
+		.b12-loader {
+	        display: none;
+        }
+        .b12-loader.active {
+        	display: block;
+        }
+        .b12-loader-bar{
+            height: 12px;
+            width: 260px;
+            margin: 0 auto;
+            background: #E0E0E0;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);
+            -moz-box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);
+            box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);        	
+        }
+        .b12-loaded {
+          background: #72d0eb;
+          height: 12px;
+          border-radius: 4px 0 0 4px;
+        }
+        .b12-loaded.done {
+            border-radius: 4px;
+        }		
+        .truncate {
+			width: 250px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+        .b12-steps {
+        
+        }
+        .b12-step {
+            width: 280px;
+            border-radius: 5px;
+            border: solid 1px #d0d5d9;
+            margin: 10px 5px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            margin: 30px auto;
+            padding-bottom: 60px;
+        }
+        .b12-step p {
+        	margin: 0;
+        }
+        .b12-step.loader{
+        	padding-bottom: 12px;
+        }
+        .b12-step.inactive {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            opacity: 0.3;  
+        }
+        .b12-step.inactive .b12-btn {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            opacity: 0.3;  
+        }
+        .b12-step.complete {
+            border-color: #03b603;
+        }
+        .b12-step.complete .b12-step-actions {
+            background: #03b603;
+        }
+        .b12-step.complete .b12-step-actions a {
+            display: none;
+        }
+        .b12-step.complete .b12-step-actions img {
+            display: block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            margin: 0 auto;
+            background: none;
+        }
+        .b12-step .b12-step-actions img {
+            display: none;
+        }
+		.b12-step.loader .b12-step-actions{
+			display: none;
+		}
+        .b12-step-actions {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;	
+            padding: 10px 0;
+        }
+        .b12-step h1 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        	display: block;
+        }
+        .b12-step p {
+            font-weight: normal;
+            font-size: 12px;
+			padding: 10px;        
+        }
+        .b12-step img {
+            text-align: center;
+        }
+
+        .b12-step.loader{
+        	padding-bottom: 12px;
+        }
+		.b12-step.inactive {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            opacity: 0.3;  
+        }
+        .b12-step.inactive .b12-btn {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            opacity: 0.3;  
+        }
+        .b12-step.complete {
+            border-color: #03b603;
+        }
+        .b12-step.complete .b12-step-actions {
+            background: #03b603;
+        }
+        .b12-step.complete .b12-step-actions a {
+            display: none;
+        }
+        .b12-step.complete .b12-step-actions img {
+            display: block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            margin: 0 auto;
+            background: none;
+        }
+        .b12-step .b12-step-actions img {
+            display: none;
+        }
+		.b12-step.loader .b12-step-actions{
+			display: none;
+		}
+        .b12-step-actions {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;	
+            padding: 10px 0;
+        }
+        .b12-step h1 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        	display: block;
+        }
+        .b12-step p {
+            font-weight: normal;
+            font-size: 12px;
+			padding: 10px;        
+        }
+        .b12-step img {
+            text-align: center;
+        }
+	</style>
+
+	<script type="text/javascript">
+
+		var j$ = j$ || jQuery.noConflict();
+		var smartRefresh = smartRefresh || {};
+
+		smartRefresh.checkProgress = function(){
+
+			Visualforce.remoting.Manager.invokeAction(
+	        	'{!$RemoteAction.SmartEmailRefreshExtension.checkRunningJobs}',
+	        	smartRefresh.handleProgressResult,
+	        	{buffer:false});
+
+		};
+
+		smartRefresh.handleProgressResult = function(result, event){
+
+			var interval = 1000;
+
+			if(result.ErrorMessage == null){
+
+				if(result.SmartEmailSync == null){
+					j$('.b12-loader').removeClass('active');
+					j$('.b12-step').addClass('complete');
+                    interval = 5000;
+				}else{
+					var pct = smartRefresh.calcProgress(result.SmartEmailSync);
+					interval = 750;
+
+					j$('.b12-loader').addClass('active');
+					j$('.b12-loaded').width(pct + '%');
+					j$('.b12-loader-status').html(result.SmartEmailSync.Message);
+
+					if(pct == 100){
+						j$('.b12-loaded').addClass('done');
+						j$('.b12-step').addClass('complete');
+                        interval = 5000;
+					}
+				}
+			
+			}else{
+				console.log(result.ErrorMessage);
+			}
+			
+			setTimeout(smartRefresh.checkProgress, interval);
+		};
+
+		smartRefresh.calcProgress = function(progress){
+
+			if(progress.CurrentStage == 0){
+				return '0';
+			}
+
+			var bigInc = (100 / progress.TotalStages);
+			var ret = bigInc * (progress.CurrentStage-1);
+
+			if(progress.TotalSteps > 0){
+				ret += ((bigInc / progress.TotalSteps) * progress.CurrentStep);
+			}
+
+			if(ret > 100)
+				ret = 100;
+
+			return ret;
+
+		};
+
+		j$(document).ready(function(){
+			smartRefresh.checkProgress();
+		});
+
+	</script>
+
+
+    <div class="b12-frame">
+
+        <div class="b12-header">
+            <h1>{!HTMLENCODE($Label.Sync_Smart_Emails)}</h1>
+            <div class="b12-help"><a href="http://support.beaufort12.com/" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+        </div>
+
+        <div class="b12-messages b12-messages-info" style="display: none;">
+            <p class="b12-messages-text"></p>
+            <a href="#" class="b12-message-close"><i class="fa fa-times"></i></a>
+        </div>
+
+        <div class="b12-content">
+
+            <div class="b12-step">
+                <h1>{!HTMLENCODE($Label.Sync_Smart_Emails)}</h1>
+                <img src="{!URLFOR($Resource.SendItAssets, 'img/step-sync.png')}" />
+				<p class="b12-loader b12-loader-status active"></p>
+                <div class="b12-loader b12-loader-bar active">
+                    <div class="b12-loaded" style="width:0%;"></div>
+                </div>
+                <div class="b12-step-actions">
+                    <img src="{!URLFOR($Resource.SendItAssets, 'img/b12-check.png')}" alt =""/>
+                </div>
+
+            </div>
+
+
+    	</div>
+
+        <div class="b12-footer">
+            <div class="b12-action">
+                <div class="b12-action-save">
+                    <a class="b12-btn b12-btn-do" href="{!URLFOR($Action.Smart_Email_Template__c.List, $ObjectType.Smart_Email_Template__c)}">{!HTMLENCODE($Label.Sync_Smart_Emails_Close)}</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</apex:page>

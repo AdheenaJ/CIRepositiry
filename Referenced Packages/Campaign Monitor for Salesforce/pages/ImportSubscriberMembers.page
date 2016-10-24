@@ -1,0 +1,19 @@
+<apex:page showHeader="true" sidebar="true" controller="wbsendit.ImportSubscriberMembersController">
+
+
+    <apex:sectionHeader title="Add Subscribers" subtitle="{!headerLabel}" help="{!$Label.SupportLink_Bulk_Import_Subscriber}" />
+    <apex:form >
+        <apex:outputPanel >
+        &nbsp;«&nbsp;<apex:commandLink action="{!back}" id="idBack"  value="Back to Subscriber List" style="font-family: 'Verdana','Geneva',sans-serif;font-size: 91.3%;text-decoration: none;"/>
+        </apex:outputPanel>
+    </apex:form>
+    <apex:tabPanel switchType="server" selectedTab="name2" id="theTabPanel">
+    <apex:tab label="Add Contacts" name="contacts" id="tabOne">
+        <apex:enhancedList type="Contact" height="600" rowsPerPage="100" id="ContactList" customizable="True"  />
+    </apex:tab>
+    <apex:tab label="Add Leads" name="leads" id="tabTwo">
+        <apex:enhancedList type="Lead" height="600" rowsPerPage="100" id="LeadList" customizable="True"  />
+    </apex:tab>
+    </apex:tabPanel>
+
+</apex:page>

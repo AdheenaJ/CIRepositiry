@@ -1,0 +1,75 @@
+<apex:page standardController="wbsendit__Subscriber_List__c" extensions="wbsendit.CreateSubscriberController" showChat="false" action="{!init}">
+
+    <apex:sectionHeader title="Campaign Monitor Subscriber List" subtitle="Subscriber List" help="{!$Label.SupportLink_Setup_a_Subscriber_List}"/>
+
+    <apex:form >
+    <apex:pageMessages escape="false" />
+
+    <apex:pageBlock title="{!listAction} Subscriber List">
+
+
+        <apex:pageBlockButtons location="bottom" >
+            <apex:commandButton action="{!createSubscriberList}" value="Create List" rendered="{!editMode == 'new'}"/>
+            <apex:commandButton action="{!updateSubscriberList}" value="Update List" rendered="{!editMode == 'edit'}"/>
+            <apex:commandButton action="{!deleteSubscriberList}" value="Delete List" rendered="{!editMode == 'delete'}"/>
+            <apex:commandButton action="{!cancel}" value="Cancel"/>
+        </apex:pageBlockButtons>
+
+        <apex:pageBlockSection columns="2" rendered="{!editMode == 'delete'}">
+			<apex:pageblockSectionItem >
+				<apex:outputlabel >Subscriber List to Delete: </apex:outputlabel>
+				<apex:outputlabel >{!newSubscriberList.wbsendit__List_Name__c}</apex:outputlabel>
+			</apex:pageblockSectionItem>
+			<apex:pageblockSectionItem >
+				<apex:outputlabel style="color:grey">List to be permanently deleted along with its subscribers from your account. It will not affect any other subscriber list in your account (even if they contain the same email addresses). Please note: this process cannot be undone.</apex:outputlabel>
+			</apex:pageblockSectionItem>
+		</apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="2" rendered="{!editMode != 'delete'}">
+
+			<apex:pageblockSectionItem rendered="{!showClientList}">
+                <apex:outputLabel value="Client" for="clList"/>
+                <apex:outputPanel styleClass="requiredInput" layout="block">
+                    <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                    <apex:selectList id="clList" value="{!newSubscriberList.wbsendit__Campaign_Monitor_Client__c}" required="true" size="1">
+                        <apex:selectOptions value="{!ClientList}"/>
+                    </apex:selectList>
+                </apex:outputPanel>
+
+			</apex:pageblockSectionItem>
+			<apex:pageblockSectionItem rendered="{!showClientList}">
+				<apex:outputlabel style="color:grey">Select the Campaign Monitor client where the list should be created.</apex:outputlabel>
+			</apex:pageblockSectionItem>
+
+
+			<apex:pageblockSectionItem >
+                <apex:outputLabel value="List Name" for="idListName"/>
+                <apex:outputPanel styleClass="requiredInput" layout="block">
+                    <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                    <apex:inputField value="{!newSubscriberList.wbsendit__List_Name__c}" required="true" id="idListName"/>
+                </apex:outputPanel>
+			</apex:pageblockSectionItem>
+			<apex:pageblockSectionItem >
+				<apex:outputlabel style="color:grey">Give the list an easy to remember name that you'll recognize when you're sending an email.</apex:outputlabel>
+			</apex:pageblockSectionItem>
+
+
+			<apex:pageblockSectionItem >
+                <apex:outputLabel value="List Type" for="idListType"/>
+                <apex:outputPanel styleClass="requiredInput" layout="block">
+                    <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                    <apex:selectList id="idListType" value="{!newSubscriberList.wbsendit__List_Type__c}" required="true" size="1">
+                        <apex:selectOptions value="{!listTypeLists}"/>
+                    </apex:selectList>
+                </apex:outputPanel>
+			</apex:pageblockSectionItem>
+			<apex:pageBlockSectionItem >
+				<apex:outputlabel style="color:grey"><b>Single opt-in</b> means new subscribers are added to this list as soon as they complete the subscribe form. <b>Confirmed opt-in</b> means a confirmation email will be sent with a link they must click to validate their address. This confirmation isn't required when you import existing subscribers, only when new subscribers join via your subscribe form.</apex:outputlabel>
+			</apex:pageBlockSectionItem>
+
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

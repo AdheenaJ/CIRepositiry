@@ -1,0 +1,573 @@
+<aura:component controller="shoponklik.LightningCartApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <ltng:require styles="/resource/shoponklik__w3,/resource/shoponklik__ecart/jquery.nouislider.min.css"	
+                  scripts="/resource/shoponklik__ecart/jquery.js,/resource/shoponklik__ecart/jquery.nouislider.all.min.js" 
+                  afterScriptsLoaded="{!c.callSlider}"/>
+    <style>
+        body{
+        overflow-x:hidden;
+        overflow-y:auto;
+        }
+    </style>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.itemList}"></aura:handler>   
+    <aura:handler event="shoponklik:PriceSelectionChange" action="{!c.filter}"/>
+    <aura:handler event="shoponklik:SearchKeyChange" action="{!c.filter}"/>    
+    <aura:attribute name="Items" type="shoponklik.ItemsWithWish[]"></aura:attribute>
+    <aura:attribute name="cart" type="shoponklik.ItemsWithWish[]"></aura:attribute>
+    <aura:attribute name="wish" type="shoponklik.ItemsWithWish[]"></aura:attribute>    
+    <aura:attribute name="disc" type="shoponklik.ItemsWithWish[]"></aura:attribute>    
+    <aura:attribute name="categories" type="string[]"></aura:attribute>
+    <aura:attribute name="dateTime" type="string"></aura:attribute>
+    <aura:attribute name="searchKey" type="string"></aura:attribute>
+    <aura:attribute name="SelectedItem" type="shoponklik.ItemsWithWish[]"></aura:attribute>
+    <aura:attribute name="suggList" type="shoponklik.ItemsWithWish[]"></aura:attribute>   
+    <aura:attribute name="total" default="0" type="Double"></aura:attribute>
+    <aura:attribute name="quantity" default="1" type="Integer"></aura:attribute>
+    <aura:attribute name="flag" default="0" type="Integer"></aura:attribute>
+    <aura:attribute name="flag2" default="0" type="Integer"></aura:attribute>
+    <aura:attribute name="count" default="0" type="Integer"></aura:attribute>
+    <aura:attribute name="searchItems" type="shoponklik.ItemsWithWish[]"></aura:attribute>
+    <aura:attribute name="onclick" type="Aura.Action" default="{!c.displayCart}"/>
+    <aura:attribute name="data" type="String" description="Any data to be passed via html5 data-attribute"/> 
+    <aura:attribute name="cat" type="String" default='home'></aura:attribute>
+    <aura:attribute name="unit" type="string"></aura:attribute>
+    <aura:attribute name="categoryFlag" type="string"></aura:attribute>
+    <aura:attribute name="temp" type="Integer[]" ></aura:attribute>
+    <aura:attribute name="orderProducts" type="Map" ></aura:attribute>
+    <aura:attribute name="key" type="string[]"></aura:attribute>
+    <aura:attribute name="GUEST" type="string"></aura:attribute>
+    <aura:attribute name="UserFlag" type="boolean"></aura:attribute>
+    <!--Menu Bar-->
+    <aura:attribute name="minprice" type="Integer"></aura:attribute>
+    <aura:attribute name="maxprice" type="Integer"></aura:attribute>
+    <aura:attribute name="itemTotal" type="shoponklik.ItemsWithWish[]"></aura:attribute> 
+    <aura:attribute name="userContactId" type="string"></aura:attribute>
+    <aura:attribute name="couponStatus" type="boolean"></aura:attribute> 
+    <aura:attribute name="userProfDetails" type="String[]"></aura:attribute>
+    <aura:attribute name="ContactDetails" type="Contact" default="{sobjectType: 'Contact'}"></aura:attribute>
+    <aura:attribute name="ProPicStr" type="String"></aura:attribute>
+    <aura:attribute name="CustomerNameStr" type="String"></aura:attribute>
+    <aura:attribute name="cChance" default="0" type="Integer"></aura:attribute>
+    
+    <body>   
+        
+        <!-- Overlay effect when opening sidenav on small screens -->
+        <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+        
+        
+        <!-- Sidenav/menu -->
+        <div class="w3-light-grey w3-content" style="max-width:1600px">
+            <nav class="myFontColor myThemeColor w3-sidenav w3-collapse w3-white w3-animate-left" style="width:300px;" id="mySidenav"><br></br>
+                <div class="w3-container">
+                    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding" title="close menu"></a>
+                    <img src="{!v.ProPicStr}" style="width:20%;margin-top:15%;border:5px solid #fff;" class="w3-round"/><br></br>
+                    <aura:if isTrue="{!v.UserFlag}">
+                        <h6 class="myClassUppercase">Welcome Guest</h6>
+                        <aura:set attribute="else">
+                            <h6 class="myClassUppercase">{!v.CustomerNameStr}</h6>
+                        </aura:set>
+                    </aura:if>
+                    <h4 ></h4>
+                    <p class="w3-text-grey"></p>
+                    <div class="w3-container w3-section">                        
+                    </div><div class="w3-tag w3-red"></div>
+                    <div class="w3-tag w3-yellow"></div> 
+                </div>
+                <div class="w3-container">
+                    <div class="w3-padding w3-xxlarge w3-white w3-text-teal" style="text-align:center;">STORES</div>
+                </div>                  
+                <a href="#" onclick="{!c.displayHome}" style="margin-top:16px;" class="w3-hover-white w3-hover-text-black w3-padding">{!$Label.shoponklik.HOME}</a>          
+                <aura:iteration items="{!v.categories}" var="cat">
+                    <a href="#" id="{!cat}" onclick="{!c.displayCategory}" class="w3-hover-white w3-hover-text-black myClassUppercase w3-padding">{!cat}</a>
+                </aura:iteration>
+            </nav>
+        </div> 
+        
+        <div class="w3-content" style="max-width:1800px;margin-top:46px">
+            <!--NavBar on Large Screens-->
+            <div class="w3-top">
+                <ul class="w3-navbar w3-black w3-card-2 w3-left-align">
+                    <li class="w3-hide-medium w3-hide-large w3-opennav w3-left">
+                        <div class="search">
+                            <input id="search_textMob" onkeyup="{!c.searchMob}" type="search" class="search-box"/>
+                            <span id="201" class="search-button" onclick="{!c.hui}">
+                                <span class="search-icon"></span>
+                            </span>
+                        </div>
+                    </li>
+                    <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+                        <a class="w3-padding-large" href="javascript:void(0)" onclick="{!c.performInit}" title="Toggle Navigation Menu"><i class="faCustomClass">&#x2630;</i></a>
+                    </li>
+                    <li class="w3-hide-small"><div class="w3-padding-large myPadding"><span><img style="width:160px;height:44px;" src="{!$Resource.shoponklik__myLogo}"/></span></div></li>
+                    <li class="w3-hide-small"><a onclick="{!c.displayHome}" href="#" class="w3-padding-large" title="{!$Label.shoponklik.HOME}"><span><img style="width:21px;height:21px;" src="{!$Resource.shoponklik__HomeIcon}"/></span>&nbsp;</a></li>
+                    <aura:if isTrue="{!v.UserFlag}">
+                        <aura:set attribute="else">
+                            <li class="w3-hide-small"><a onclick="{!c.displayCart}" href="#" class=" w3-padding-large" title="{!$Label.shoponklik.CART}"><span><img style="width:21px;height:21px;" src="{!$Resource.shoponklik__BagIcon}"/></span>&nbsp;<span id="cartItemCount" class="w3-badge w3-green">0</span></a></li>
+                            <li class="w3-hide-small"><a onclick="{!c.displayWish}" href="#" class=" w3-padding-large" title="{!$Label.shoponklik.WISHLIST}"><span><img style="width:21px;height:21px;" src="{!$Resource.shoponklik__HeartIcon}"/></span>&nbsp;<span id="wishlistItemCount" class="w3-badge w3-green">0</span></a></li>
+                        </aura:set>
+                    </aura:if>
+                    <li class="w3-hide-small w3-dropdown-hover">
+                        <a href="javascript:void(0)" class="w3-hover-none w3-padding-large" title="{!$Label.shoponklik.ACCOUNT}"><span><img style="width:21px;height:21px;" src="{!$Resource.shoponklik__AccountIcon}"/></span>&nbsp;<i class="faCustomClass">&#x025BE;</i></a>
+                        <div class="w3-dropdown-content w3-white w3-card-4">
+                            <aura:if isTrue="{!v.UserFlag}">
+                                <a class="myClassUppercase" href="#"  onclick="{!c.userLogin}">LOGIN / SIGNUP</a> 
+                                <aura:set attribute="else">
+                                    <a class="myClassUppercase" href="#"  onclick="{!c.getOrders}">{!$Label.shoponklik.MYORDERS}</a>   
+                                    <a class="myClassUppercase" href="#"  onclick="{!c.getProfileu}">{!$Label.shoponklik.MYPROFILE}</a>    
+                                    <a class="myClassUppercase" href="#"  onclick="{!c.userLogout}">{!$Label.shoponklik.LOGOUT}</a> 
+                                </aura:set>
+                            </aura:if>
+                            
+                        </div>
+                    </li>
+                    <li class="w3-hide-small w3-dropdown-hover">
+                        <a href="javascript:void(0)" class="w3-hover-none w3-padding-large" title="{!$Label.shoponklik.STORES}"><span><img style="width:21px;height:21px;" src="{!$Resource.shoponklik__StoreIcon}"/></span>&nbsp;<i class="faCustomClass">&#x025BE;</i></a>
+                        <div class="w3-dropdown-content w3-white w3-card-4">
+                            <aura:iteration items="{!v.categories}" var="cat"> 
+                                <a class="myClassUppercase" id="{!cat}" onclick="{!c.displayCategory}">{!cat}</a>
+                            </aura:iteration>
+                        </div>
+                    </li>
+                    <li class="w3-hide-small w3-right">
+                        <form name="searchq">
+                            <label class="search-boxq">
+                                <input type="text" name="search" id="search_text" onkeyup="{!c.search}"/>
+                                <span></span>
+                            </label> 
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Navbar on small screens -->
+            <div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+                
+                <ul class="w3-navbar w3-left-align w3-black">
+                    <li><a onclick="{!c.displayHome}" class="w3-padding-large" href="#">{!$Label.shoponklik.HOME}</a></li> 
+                    <aura:if isTrue="{!v.UserFlag}">
+                        <aura:set attribute="else">
+                            <li><a onclick="{!c.displayCart}" class="w3-padding-large" href="#">{!$Label.shoponklik.CART}<span id="cartItemCountMob" class="w3-badge w3-green">0</span></a></li>
+                            <li><a onclick="{!c.displayWish}" class="w3-padding-large" href="#">{!$Label.shoponklik.WISHLIST}<span id="wishlistItemCountMob" class="w3-badge w3-green">0</span></a></li>                   
+                        </aura:set>
+                    </aura:if>
+                    <li class="w3-dropdown-hover">
+                        <a class="w3-padding-large" href="#">{!$Label.shoponklik.STORES}<i class="faCustomClass">&#x025BE;</i></a>
+                        <div class="w3-dropdown-content w3-white w3-card-4">
+                            <aura:iteration items="{!v.categories}" var="cat"> 
+                                <a class="w3-padding-large myClassUppercase" href="#" id="{!cat}" onclick="{!c.displayCategory}">{!cat}</a>
+                            </aura:iteration>
+                        </div>
+                    </li> 
+                    <li class="w3-dropdown-hover">
+                        
+                        <a class="w3-padding-large" href="#">{!$Label.shoponklik.ACCOUNT}<i class="faCustomClass">&#x025BE;</i></a>
+                        <div class="w3-dropdown-content w3-white w3-card-4">
+                            <aura:if isTrue="{!v.UserFlag}">
+                                <a class="w3-padding-large myClassUppercase" href="#" onclick="{!c.userLogin}">LOGIN / SIGNUP</a>
+                                
+                                <aura:set attribute="else">
+                                    <a class="w3-padding-large myClassUppercase" href="#" onclick="{!c.getOrders}">{!$Label.shoponklik.MYORDERS}</a>
+                                    <a class="w3-padding-large myClassUppercase" href="#" onclick="{!c.getProfileu}">{!$Label.shoponklik.MYPROFILE}</a>
+                                    <a class="w3-padding-large myClassUppercase" href="#" onclick="{!c.userLogout}">{!$Label.shoponklik.LOGOUT}</a>
+                                    
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                    </li>   
+                </ul>
+            </div>
+            
+            <!-- The Product Section -->
+            <div class="w3-black w3-main myClassScroll" style="margin-left:300px">                
+                <div id="wishlistPage" class="w3-row-padding w3-padding-32">     
+                    <ul class="w3-ul w3-card-4">
+                        <aura:iteration items="{!v.wish}" var="wishObj">
+                            <li class="w3-padding-16">
+                                <span id="{!wishObj.item.Product2.Name}" onclick="{!c.deleteWishItemFull}"
+                                      class="w3-closebtn w3-padding w3-margin-right w3-medium">x</span>
+                                <span id="{!wishObj.item.Product2.Name}" onclick="{!c.addToCart}"
+                                      class="w3-closebtn w3-padding w3-margin-right w3-medium myBtnAdd">+</span>
+                                <!--  <img src="{!wishObj.item.Product2.Icon__c}" class="myClassWishlistImg w3-left w3-circle w3-margin-right" style="width:60px"/>-->
+                                <aura:if isTrue="{!wishObj.item.Product2.shoponklik__Icon__c == null}">
+                                    <img src="{!$Resource.shoponklik__ImageNotfound}" alt="product_icon_missing" class="myClassWishlistImg w3-left w3-circle w3-margin-right" style="width:60px"/>
+                                    <aura:set attribute="else">
+                                        <img src="{!wishObj.item.Product2.shoponklik__Icon__c}" alt="product_icon" class="myClassWishlistImg w3-left w3-circle w3-margin-right" style="width:60px"/>                                            
+                                    </aura:set>
+                                </aura:if>
+                                 
+                                <span class="w3-xlarge">{!wishObj.item.Product2.Name}</span><br></br>
+                                <span>₹&nbsp;{!wishObj.item.UnitPrice} / {!wishObj.item.Product2.shoponklik__UnitWeight__c}&nbsp;{!wishObj.item.Product2.shoponklik__Unit__c}</span>
+                            </li> 
+                        </aura:iteration>
+                    </ul>   
+                </div>
+                <!-- order items-->
+                <div class="myClassUppercase w3-black w3-main myClassScroll">    
+                    <div id="OrdersPage" class="w3-row-padding w3-padding-32">
+                        <div>
+                            <div id="OrderDetails"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w3-black w3-main myClassScroll">    
+                    <div id="profilePage" class="w3-row-padding w3-padding-32">
+                        <div class="myClassBorderFocus">
+                            <aura:iteration items="{!v.userProfDetails}" var="Details"> 
+                                <div class="w3-group">
+                                    <label class="w3-label">Name</label>
+                                    <input value="{!Details.Name}" class="w3-input" type="text" readonly="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Email</label>
+                                    <input value="{!Details.Email}" class="w3-input" type="text" readonly="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Phone</label>
+                                    <input  value="{!Details.Phone}"  class="w3-input" type="text" readonly="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Home Phone</label>
+                                    <input  value="{!Details.HomePhone}"  class="w3-input" type="text" readonly="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Mailing Street</label>
+                                    <input  value="{!Details.MailingStreet}"  class="w3-input" type="text" readonly="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Mailing City</label>
+                                    <input  value="{!Details.MailingCity}"  class="w3-input" type="text" readonly="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Mailing State</label>
+                                    <input  value="{!Details.MailingState}"  class="w3-input" type="text" readonly="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Mailing Postal Code</label>
+                                    <input  value="{!Details.MailingPostalCode}"  class="w3-input" type="text" readonly="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Mailing Country</label>
+                                    <input  value="{!Details.MailingCountry}"  class="w3-input" type="text" readonly="true"/>
+                                </div>
+                            </aura:iteration>
+                            <button class="w3-btn w3-green" onclick="{!c.editProfile}">{!$Label.shoponklik.EDIT}</button>
+                        </div>                        
+                    </div>
+                </div>
+                
+                <div class="w3-black w3-main myClassScroll">    
+                    <div id="profilePageEdit" class="w3-row-padding w3-padding-32">
+                        <div class="myClassBorderFocus">
+                            <form>
+                                <div class="w3-group">                     
+                                    <label class="w3-label">First Name</label>
+                                    <ui:inputText value="{!v.ContactDetails.FirstName}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">                     
+                                    <label class="w3-label">Last Name&nbsp;<label class="w3-text-red">*</label></label>
+                                    <ui:inputText value="{!v.ContactDetails.LastName}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Email</label>
+                                    <ui:inputText value="{!v.ContactDetails.Email}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">Phone</label>
+                                    <ui:inputText value="{!v.ContactDetails.Phone}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">HomePhone</label>
+                                    <ui:inputText value="{!v.ContactDetails.HomePhone}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">MailingStreet</label>
+                                    <ui:inputText value="{!v.ContactDetails.MailingStreet}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">MailingCity</label>
+                                    <ui:inputText value="{!v.ContactDetails.MailingCity}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">MailingState</label>
+                                    <ui:inputText value="{!v.ContactDetails.MailingState}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">MailingPostalCode</label>
+                                    <ui:inputText value="{!v.ContactDetails.MailingPostalCode}" class="w3-input" required="true"/>
+                                </div>
+                                <div class="w3-group">
+                                    <label class="w3-label">MailingCountry</label>
+                                    <ui:inputText value="{!v.ContactDetails.MailingCountry}" class="w3-input" required="true"/>
+                                </div>
+                                <ui:button class="w3-btn w3-green" label="{!$Label.shoponklik.SAVE}" press="{!c.saveProfile}"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div id="cartPage" class="myClassUppercase w3-row-padding w3-padding-32" >
+                    <div id="wrap">
+                        <div class="item ">
+                            <h3>{!$Label.shoponklik.ITEM}</h3>
+                        </div>
+                        <div class="price noHeight">
+                            <h3>{!$Label.shoponklik.PRICE}</h3>
+                        </div>
+                        <div class="qty noHeight">
+                            <h3>{!$Label.shoponklik.QUANTITY}</h3>
+                        </div>
+                        <div class="total noHeight">
+                            <h3>{!$Label.shoponklik.TOTAL}</h3>
+                        </div>
+                        <aura:iteration items="{!v.cart}" var="cartObj">
+                            <div id="cart_layout_2">    
+                                <div class="cart_details">
+                                    <div class="item">
+                                        <h3></h3>
+                                        <div class="product_image">
+                                            <!--<img src="{!cartObj.item.Product2.shoponklik__Icon__c}" />-->
+                                            <aura:if isTrue="{!cartObj.item.Product2.shoponklik__Icon__c == null}">
+                                                <img src="{!$Resource.shoponklik__ImageNotfound}" alt="product_icon_missing"/>
+                                                <aura:set attribute="else">
+                                                    <img src="{!cartObj.item.Product2.shoponklik__Icon__c}" alt="product_icon"/>                                            
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                        <div class="product_details">
+                                            <span>{!cartObj.item.Product2.Name}</span>
+                                        </div>
+                                    </div>
+                                    <div class="price">
+                                        <h3></h3>
+                                        <div class="center">
+                                            <span>₹&nbsp;{!cartObj.item.UnitPrice} / {!cartObj.item.Product2.shoponklik__UnitWeight__c}&nbsp;{!cartObj.item.Product2.shoponklik__Unit__c}</span>
+                                        </div>
+                                    </div>
+                                    <div class="qty">
+                                        <h3></h3>
+                                        <div class="center">
+                                            <input value="{!cartObj.Quantity}" disabled="true" for="qty"></input>                  
+                                        </div>
+                                    </div>
+                                    <div class="total">
+                                        <h3></h3>
+                                        <div class="center">
+                                            <span>₹&nbsp;{!cartObj.itemprice}</span>
+                                        </div>
+                                    </div>
+                                    <div class="remove">
+                                        <div class="center">
+                                            <h3>{!$Label.shoponklik.ADDREMOVE}:</h3>
+                                            <a id="{!cartObj.item.Product2.Name}" onclick="{!c.removeItem}" class="w3-tiny w3-green">-</a>
+                                            <a id="{!cartObj.item.Product2.Name}" onclick="{!c.addToCart}" class="w3-tiny w3-green">+</a>
+                                            <a id="{!cartObj.item.Product2.Name}" onclick="{!c.deleteCartItemFull}" class="w3-tiny w3-red">x</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:iteration>
+                        <div id="cartPageData" class="complete_cart">
+                            <div class="update">
+                                <div class="coupon">
+                                    <h2>{!$Label.shoponklik.COUPONCODE}</h2>
+                                    <input id="couponTxt1" type="text" required="true"></input>
+                                    <a onclick="{!c.couponModalOpen}" class="w3-btn button" href="#">{!$Label.shoponklik.APPLYCODE} &#10003;</a>
+                                </div>
+                                
+                            </div>
+                            <div class="checkout">
+                                <div class="subtotal">
+                                    <h2>{!$Label.shoponklik.SUBTOTAL}:</h2>
+                                    <span class="finalprice">₹&nbsp;{!v.total}</span>
+                                    <a class="refresh"><i class="faCustomClass"></i></a>
+                                </div>
+                                <div class="complete">
+                                    <a class="w3-btn button" onclick="{!c.openCheckoutWin}" href="#">{!$Label.shoponklik.CHECKOUT}</a>
+                                </div>
+                            </div>
+                            <div class="update mobile">
+                                <div class="coupon">
+                                    <h2>{!$Label.shoponklik.COUPONCODE}</h2>
+                                    <input id="couponTxt2" type="text" required="true"></input>
+                                    <a onclick="{!c.couponModalOpen}" class="w3-btn button">{!$Label.shoponklik.APPLYCODE} &#10003;</a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>     
+                </div>
+                
+                <div id="sliderDiv" class="myClassSlider w3-row-padding w3-padding-32" >
+                    <div id="slider"></div>
+                </div>
+                
+                <div class="w3-container w3-content w3-padding-64">
+                    
+                    <div id="productPage" class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+                        
+                        <aura:iteration items="{!v.Items}" var="itemObj">                           
+                            <div class="myClassFont myProductGridClass w3-third w3-margin-bottom">
+                                <aura:if isTrue="{!v.UserFlag}">
+                                    <aura:set attribute="else">
+                                        <aura:if isTrue="{!itemObj.wish}">
+                                            <div id="heartTrue"><a title="REMOVE FROM WISHLIST" id="{!'heart'+ itemObj.item.Product2.Name}" onclick="{!c.addToWish}">&#x2764;</a></div>          
+                                            <aura:set attribute="else">              
+                                                <div id="heartFalse"><a title="ADD TO WISHLIST" id="{!'heart'+ itemObj.item.Product2.Name}" onclick="{!c.addToWish}">&#x2764;</a></div>
+                                            </aura:set>           
+                                        </aura:if>
+                                    </aura:set>
+                                </aura:if>
+                                <div >
+                                    <aura:if isTrue="{!itemObj.item.Product2.shoponklik__Icon__c == null}">
+                                        <img src="{!$Resource.shoponklik__ImageNotfound}" alt="product_icon_missing" style="width:100%;height:185px;margin-top: 10%;" class="myClassProductIcon w3-hover-opacity"/>
+                                        <aura:set attribute="else">
+                                            <img src="{!itemObj.item.Product2.shoponklik__Icon__c}" alt="product_icon" style="width:100%;height:185px;margin-top: 10%;" class="myClassProductIcon w3-hover-opacity"/>                                            
+                                        </aura:set>
+                                    </aura:if>                                   
+                                </div>
+                                <div class="w3-container w3-white">
+                                    <p style="height: 55px;"><b>{!itemObj.item.Product2.Name}</b></p>
+                                    <p class="w3-opacity">₹&nbsp;{!itemObj.item.UnitPrice} / {!itemObj.item.Product2.shoponklik__UnitWeight__c}&nbsp;{!itemObj.item.Product2.shoponklik__Unit__c}
+                                        <aura:if isTrue="{!itemObj.disc}">
+                                            &nbsp;<label class="myClassDiscountAmount">{!itemObj.item.shoponklik__Discount__c}% OFF</label>
+                                        </aura:if>
+                                    </p>
+                                    
+                                    <button class="myThemeColor w3-btn w3-margin-bottom" id="{!itemObj.item.Product2.Name}" onclick="{!c.addToCart}">{!$Label.shoponklik.ADDTOCART}</button>
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div>  
+                
+            </div>
+            <!---Coupon Modal-->            
+            <div id="id01" class="w3-modal">
+                <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px">
+                    
+                    <div class="w3-center"><br></br>
+                        <span onclick="{!c.couponModalClose}" class="w3-closebtn w3-hover-red w3-container w3-padding-8 w3-display-topright" title="Close Modal">&times;</span>
+                        <img src="{!$Resource.shoponklik__coupon}" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top"/>
+                    </div>
+                    
+                    <aura:if isTrue="{!v.couponStatus}">
+                        <div class="w3-container w3-green w3-margin-top">
+                            <h3>{!$Label.shoponklik.COUPONAPPLIED}</h3>
+                            <p>{!$Label.shoponklik.HAPPYSHOPPING}</p>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="w3-container w3-red w3-margin-top">
+                                <h3>{!$Label.shoponklik.INVALIDCOUPONCODE}</h3>
+                                <p>{!$Label.shoponklik.PLEASETRYWITHAVALIDCOUPONCODE}</p>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                    <form class="w3-container">
+                        <div class="w3-section">
+                            <button onclick="{!c.displayHome}" class="myThemeColor w3-btn-block w3-green w3-section w3-padding" type="submit">{!$Label.shoponklik.CONTINUESHOPPING}</button>
+                        </div>
+                    </form>
+                    
+                    <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                        <button onclick="{!c.couponModalClose}" class="w3-btn w3-red">{!$Label.shoponklik.CLOSE}</button>
+                    </div>
+                    
+                </div>
+            </div>
+            <!--End-->
+            
+            <!--CheckOut Modal-->
+            <div id="id02" class="w3-modal">
+                <div class="w3-modal-content w3-card-8 w3-yellow w3-animate-zoom" style="max-width:600px">
+                    
+                    <div class="w3-center"><br></br>
+                        <span onclick="{!c.closeCheckoutWin}" class="w3-closebtn w3-hover-red w3-container w3-padding-8 w3-display-topright" title="Close Modal">&times;</span>
+                        <img src="{!$Resource.shoponklik__cartIcon}" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top"/>
+                    </div>
+                    
+                    
+                    <div class="w3-container w3-white w3-margin-top">
+                        <h3>{!$Label.shoponklik.DOYOUREALLYWANTTOCHECKOUT}</h3>
+                    </div>
+                    
+                    <form class="w3-container">
+                        <div class="w3-section">
+                            <button onclick="{!c.displayHome}" class="myThemeColor w3-btn-block w3-green w3-section w3-padding" type="submit">{!$Label.shoponklik.CONTINUESHOPPING}</button>
+                            <button onclick="{!c.CheckOutJS}" class="myThemeColor w3-btn-block w3-green w3-section w3-padding" type="submit">{!$Label.shoponklik.CHECKOUT}</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            <!--End-->
+            
+            <!--SignUp/Logger-->
+            <div id="id03" class="w3-modal">
+                <div class="w3-modal-content w3-card-8 w3-white w3-animate-zoom" style="max-width:600px">
+                    
+                    <div class="w3-center"><br></br>
+                        <span onclick="{!c.closeCheckoutWin}" class="w3-closebtn w3-hover-red w3-container w3-padding-8 w3-display-topright" title="Close Modal">&times;</span>
+                        <img src="{!$Resource.shoponklik__cartIcon}" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top"/>
+                    </div>
+                    
+                    
+                    <div class="w3-container w3-white w3-margin-top">
+                        <h3>Please Login or SignUp to Continue...!</h3>
+                    </div>
+                    
+                    <form class="w3-container">
+                        <div class="w3-section">
+                            <button type="reset" onclick="{!c.userLogin}" class="myThemeColor w3-btn-block w3-green w3-section w3-padding">LOGIN / SIGNUP</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            <!--SignUp/Logger-->      
+            
+            <!-- Ticket Modal -->
+            <div id="ticketModal" class="w3-modal">
+                <div class="w3-modal-content w3-animate-zoom w3-card-8">
+                    <header class="w3-container w3-teal w3-center w3-padding-32">
+                        <span onclick="{!c.closeModal}"
+                              class="w3-closebtn w3-padding-xlarge w3-xxlarge w3-display-topright">×</span>
+                        <h2 class="w3-wide"><i class="faCustomClass"></i>&#10003; {!$Label.shoponklik.ADDEDTOCART}</h2>
+                    </header>
+                    <div class="w3-container">
+                        
+                        <p><label><i class="faCustomClass">&nbsp;</i></label></p>                            
+                        <div class="myClassModalImg w3-first w3-margin-bottom" align="center">
+                            <aura:iteration items="{!v.SelectedItem}" var="SelectedItemVar">
+                                <aura:if isTrue="{!SelectedItemVar.item.Product2.shoponklik__Icon__c == null}">
+                                    <img src="{!$Resource.shoponklik__ImageNotfound}" alt="product_icon" style="width:100%;height:200px;" class="w3-hover-opacity"/>
+                                    <aura:set attribute="else">
+                                        <img src="{!SelectedItemVar.item.Product2.shoponklik__Icon__c}" alt="product_icon" style="width:100%;height:200px;" class="w3-hover-opacity"/>
+                                    </aura:set>
+                                </aura:if>
+                                <div class="myClassFont w3-container w3-white">
+                                    <p><b>{!SelectedItemVar.item.Product2.Name}</b></p>
+                                    <p class="w3-opacity">₹&nbsp;{!SelectedItemVar.item.UnitPrice} / {!SelectedItemVar.item.Product2.shoponklik__UnitWeight__c}&nbsp;{!SelectedItemVar.item.Product2.shoponklik__Unit__c}&nbsp;
+                                        <aura:if isTrue="{!SelectedItemVar.disc}">
+                                            &nbsp;<label class="myClassDiscountAmount">{!SelectedItemVar.item.shoponklik__Discount__c}% OFF&nbsp;</label>
+                                        </aura:if>
+                                        <label class="myClassTotalAmount">&nbsp;{!$Label.shoponklik.TOTAL}&nbsp;₹&nbsp;{!SelectedItemVar.itemprice}</label>
+                                    </p>
+                                    <button class="myThemeColor w3-btn w3-margin-bottom" id="{!SelectedItemVar.item.Product2.Name}" onclick="{!c.removeItem}">-</button>
+                                    <input class="w3-input myClassModalQuantity" value="{!SelectedItemVar.Quantity}" type="text" readonly="true"/>
+                                    <button class="myThemeColor w3-btn w3-margin-bottom" id="{!SelectedItemVar.item.Product2.Name}" onclick="{!c.addToCart}">+</button>
+                                </div>
+                            </aura:iteration>
+                        </div>                        
+                        
+                        <button class="w3-btn-block w3-teal w3-padding-12 w3-section w3-right" onclick="{!c.closeModal}">{!$Label.shoponklik.CONTINUESHOPPING}</button>                        
+                        <button class="w3-btn-block w3-teal w3-padding-12 w3-section w3-right" onclick="{!c.openCheckoutWin}">{!$Label.shoponklik.PROCEEDTOCHECKOUT} <i class="faCustomClass">&#x226B;</i></button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </body>
+</aura:component>

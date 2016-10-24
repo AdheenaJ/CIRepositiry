@@ -1,0 +1,144 @@
+<apex:page controller="MyController" tabStyle="Qualification__c" showHeader="false" sidebar="false">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <apex:form ><br/><br/><br/>
+        <style type="text/css">
+          
+            body{
+            background-color:#C0C0C0;
+            }
+           
+            .container {
+        height: 100%;
+            width:100%;
+            font-size: 32px;
+      
+    }
+            #d1{background-color:pink; float:right; width:1000px; height:100px;}
+            #d2{background-color:white; float:left; width:600; height:100px;}
+            #d3{ float:right; width:690px; height:100px;}
+            #d4{ float:right; width:650px; height:70px; margin-top:30px;}
+        #draggable { width: 150px; height: 150px; padding: 0.5em; }
+            .draggable { width: 150px; height: 150px; padding: 0.5em; }
+        </style>
+        
+         <script>
+         j$ = jQuery.noConflict();
+  j$(function() {
+    j$( "#draggable" ).draggable();
+      
+      j$( ".draggable" ).draggable();
+  });
+       function C(){ 
+            alert("Hey...You Clicked a Button..!!");
+}
+        </script>
+        <!--div id="d1"-->
+         <div id="d2"  class="container">
+            <b>
+                <apex:image url="{!$Resource.eldo}" width="100" height="100"/>
+                <div id="d3" class="draggable"> 
+                    <div id="d4">
+                     <apex:Outputtext value=" {!Resume.Name__c} {!Resume.Last_Name__c} "/>   
+                    </div>
+                </div>        
+            </b>
+        </div>
+        <!--/div-->
+            
+        <div>
+        
+        
+        
+        
+       <apex:pageBlock ><body>
+           
+           <div id="draggable">
+               
+           
+            <apex:Outputtext value="{!Resume.Name__c} {!Resume.Last_Name__c}"/>
+            <br/>
+            <apex:Outputtext value="{!Resume.House_Name__c}"/>
+            <br/>
+            <apex:Outputtext value="{!Resume.City__c}"/>
+            <br/>
+            <apex:Outputtext value="{!Resume.District__c}"/>
+            <br/>
+            <apex:Outputtext value="{!Resume.Pin__c}"/>
+            <br/>
+            <apex:Outputtext value="{!Resume.email__c}"/>
+            <br/></div>
+           </body>
+        </apex:pageBlock>
+        <br/>
+             <apex:pageBlock >
+        <apex:pageBlockSection title="Career Objective ">
+            <apex:outputLabel value="{!Resume.Career_Objective__c}"/>
+        </apex:pageBlockSection></apex:pageBlock>
+        <br/>
+            <apex:pageBlock >
+           <apex:pageBlockSection title="Strengths ">
+                <apex:repeat value="{!ac}" var="a">
+                   <apex:outputText value="{!a}"> </apex:outputText><br/>
+               </apex:repeat>
+           
+               </apex:pageBlockSection>
+        </apex:pageBlock>
+        <br/>
+              <apex:pageBlock >
+         <apex:pageBlockSection title="Project ">
+             <apex:outputLabel value="{!Resume.Project__c}"/><br/>
+             <apex:outputLabel value="{!Resume.Project_Def__c}"/>
+                  </apex:pageBlockSection>
+        </apex:pageBlock>
+          <br/>
+            <apex:pageBlock >
+           <apex:pageBlockSection title="Technical Skills ">
+               <apex:repeat value="{!skills}" var="skill">
+                   <apex:outputText value="{!skill}"> </apex:outputText><br/>
+               </apex:repeat>  
+                </apex:pageBlockSection>
+        </apex:pageBlock>
+        <br/>
+            <apex:pageBlock >
+           <apex:pageBlockSection title="Extra-Curricular Activities ">
+            <apex:outputLabel value="{!Resume.Co_Curricular_activities__c}"/>
+                </apex:pageBlockSection>
+        </apex:pageBlock>       
+        <apex:pageBlock >
+   <apex:pageBlockSection title="Educational Qualification" >
+      
+        <apex:pageBlockTable value="{!resume.qualification__r}" var="o" >
+           	
+            <apex:column value="{!o.Level_of_Qualification__c}"/>
+            <apex:column value="{!o.Percentage__c}"/>
+            <apex:column value="{!o.Board_University__c}"/>
+            
+            <apex:column value="{!o.Year_of_Passing__c}"/>
+            
+        </apex:pageBlockTable>
+            </apex:pageBlockSection>
+    </apex:pageBlock>
+ <br/>
+            <apex:pageBlock >
+           <apex:pageBlockSection title="Declaration ">
+            <apex:outputLabel value="{!Resume.Declaration__c}"/>
+                </apex:pageBlockSection>
+        </apex:pageBlock>
+ 	<br/>
+        <apex:pageBlock >
+        <apex:OutputLabel value="PLACE : "/> 
+            <div align="right"> <apex:OutputLabel value="Signature"/>
+                </div>
+         <br/>
+         
+            <apex:OutputLabel value="DATE : "/> 
+            <div align="right"> <apex:OutputLabel value="{!Resume.Name__c} {!Resume.Last_Name__c}"/>
+            </div>         <br/>
+                </apex:pageBlock> 
+            <apex:pageBlock >
+            <apex:pageBlockButtons location="bottom">
+				<apex:commandButton value="Click Here "  onclick="C()" />
+      		</apex:pageBlockButtons></apex:pageBlock>    
+        </div>
+    </apex:form></apex:page>

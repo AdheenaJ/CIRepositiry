@@ -1,0 +1,56 @@
+<apex:page showHeader="true" sidebar="true" standardController="wbsendit__Subscription__c" extensions="wbsendit.SubscriberMembershipDetailController" >
+    <apex:sectionHeader title="Membership Detail" subtitle="Subscriber List Membership Detail" help="{!$Label.SupportLink_Membership_Detail}"/>
+
+    <apex:form id="membershipDetailForm">
+        <apex:pageMessages id="messages" escape="false" />
+        <apex:outputLink rendered="{!retObject != null && !inAddMode}" id="idBack" value="/{!retObject.Id}" style="font-family: 'Verdana','Geneva',sans-serif;font-size: 91.3%;text-decoration: none;">&nbsp;«&nbsp;Back to {!retObject['Name']}</apex:outputLink>
+        <br/>
+        <apex:pageBlock title="List Membership Details" mode="{!IF(inAddMode, 'edit', 'mainDetail')}">
+            <apex:pageBlockButtons location="both" >
+                <apex:commandButton id="idSaveMembership" action="{!saveMembership}" value="{!saveDelete}" rendered="{!inAddMode}"/>
+                <apex:commandButton id="idEditMembership" action="{!editMembership}" value="Edit" rendered="{!NOT(inAddMode)}"/>
+                <apex:commandButton id="idCancel" action="{!cancel}" value="Cancel" rendered="{!inAddMode}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2">
+                <apex:outputField value="{!wbsendit__Subscription__c.wbsendit__Email__c}" />
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Subscriber List" />
+                    <apex:outputLink id="complink"
+                               onblur="LookupHoverDetail.getHover(this.id).hide();"
+                               onmouseout="LookupHoverDetail.getHover(this.id).hide();"
+                               onfocus="LookupHoverDetail.getHover(this.id, '/{!wbsendit__Subscription__c.wbsendit__Subscriber_List__c}/m?isAjaxRequest=1&retURL={!$CurrentPage.URL}').show();"
+                               onmouseover="LookupHoverDetail.getHover(this.id, '/{!wbsendit__Subscription__c.wbsendit__Subscriber_List__c}/m?isAjaxRequest=1&retURL={!$CurrentPage.URL}').show();"
+                               value="/{!wbsendit__Subscription__c.wbsendit__Subscriber_List__c}">
+                        <apex:outputText value="{!wbsendit__Subscription__c.Subscriber_List__r.wbsendit__List_Name__c}" />
+                    </apex:outputLink>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel >Name</apex:outputlabel>
+                    <apex:outputlabel >{!subscriberDetail.Name}</apex:outputlabel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel >Date Subscribed</apex:outputlabel>
+                    <apex:outputlabel >{!subscriberDetail.datex}</apex:outputlabel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel >Reads Email With</apex:outputlabel>
+                    <apex:outputlabel >{!subscriberDetail.readsEmailWith}</apex:outputlabel>
+                </apex:pageBlockSectionItem>
+                <apex:outputText label="Status" value="{!subscriberDetail.state}" rendered="{!NOT(inAddMode)}"/>
+    			<apex:selectList label="Status" id="cmState" value="{!subscriberDetail.state}" required="true" size="1" rendered="{!inAddMode}">
+    				<apex:selectOptions value="{!states}"/>
+                    <apex:actionSupport event="onchange" action="{!unsubscribeWarning}" rerender="messages" />
+    			</apex:selectList>
+                <apex:outputField value="{!wbsendit__Subscription__c.wbsendit__Contact__c}" rendered="{!wbsendit__Subscription__c.wbsendit__Contact__c != null}"/>
+                <apex:outputField value="{!wbsendit__Subscription__c.wbsendit__Lead__c}" rendered="{!wbsendit__Subscription__c.wbsendit__Lead__c != null}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:inputHidden value="{!wbsendit__Subscription__c.wbsendit__List_Id__c}"/>
+        <apex:inputHidden value="{!wbsendit__Subscription__c.Subscriber_List__r.wbsendit__Unsubscribe_Setting__c}"/>
+        <apex:inputHidden value="{!wbsendit__Subscription__c.Contact__r.HasOptedOutOfEmail}"/>
+        <apex:inputHidden value="{!wbsendit__Subscription__c.Lead__r.HasOptedOutOfEmail}"/>
+
+    </apex:form>
+</apex:page>

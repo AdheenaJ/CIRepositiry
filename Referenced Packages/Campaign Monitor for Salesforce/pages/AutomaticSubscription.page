@@ -1,0 +1,676 @@
+<apex:page showHeader="true" sidebar="false" standardController="wbsendit__AutoSubscription__c" extensions="wbsendit.EditAutoSubExtension" action="{!checkSetup}">
+
+    <html>
+
+        <head>
+
+            <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.css')}" />
+            <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+
+            <apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"/>
+
+            <script>
+
+                var conFields = JSON.parse('{!conFields}');
+                var conFieldTypes = JSON.parse('{!conFieldTypes}');
+                var conPicklists = JSON.parse('{!conPicklists}');
+                var leadFields = JSON.parse('{!leadFields}');
+                var leadFieldTypes = JSON.parse('{!leadFieldTypes}');
+                var leadPicklists = JSON.parse('{!leadPicklists}');
+                var objName = '{!ObjectType}';
+
+                var j$ = jQuery.noConflict();
+                function esc(myid) {
+                    return '#' + myid.replace(/(:|\.)/g,'\\\\$1');
+                }
+
+                var ops = {boolean: ["equals", "notequalto"],
+                           double: ["equals", "notequalto", "lessthan", "lessorequal", "greaterthan", "greaterorequal"],
+                           integer: ["equals", "notequalto", "lessthan", "lessorequal", "greaterthan", "greaterorequal"],
+                           string: ["equals", "notequalto", "startswith", "contains", "doesnotcontain"],
+                           datetime: ["equals", "notequalto", "lessthan", "lessorequal", "greaterthan", "greaterorequal"],
+                           date: ["equals", "notequalto", "lessthan", "lessorequal", "greaterthan", "greaterorequal"],
+                           none: ["equals", "notequalto", "lessthan", "lessorequal", "greaterthan", "greaterorequal", "startswith", "contains", "doesnotcontain"]};
+
+                var opNames = {"equals": "equals", "notequalto": "not equal to", "lessthan": "less than", "lessorequal": "less or equal", "greaterthan": "greater than", "greaterorequal": "greater or equal", "startswith": "starts with", "contains": "contains", "doesnotcontain": "does not contain"};
+
+                var fieldTypes;
+                var currentOperators;
+
+                j$(document).ready(function(){
+
+                    setTimeout(function(){
+                            j$('#main-content').removeClass('b12-hide');
+                            j$('.b12-stencil').addClass('b12-hide');
+                        }, 600);
+
+                    var cons = JSON.parse(j$(esc(hiddenValId)).val());
+                    var opIdx = 0;
+                    j$('.operator').each(function(index, value){
+                            j$('option', this).remove();
+                            var that = this;
+                            that.options[that.options.length] = new Option('-- None --', 'none');
+                            j$.each(opNames, function(text, val){
+                                    that.options[that.options.length] = new Option(val, text);
+                                    if(cons != null && opIdx < cons.length && cons[opIdx].operatorName == text)
+                                        that.options[that.options.length-1].selected = 'selected';
+                                });
+                            opIdx++;
+                        });
+
+                    j$('.field').change(function(){
+                            var index = this.id.replace('field', '');
+                            var fldName = j$('#'+this.id).val();
+                            if(currentOperators != null && currentOperators[index] != null){
+                                if(currentOperators[index] == fieldTypes[fldName].toLowerCase())
+                                    return;
+                            }
+
+                            var opList = j$('#operator' + index);
+                            var selected = opList.val();
+                            j$('option', opList).remove();
+                            opList.append(new Option('-- None --', 'none'));
+                            var fieldType;
+                            var objFieldTypes;
+                            if(objName == 'Contact')
+                                objFieldTypes = conFieldTypes;
+                            else
+                                objFieldTypes = leadFieldTypes;
+                            if(fldName == 'none')
+                                fieldType = 'none';
+                            else
+                                fieldType = objFieldTypes[fldName].toLowerCase();
+                            j$.each(ops[fieldType], function(text, val){
+                                    opList.append(new Option(opNames[val], val));
+                                    if(selected == val)
+                                        opList.children('[value=' + val + ']').attr('selected', 'selected');
+                                });
+
+                            updateconditions();
+
+                            var picklists;
+                            if(objName == 'Contact')
+                                picklists = conPicklists;
+                            else
+                                picklists = leadPicklists;
+                            if(picklists[fldName] != null){
+                                j$('#lookup' + index).css('display', 'inline-block');
+                            } else{
+                                j$('#lookup' + index).css('display', 'none');
+
+                            }
+
+                        });
+
+                    for(var i = 0; i < cons.length; i++)
+                        j$('#value' + (i+1)).val(cons[i].value);
+
+
+                    var idx = 0;
+                    j$('.field').each(function(index, value){
+                            j$('option', this).remove();
+                            var that = this;
+                            var flds;
+                            if(objName == 'Contact')
+                                flds = conFields;
+                            else
+                                flds = leadFields;
+                            that.options[that.options.length] = new Option('-- None --', 'none');
+                            j$.each(flds, function(text, val){
+                                that.options[that.options.length] = new Option(val, text);
+                                if(cons != null && idx < cons.length && cons[idx].fieldName == text){
+                                    that.options[that.options.length-1].selected = 'selected';
+                                    j$('#' + that.id).change();
+                                }
+                            });
+                            idx++;
+                        });
+
+                    j$('.operator').change(updateconditions);
+                    j$('.value').change(updateconditions);
+
+                });
+
+                function resetFields(){
+                    j$('.field').each(function(index, value){
+                        j$('option', this).remove();
+                        var that = this;
+                        var flds;
+                        if(objName == 'Contact')
+                            flds = conFields;
+                        else
+                            flds = leadFields;
+                        that.options[that.options.length] = new Option('-- None --', 'none');
+                        j$.each(flds, function(text, val){
+                            that.options[that.options.length] = new Option(val, text);
+                        });
+                    });
+
+                    j$('.operator').each(function(index, value){
+                        j$(this).val('-- None --');
+                    });
+
+                    j$('.value').each(function(index, value){
+                        j$(this).val('');
+                    });
+                };
+
+                function updateconditions(){
+
+                    var fldTypes;
+                    var picklists;
+                    if(objName == 'Contact'){
+                        fldTypes = conFieldTypes;
+                        picklists = conPicklists;
+                    } else{
+                        fldTypes = leadFieldTypes;
+                        picklists = leadPicklists;
+                    }
+
+                    var cons = new Array();
+                    var index = 1;
+                    var fld = j$('#field' + index);
+                    var op = j$('#operator' + index);
+                    var val = j$('#value' + index);
+                    while(fld.length != 0 && fld.val() != null){
+
+                        var con = new Object();
+                        con['fieldName'] = fld.val();
+                        con['fieldTypeName'] = fldTypes[fld.val()];
+                        con['operatorName'] = op.val();
+                        con['value'] = val.val();
+                        con['isPickList'] = (picklists[fld.val()] != null);
+                        if(con['fieldName'] != 'none' && con['operatorName'] != 'none')
+                            cons.push(con);
+
+
+                        index++;
+                        fld = j$('#field' + index);
+                        op = j$('#operator' + index);
+                        val = j$('#value' + index);
+
+                    }
+                    j$(esc(hiddenValId)).val(JSON.stringify(cons));
+
+                };
+
+                function openLookup(index){
+
+                    var fldName = j$('#field' + index).val();
+                    var picklists;
+                    if(objName == 'Contact')
+                        picklists = conPicklists;
+                    else
+                        picklists = leadPicklists;
+
+                    openPopupFocus('{!$Page.Lookup}?id=' + index + '&fldName=' + picklists[fldName], 'wbsendit_filter_lookup', 620, 430, 'width=620,height=430,resizable=yes,toolbar=no,status=no,scrollbars=yes,menubar=no,directories=no,location=no,dependant=no', false, true);
+                };
+
+                function updateValueWithPicklist(values, index){
+                    var id = '#value' + index;
+                    var val = j$(id).val().trim();
+                    if(val != null && val != '')
+                        val += ',';
+                    else
+                        val = '';
+                    val += values;
+                    j$(id).val(val);
+                    updateconditions();
+                };
+
+                function checkAndSave(){
+
+                    var valid = true;
+
+                    var logicFld = j$('input[name$="logic"]');
+                    var logic = logicFld.val();
+                    if(logic === undefined){
+                        logicFld.removeClass('b12-error b12-error-text');
+                        doSave();
+                    }
+
+                    if(logic.replace(/\(/g, '').replace(/\)/g, '').replace(/or/gi, '').replace(/and/gi, '').replace(/\d+/g, '').trim().length === 0){
+
+                        var opens = logic.match(/\(/g) === null ? 0 : logic.match(/\(/g).length;
+                        var closes = logic.match(/\)/g) === null ? 0 : logic.match(/\)/g).length;
+
+                        if(opens == closes){
+
+                            var nums = logic.match(/\d+/g);
+                            var max = 5;
+
+                            var index = 1;
+                            for(var i=0; i<5; i++, index++){
+                                var fld = j$('#field' + index);
+
+                                if(fld.val() == 'none'){
+                                    max = --index;
+                                    break;
+                                }
+
+                            }
+
+                            if(nums !== null && max > 0){
+                                for(var i=0; i<nums.length; i++){
+                                    if(nums[i] > max){
+                                        valid = false;
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }else{
+                            valid = false;
+                        }
+                    }else{
+                        valid = false;
+                    }
+
+                    if(valid){
+                        logicFld.removeClass('b12-error b12-error-text');
+                        doSave();
+                    }else{
+                        logicFld.addClass('b12-error b12-error-text');
+                    }
+
+                };
+
+            </script>
+
+            <style>
+
+                .b12-error{
+                    background-color: #f6e4e4 !important;
+                    border-color: #be554b !important;
+                }
+
+                .b12-error-text{
+                    color: #be554b;
+                }
+
+                .b12-hide{
+                    display: none;
+                }
+
+                .b12-apex-messages{
+                    padding-left: 0px;
+                }
+
+                .b12-apex-messages li{
+                    margin-left: 0px;
+                }
+
+
+            </style>
+        </head>
+
+
+        <body>
+            <apex:form >
+
+                <div class="b12-frame">
+
+                    <div class="b12-header">
+                        <h1>{!$ObjectType.AutoSubscription__c.Label}</h1>
+                        <div class="b12-help"><a href="{!$Label.Help_Url_Smart_Email}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+                    </div>
+
+                    <apex:variable rendered="{!HasMessages}" var="q" value="p">
+                        <div class="b12-messages b12-messages-warning">
+                            <apex:messages styleClass="b12-apex-messages" id="messages"/>
+                        </div>
+                    </apex:variable>
+
+                    <apex:variable rendered="{!IsTrial}" value="p" var="o">
+                        <div class="b12-messages b12-messages-info ng-hide" ng-show="!stencil">
+                            <a class="b12-message-info-icon"><i class="fa fa-info"></i></a>
+                            <p class="b12-messages-text">{!$Label.AutoSubs_Premium_Message} <a href="{!$Page.UpgradeWizard}">{!$Label.AutoSubs_Upgrade_Now}</a></p>
+                        </div>
+                    </apex:variable>                
+
+                    <div class="b12-content b12-hide" id="main-content">
+
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>{!$ObjectType.wbsendit__AutoSubscription__c.fields.Name.Label}</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p><apex:inputText styleClass="b12-input-inline" value="{!newCondition.Name}"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>{!$ObjectType.wbsendit__AutoSubscription__c.fields.wbsendit__Description__c.Label}</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p>
+                                            <apex:inputTextarea styleClass="b12-input-inline" value="{!newCondition.wbsendit__Description__c}"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>{!$ObjectType.wbsendit__AutoSubscription__c.fields.wbsendit__Object__c.Label}</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p>
+                                            <apex:selectList id="slObject" value="{!newCondition.wbsendit__Object__c}" required="true" size="1" onchange="objName = j$(this).val(); resetFields();">
+                                                <apex:selectOptions value="{!Objects}"/>
+                                            </apex:selectList>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>{!$ObjectType.wbsendit__AutoSubscription__c.fields.wbsendit__Action__c.Label}</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p>
+                                            <apex:selectList id="slAction" value="{!newCondition.wbsendit__Action__c}" required="true" size="1" >
+                                                <apex:selectOptions value="{!Actions}"/>
+                                                <apex:actionSupport event="onchange" rerender="EvaluationTime"/>
+                                            </apex:selectList>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>{!$ObjectType.wbsendit__AutoSubscription__c.fields.wbsendit__Subscriber_List_Id__c.Label}</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p>
+                                            <apex:selectList id="slList" value="{!newCondition.wbsendit__Subscriber_List_Id__c}" required="true" size="1">
+                                                <apex:selectOptions value="{!SubscriberLists}"/>
+                                            </apex:selectList>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>{!$ObjectType.wbsendit__AutoSubscription__c.fields.wbsendit__Resubscribe__c.Label}</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p>
+                                            <apex:inputCheckbox id="cbxResubscribe" value="{!newCondition.wbsendit__Resubscribe__c}" required="true"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>{!$ObjectType.wbsendit__AutoSubscription__c.fields.wbsendit__Evaluation_Time__c.Label}</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p>
+                                            <apex:selectRadio value="{!newCondition.wbsendit__Evaluation_Time__c}" layout="pageDirection" required="true" id="EvaluationTime">
+                                                <apex:selectOptions value="{!EvalTimes}"/>
+                                            </apex:selectRadio>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                
+                            </div>
+                        </div>
+
+                        <div class="b12-layout">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>Rule Criteria</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <div id="customMappingContainer">
+                                            <table class="b12-table">
+                                                <tr>
+                                                    <td><span class="b12-filter-label">1</span></td>
+                                                    <td><select id="field1" class="field"></select></td>
+                                                    <td><select id="operator1" class="operator"></select></td>
+                                                    <td><input id="value1" class="b12-input-inline value"/> <a id="lookup1" style="display:none" href="javascript:openLookup(1);"><img src="/s.gif" alt="Lookup (New Window)" class="lookupIcon"  onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Lookup (New Window)"/></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span class="b12-filter-label">2</span></td>
+                                                    <td><select id="field2" class="field"></select></td>
+                                                    <td><select id="operator2" class="operator"></select></td>
+                                                    <td><input id="value2" class="b12-input-inline value"/> <a id="lookup2" style="display:none" href="javascript:openLookup(2);"><img src="/s.gif" alt="Lookup (New Window)" class="lookupIcon"  onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Lookup (New Window)"/></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span class="b12-filter-label">3</span></td>
+                                                    <td><select id="field3" class="field"></select></td>
+                                                    <td><select id="operator3" class="operator"></select></td>
+                                                    <td><input id="value3" class="b12-input-inline value"/> <a id="lookup3" style="display:none" href="javascript:openLookup(3);"><img src="/s.gif" alt="Lookup (New Window)" class="lookupIcon"  onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Lookup (New Window)"/></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span class="b12-filter-label">4</span></td>
+                                                    <td><select id="field4" class="field"></select></td>
+                                                    <td><select id="operator4" class="operator"></select></td>
+                                                    <td><input id="value4" class="b12-input-inline value"/> <a id="lookup4" style="display:none" href="javascript:openLookup(4);"><img src="/s.gif" alt="Lookup (New Window)" class="lookupIcon"  onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Lookup (New Window)"/></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span class="b12-filter-label">5</span></td>
+                                                    <td><select id="field5" class="field"></select></td>
+                                                    <td><select id="operator5" class="operator"></select></td>
+                                                    <td><input id="value5" class="b12-input-inline value"/> <a id="lookup5" style="display:none" href="javascript:openLookup(5);"><img src="/s.gif" alt="Lookup (New Window)" class="lookupIcon"  onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Lookup (New Window)"/></a></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+
+                        
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p>{!$ObjectType.AutoSubscription__c.fields.Logic__c.Label}</p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p><apex:inputText id="logic" styleClass="b12-input-inline" value="{!newCondition.wbsendit__Logic__c}"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b12-content b12-stencil">
+
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                
+                            </div>
+                        </div>
+
+                        <div class="b12-layout">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <table class="b12-table">
+                                        <tr>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>                                                                        
+                                        </tr>                                       
+                                        <tr>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>                                                                        
+                                        </tr>                                       
+                                        <tr>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>                                                                        
+                                        </tr>               
+                                        <tr>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>                                                                        
+                                        </tr>               
+                                        <tr>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>
+                                            <td><p></p></td>                                        
+                                        </tr>                                                                                                                           
+                                    </table>
+                                </div>
+                            </div>
+                        </div>   
+
+                        
+                        <div class="b12-layout b12-layout-50">
+                            <div class="b12-layout-col">
+                                <div class="b12-layout-group">
+                                    <div class="b12-layout-group-header">
+                                        <p></p>
+                                    </div>  
+                                    <div class="b12-layout-group-content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="b12-layout-col">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b12-footer">
+                        <div class="b12-action">
+                            <div class="b12-action-save">
+                                <apex:commandLink styleClass="b12-btn b12-btn-do" action="{!runSave}" value="{!$Label.Save}" />
+                                <apex:commandLink immediate="true" styleClass="b12-btn b12-btn-cancel" action="{!Cancel}" value="{!$Label.Cancel}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <apex:inputHidden id="hiddenSaveCondition" value="{!newCondition.wbsendit__Criteria__c}"/>
+                    <script>var hiddenValId = '{!$Component.hiddenSaveCondition}';</script>
+
+
+                </div>
+
+            </apex:form>
+
+        </body>
+
+    </html>
+    
+</apex:page>

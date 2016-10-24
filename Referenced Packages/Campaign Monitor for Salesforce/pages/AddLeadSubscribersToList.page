@@ -1,0 +1,93 @@
+<apex:page standardController="Lead" tabStyle="Lead" extensions="wbsendit.AddSubscribersToListController" recordSetVar="allSelected" action="{!checkSetup}">
+<apex:sectionHeader title="Campaign Monitor Subscriber List" subtitle="Subscriber Leads" help="{!$Label.SupportLink_Add_Contacts_or_Leads}" />
+
+    <apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
+    <script>
+
+        j$ = jQuery.noConflict();
+
+        var addSubscribersToListController = {};
+
+        addSubscribersToListController.missingIds = JSON.parse('{!JSONMissingListIds}');
+
+        addSubscribersToListController.startRefresh = function(){
+
+            var link = j$("a[id$='refreshLink']");
+            var con = link.parent();
+
+            link.remove();
+            con.append('<div>Updating. The page will refresh when complete.</div>').css('color', 'grey');
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.AddSubscribersToListController.refreshLists}',
+                addSubscribersToListController.missingIds,
+                function(result, event){
+                    refresh();
+                });
+        };
+
+    </script>
+
+    <apex:form >
+
+      <apex:pageBlock title="Campaign Monitor Subscriber List">
+          <apex:pageMessages escape="false"/>
+          <apex:pageBlockButtons location="bottom">
+              <apex:commandButton action="{!addToList}" value="Add Leads to Email List" rendered="{!AND(showAddButton,showingError == false)}"/>
+              <apex:commandButton action="{!cancel}" value="Cancel"  rendered="{!showingError == false}"/>
+              <apex:commandButton action="{!cancel}" value="OK" rendered="{!showingError == true}"/>
+          </apex:pageBlockButtons>
+
+          <apex:actionFunction name="refresh" action="{!refreshPage}" reRender="details"/>
+          <apex:pageBlockSection columns="2" id="deatils" rendered="{!AND(showAddButton,!showingError)}" >
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Select Email Lists" for="pro"></apex:outputLabel>
+                  <apex:selectList id="pro" value="{!SelectedSubscriberLists}" multiselect="true" title="Email Lists" size="10">
+                      <apex:selectOptions value="{!SubscriberLists}"></apex:selectOptions>
+                  </apex:selectList>
+              </apex:pageBlockSectionItem>
+
+              <apex:pageBlockSectionItem >
+                  <apex:outputlabel style="color:grey">The leads will be added to these lists in Campaign Monitor.</apex:outputlabel>
+              </apex:pageBlockSectionItem>
+
+              <apex:pageBlockSectionItem rendered="{!MissingListIds.size > 0}">
+                <apex:outputText value="" />
+                <apex:outputLink id="refreshLink" value="#" onclick="addSubscribersToListController.startRefresh()">Refresh subscriber lists</apex:outputLink>
+              </apex:pageBlockSectionItem>
+              <apex:outputlabel rendered="{!MissingListIds.size > 0}" style="color:grey">Some subscriber lists from Campaign Monitor aren't currently shown in this list.</apex:outputlabel>
+
+              <apex:pageblockSectionItem >
+                <apex:outputlabel >Resubscribe</apex:outputlabel>
+                <apex:inputCheckBox value="{!resubscribe}" style="width:150px"  rendered="{!showAddButton}"/>
+              </apex:pageblockSectionItem>
+
+              <apex:pageBlockSectionItem >
+                <apex:outputlabel style="color:grey">When this field is ticked previously unsusbcribed emails will be resubscribed.</apex:outputlabel>
+              </apex:pageBlockSectionItem>
+
+              <apex:pageblockSectionItem rendered="{!canAccessAPI}" >
+                <apex:outputlabel >Add ALL members of this list view</apex:outputlabel>
+                <apex:inputCheckBox value="{!addAllMembers}" style="width:150px" rendered="{!showAddButton}"/>
+              </apex:pageblockSectionItem>
+
+              <apex:pageBlockSectionItem rendered="{!canAccessAPI}" >
+                <apex:outputlabel style="color:grey">When this field is ticked all leads in the list view will be added to the selected Campaign Monitor lists.</apex:outputlabel>
+              </apex:pageBlockSectionItem>
+
+              <apex:pageblockSectionItem rendered="{!addAllMembers}" >
+                <apex:outputlabel >Email me when complete</apex:outputlabel>
+                <apex:inputCheckBox value="{!email}" style="width:150px" rendered="{!showAddButton}"/>
+              </apex:pageblockSectionItem>
+
+              <apex:pageBlockSectionItem rendered="{!addAllMembers}" >
+                <apex:outputlabel style="color:grey">Send an email once all leads have been added to the lists.</apex:outputlabel>
+              </apex:pageBlockSectionItem>
+
+          </apex:pageBlockSection>
+
+      </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

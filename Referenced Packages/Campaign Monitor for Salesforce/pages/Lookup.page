@@ -1,0 +1,79 @@
+<apex:page sidebar="false" showHeader="false" showChat="false" title="Select Picklist Values" controller="wbsendit.LookupController" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"/>
+	
+	<script>
+		var winMain = window.opener;
+	</script>
+
+	<body class="hasMotif lookupTab FilterLookupPage">
+		<div class="lookup">
+			<div class="bPageTitle">
+				<div class="ptBody secondaryPalette">
+					<div class="content">
+						<img src="/s.gif" alt="" class="pageTitleIcon" title=""/>
+						<h1>Lookup</h1>
+					</div>
+				</div>
+			</div>
+			<div class="pbBody">
+				<h2>Select the picklist values to add below.</h2>
+			</div>
+			<div class="topButton">
+				<input value="Insert Selected" class="btn" name="Done" onclick="insertItems();" title="Add Selected" type="button"/>
+			</div>
+			<a href="javascript:clearAll();">Deselect all</a>
+	
+			<div class="listRelatedObject lookupBlock">
+				<div class="bPageBlock brndScnBrd secondaryPalette">
+					<div class="pbHeader"></div>
+					<div class="pbBody">
+						<table class="list" border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr class="headerRow"><th class="actionColumn" scope="col">&nbsp;</th><th scope="col" class=" zen-deemphasize">Value</th></tr>
+							
+								<apex:Repeat value="{!Options}" var="item">
+									<tr class="dataRow"><td class="actionColumn"><input class="pckListOption" type="checkbox" value="{!item}"/></td><td><label for="chkbox1">{!item}</label></td></tr>
+								</apex:Repeat>
+							
+							</tbody>
+						</table>
+					</div>
+					<div class="pbFooter secondaryPalette">
+						<div class="bg"></div>
+					</div>
+				</div>
+			</div>
+			<div class="listElementBottomNav"></div>
+		<!-- End ListElement -->
+			<div class="bottomButton">
+				<input value="Insert Selected" class="btn" name="Done" onclick="insertItems();" title="Add Selected" type="button"/>
+			</div>
+		</div>
+		<script>
+		
+		    var j$ = jQuery.noConflict();
+	        function esc(myid) {
+	            return '#' + myid.replace(/(:|\.)/g,'\\\\$1');
+	        }
+	        
+	    	function clearAll(){
+	    		j$('.pckListOption').attr('checked', false);
+	    	}               
+	    
+			function insertItems(){
+			
+				var s = new Array();
+				j$('.pckListOption:checked').each(function(){
+					s.push(j$(this).val());
+				});
+			
+				window.opener.updateValueWithPicklist(s.toString(), {!index});
+				window.close();
+			}
+		
+		</script>	
+	</body>
+	
+
+	
+</apex:page>

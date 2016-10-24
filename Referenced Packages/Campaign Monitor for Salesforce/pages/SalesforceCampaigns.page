@@ -1,0 +1,151 @@
+<apex:page showHeader="true" sidebar="false" controller="wbsendit.SalesforceCampaignsController" action="{!checkSetup}">
+
+    <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+    <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+    <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/settings.min.js')}" />
+
+    <apex:outputPanel >
+
+		<script type="text/javascript">
+
+			var j$ = j$ || jQuery.noConflict();
+
+			settings.campaigns.VFBindings.saveChanges = '{!$RemoteAction.SalesforceCampaignsController.saveSettings}';
+
+			settings.campaigns.orgSettings = JSON.parse('{!Settings}');
+			settings.labels.unsaved = '{!$Label.Settings_Not_Saved}';
+
+			j$(document).ready(settings.campaigns.documentReady);
+
+		</script>
+
+	</apex:outputPanel>
+
+	<apex:form >
+
+		<apex:actionFunction name="callSaveChanges" action="{!SaveChanges}" reRender="dummy"/>
+		<script type="text/javascript">
+			settings.campaigns.saveChangesActionFunction = callSaveChanges;
+		</script>
+
+
+		<apex:outputPanel id="dummy"/>
+
+	    <div class="b12-frame">
+
+	        <div class="b12-header">
+	            <h1>{!HTMLENCODE($Label.Campaign_Settings_Header)}</h1>
+	            <div class="b12-help"><a href="{!$Label.Help_Url_Salesforce_Campaigns}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+	        </div>
+
+	        <apex:outputPanel >
+
+		        <div class="b12-messages b12-messages-info" style="display: none;">
+		            <p class="b12-messages-text"></p>
+		            <a href="#" class="b12-message-close"><i class="fa fa-times"></i></a>
+		        </div>
+
+		        <div class="b12-content">
+
+		        	<div class="b12-layout b12-layout-30">
+						<div class="b12-layout-col">
+							<div class="b12-layout-group">
+								<div class="b12-layout-group-header">
+									<p>{!HTMLENCODE($Label.Campaign_Settings_Update_Campaigns)}</p>
+								</div>
+								<div class="b12-layout-group-content">
+									<label class="b12-radio-button b12-radio-button-left">
+										<input id="updateCampaignsYes" name="updateCampaigns" type="radio" value="true" />
+										{!HTMLENCODE($Label.Campaign_Settings_Yes)}
+									</label>
+									<label class="b12-radio-button b12-radio-button-right">
+										<input id="updateCampaignsNo" name="updateCampaigns" type="radio" value="false" />
+										{!HTMLENCODE($Label.Campaign_Settings_No)}
+									</label>
+								</div>					
+							</div>
+						</div>
+						<div class="b12-layout-col only-for-updates">
+							<div class="b12-layout-group">
+								<div class="b12-layout-group-header">						
+									<p>{!HTMLENCODE($Label.Campaign_Settings_Refresh)}</p>
+								</div>
+								<div class="b12-layout-group-content">
+									<label class="b12-radio-button b12-radio-button-left">
+										<input type="radio" name="refresh" id="refreshNever" value="{!NeverUpdate}"/>
+								        {!HTMLENCODE($Label.Campaign_Settings_Never)}
+									</label>
+									<label class="b12-radio-button b12-radio-button-center">
+										<input type="radio" name="refresh" id="refreshAlways" value="{!AlwaysUpdate}"/>
+								        {!HTMLENCODE($Label.Campaign_Settings_Always)}
+									</label>
+									<label class="b12-radio-button b12-radio-button-right">
+										<input type="radio" name="refresh" id="refreshOnce" value="{!UpdateOnce}"/>
+								        {!HTMLENCODE($Label.Campaign_Settings_Once)}
+									</label>
+								</div>
+							</div>
+						</div>					
+						<div class="b12-layout-col only-for-updates">
+							<div class="b12-layout-group">
+								<div class="b12-layout-group-header">						
+									<p>{!HTMLENCODE($Label.Campaign_Settings_Auto_Create)}</p>
+								</div>
+								<div class="b12-layout-group-content">
+									<label class="b12-radio-button b12-radio-button-left">
+										<input id="autoCreateYes" name="autoCreate" type="radio" value="true" />
+										{!HTMLENCODE($Label.Campaign_Settings_Yes)}
+									</label>
+									<label class="b12-radio-button b12-radio-button-right">
+										<input id="autoCreateNo" name="autoCreate" type="radio" value="false" />
+										{!HTMLENCODE($Label.Campaign_Settings_No)}
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="b12-layout only-for-updates">
+						<div class="b12-layout-group">
+							<div class="b12-layout-group-header">
+								<p>Update Salesforce Campaign Members</p>
+							</div>
+							<div class="b12-layout-group-content b12-form-group">
+								<table class="b12-table">
+									<tr>
+										<th>{!HTMLENCODE($Label.Campaign_Settings_CM_Activity)}</th>
+										<th>{!HTMLENCODE($Label.Campaign_Settings_SFDC_Status)}</th>
+										<th>{!HTMLENCODE($Label.Campaign_Settings_Responded)}</th>
+									</tr>
+									<apex:repeat value="{!mappings}" var="mapping">
+										<tr>
+											<td>{!HTMLENCODE(mapping.Name)}</td>
+											<td><apex:inputText value="{!mapping.wbsendit__Status_Label__c}"/></td>
+											<td><apex:inputCheckbox value="{!mapping.wbsendit__HasResponded__c}" /></td>
+										</tr>
+									</apex:repeat>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+		        <div class="b12-footer">
+		            <div class="b12-action">
+		                <div class="b12-action-save">
+		                    <button class="b12-btn b12-btn-do" id="saveButton" type="button">{!HTMLENCODE($Label.Save)}</button>
+		                </div>
+		            </div>
+		        </div>
+
+	        </apex:outputPanel>
+
+		</div>
+
+
+	</apex:form>
+
+
+
+</apex:page>

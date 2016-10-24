@@ -1,0 +1,21 @@
+<apex:page showHeader="true" sidebar="true" standardController="wbsendit__Smart_Email_Template__c" extensions="wbsendit.SmartEmailTemplateNewExtension" action="{!initPage}">
+
+	<apex:form >
+		<apex:pageMessages escape="false" />
+		
+		<apex:pageBlock rendered="{!ClientList.size > 1}">
+	        <apex:pageBlockSection columns="2">
+	            <apex:pageBlockSectionItem >
+	                <apex:selectList id="clientID" value="{!clientID}" size="1" title="Clients">
+	                    <apex:selectOptions value="{!ClientList}"></apex:selectOptions>
+	                    <apex:actionSupport event="onchange" reRender="Details" action="{!displayCMPage}"/>
+	                </apex:selectList>
+				</apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	    </apex:pageBlock>
+		<apex:panelGroup >
+			<iframe height="800px" id="idCMIFrame" name="idCMIFrame" src="{!frameURL}" width="100%" frameborder="false" style="border: 0px solid #ffffff;">Campaign Monitor could not be loaded. Contact support.</iframe>
+		</apex:panelGroup>
+	</apex:form>
+
+</apex:page>

@@ -1,0 +1,200 @@
+<apex:page showHeader="true" sidebar="false" controller="wbsendit.TrackingDataSettingsController" action="{!checkPremium}">
+
+    <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+    <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+    <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/settings.min.js')}" />
+
+    <apex:outputPanel >
+		<script type="text/javascript">
+			
+			var j$ = j$ || jQuery.noConflict();
+
+			settings.trackingData.statsToSave = JSON.parse('{!StatsToSave}');
+			settings.trackingData.daysToRetain = '{!DaysToRetain}';
+			settings.trackingData.oldSyncLevel = '{!SyncLevel}';
+			settings.trackingData.totalStorage = {!TotalStorage};
+			settings.trackingData.totalStorageUsed = {!TotalStorageUsed};
+			settings.trackingData.totalTrackingStorage = {!TotalTrackingData};
+
+			settings.trackingData.VFBindings.saveData = '{!$RemoteAction.TrackingDataSettingsController.saveData}';
+			settings.labels.unsaved = '{!$Label.Settings_Not_Saved}';
+
+			j$(document).ready(settings.trackingData.documentReady);
+
+		</script>
+	</apex:outputPanel>
+
+
+	<style>
+
+		.b12-btn-do:disabled{
+			cursor: default;
+			color: #aaa;
+			background: #5E99BD;
+			border-color: #5E99BD;
+		}
+
+		.b12-loader {
+	        display: none;
+        }
+        .b12-loader.active {
+        	display: block;
+        }
+        .b12-loader-bar{
+            height: 12px;
+            width: 260px;
+            margin: 0 auto;
+            background: #E0E0E0;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);
+            -moz-box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);
+            box-shadow: inset 3px 3px 8px 0px rgba(209,209,209,1);        	
+        }
+        .b12-loaded {
+          background: #72d0eb;
+          height: 12px;
+          border-radius: 4px 0 0 4px;
+        }
+        .b12-loaded.done {
+            border-radius: 4px;
+        }		
+	</style>
+
+    <div class="b12-frame">
+
+        <div class="b12-header">
+            <h1>{!HTMLENCODE($Label.Tracking_Data_Header)}</h1>
+            <div class="b12-help"><a href="{!$Label.Help_Url_Tracking_Data}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+        </div>
+
+        <apex:outputPanel rendered="{!IsTrial}">
+            <div class="b12-messages b12-messages-info" style="">
+                <span class="b12-message-info-icon"><i class="fa fa-info"></i></span>
+                <p class="b12-messages-text">{!$Label.Tracking_Data_Premium_Message} <a href="{!$Page.UpgradeWizard}">{!$Label.FieldMapping_Upgrade_Now}</a></p>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel >
+
+	        <div class="b12-messages b12-messages-info" style="display: none;">
+	            <p class="b12-messages-text"></p>
+	            <a href="" class="b12-message-close"><i class="fa fa-times"></i></a>
+	        </div>
+
+	        <div class="b12-content">
+
+		        <apex:variable rendered="{!IsHigherThanPE}" value="p" var="o">
+		        	<div class="b12-layout b12-layout-50">
+		        		<div class="b12-layout-col">
+							<div class="b12-layout-group">
+								<div class="b12-layout-group-header">
+									<p>{!HTMLENCODE($Label.Tracking_Data_Total_Space)}</p>
+								</div>	
+								<div class="b12-layout-group-content">
+									<p>{!TotalStorage} MB</p>
+									<div class="b12-space-bar">
+										<div class="b12-space-bar-1" style="width:20%"></div>
+										<div class="b12-space-bar-2" style="width:40%"></div>
+									</div>								
+								</div>
+							</div>	
+							<div class="b12-layout-group">
+								<div class="b12-layout-group-content">
+									<ul>
+										<li><span class="b12-space-bar-key b12-space-bar-key-1"></span> {!TotalTrackingData}MB {!HTMLENCODE($Label.Tracking_Data_sendIT_Data)}</li>
+										<li><span class="b12-space-bar-key b12-space-bar-key-2"></span> {!TotalStorageUsed - TotalTrackingData}MB {!HTMLENCODE($Label.Tracking_Data_Other_Data)}</li>
+										<li><span class="b12-space-bar-key"></span> {!TotalStorage - TotalStorageUsed}MB {!HTMLENCODE($Label.Tracking_Data_Free)}</li>																		
+									</ul>
+								</div>
+							</div>        		
+		        		</div>
+		        	</div>
+	        	</apex:variable>
+
+	        	<div class="b12-layout">
+	        		<div class="b12-layout-col">
+	        			<div class="b12-layout-group">
+							<div class="b12-layout-group-header">
+								<p>What to track</p>
+							</div>	
+							<div class="b12-layout-group-content">
+								<label class="b12-radio-button b12-radio-button-left">
+									<input data-sync-level="Nothing" id="syncNothing" name="sync" type="radio" />
+									{!HTMLENCODE($Label.Tracking_Data_Sync_Nothing)}
+								</label>
+								<label class="b12-radio-button b12-radio-button-center"> 
+									<input data-sync-level="Everything" id="syncEverything" name="sync" type="radio" />
+									{!HTMLENCODE($Label.Tracking_Data_Sync_Everything)}
+								</label>
+								<label class="b12-radio-button b12-radio-button-right">
+									<input data-sync-level="Selective" id="syncSelective" name="sync" type="radio" />
+									{!HTMLENCODE($Label.Tracking_Data_Sync_Selective)}
+								</label>						
+							</div>
+						</div>
+	        		</div>
+	        	</div>
+	            
+	        	<div class="b12-layout b12-layout-30" id="selectiveOptions">
+	        		<div class="b12-layout-col">
+	        			<div class="b12-layout-group b12-form-group">
+							<div class="b12-layout-group-header">
+								<p>{!HTMLENCODE($Label.Tracking_Data_Days_To_Keep)}</p>
+							</div>	
+							<div class="b12-layout-group-content">
+								<input id="numberDays" type="number" />
+							</div>
+						</div>
+	        		</div>
+	        		<div class="b12-layout-col">
+	        			<div class="b12-layout-group">
+							<div class="b12-layout-group-header">
+								<p>{!HTMLENCODE($Label.Tracking_Data_Restrict_By_Type)}:</p>
+							</div>	
+							<div class="b12-layout-group-content">
+								<ul>
+									<li>
+										<label for="restrictSent">
+											<input data-activity-type="recipients" id="restrictSent" name="stats" type="checkbox" />
+											{!HTMLENCODE($Label.Tracking_Data_Sent)}
+										</label>
+									</li>
+									<li>
+										<label for="restrictOpen">
+											<input data-activity-type="opens" id="restrictOpen" name="stats" type="checkbox" />
+											{!HTMLENCODE($Label.Tracking_Data_Opened)}
+										</label>
+									</li>
+									<li>
+										<label for="restrictClicked">
+											<input data-activity-type="clicks" id="restrictClicked" name="stats" type="checkbox" />
+											{!HTMLENCODE($Label.Tracking_Data_Clicked)}
+										</label>	
+									</li>
+									<li>
+										<label for="restrictBounced">
+											<input data-activity-type="bounces" id="restrictBounced" name="stats" type="checkbox" />
+											{!HTMLENCODE($Label.Tracking_Data_Bounced)}
+										</label>
+									</li>
+								</ul>
+							</div>
+						</div>
+	        		</div>
+	        	</div>
+	        	      	
+	    	</div>
+
+	        <div class="b12-footer">
+	            <div class="b12-action">
+	                <div class="b12-action-save">
+	                    <button class="b12-btn b12-btn-do" id="saveButton" type="button">{!HTMLENCODE($Label.Save)}</button>
+	                </div>
+	            </div>
+	        </div>
+        </apex:outputPanel>
+
+	</div>
+
+</apex:page>

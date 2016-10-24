@@ -1,0 +1,28 @@
+<apex:page showHeader="false" sidebar="false" controller="wbsendit.ConnectController" action="{!runOAuth}">
+
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"/>
+	
+	<apex:pageMessages />
+
+	<apex:outputPanel rendered="{!success}">
+		<script>
+
+			$(document).ready(function(){
+
+				Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.ConnectController.IsNewCM}', 
+		            function(result, event){
+						if(window.opener){
+							window.opener.setupWizard.closePopup(result);
+						}		            	
+		            },
+		            {buffer: false}
+		        );				
+
+			});
+
+
+		</script>
+	</apex:outputPanel>
+
+</apex:page>

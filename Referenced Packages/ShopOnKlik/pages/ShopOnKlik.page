@@ -1,0 +1,81 @@
+<apex:page applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false" showHeader="false" sidebar="false">
+    <apex:includeLightning />
+    <apex:includeScript value="/lightning/lightning.out.js"/>
+    <head>
+    
+        <link rel="stylesheet" href="https://cdn.rawgit.com/mailtoharshit/ForceSpinner/master/src/css/forcespinner.css" media="screen,projection"/>
+        
+    </head>
+    <style>
+        .cTestCart .myClassModalImg img {
+        margin-top: -5%;
+        }
+        
+        /* Let's get this party started */
+        ::-webkit-scrollbar {
+        width: 5px;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px #fff;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: #009688;
+        -webkit-box-shadow: inset 0 0 6px #009688;
+        }
+        ::-webkit-scrollbar-thumb:window-inactive {
+        background: #fff; 
+        }
+        ::-moz-selection { /* Code for Firefox */
+        color: #fff !important;
+        background: #009688 !important;
+        }
+        
+        ::selection {
+        color: #fff !important;
+        background: #009688 !important;
+        }
+        body{
+        font-family: sans-serif !important;
+        text-transform: uppercase;
+        }
+        
+        a{
+        text-decoration: none !important;
+        }
+        #myLoader{
+        margin-top:20%;
+        }
+    </style>
+    <script>
+    function loadspinner(){
+        
+        forceSpin(myLoader, 'cubes', 'teal', 'transparent');
+    }
+    $Lightning.use("shoponklik:TestCartApp", function() {
+        
+        $Lightning.createComponent("shoponklik:TestCart",
+                                   {},
+                                   "myLightningApp",
+                                   function(cmp) {    
+                                       
+                                   });
+        document.getElementById("myLoader").style.display = 'none';  
+    });
+    </script>
+    <body onload="loadspinner()">
+        <div id="myLoader"/>
+        <div id="myLightningApp"/>
+        
+        <apex:includeScript value="https://code.jquery.com/jquery-2.1.1.min.js"/>
+        <apex:includeScript value="https://cdn.rawgit.com/mailtoharshit/ForceSpinner/master/src/js/forcespinner.js"/>
+    </body>
+    
+</apex:page>

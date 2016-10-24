@@ -1,0 +1,7 @@
+<apex:page >
+
+    <apex:canvasApp applicationName="canvas_test_sheethu" 
+        height="1000px" width="500px" 
+        border="2" scrolling="yes"/>
+
+</apex:page>

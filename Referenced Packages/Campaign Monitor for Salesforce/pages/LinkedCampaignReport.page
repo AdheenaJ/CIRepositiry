@@ -1,0 +1,27 @@
+<apex:page controller="wbsendit.LinkedCampaignReportController" tabStyle="Campaign">
+<apex:form >
+	<apex:pageBlock title="Campaigns already linked" rendered="{!hasRows}">
+
+		<apex:pageBlockTable value="{!linkedCampaigns}" var="linkedCampaign" rowClasses="odd,even" styleClass="tableClass">
+			<apex:column >
+				<apex:facet name="header">Salesforce Campaign</apex:facet>
+				<apex:commandLink action="{!displaySalesforceCampaign}" id="idDisplaySalesforceCampaign"  value="{!linkedCampaign.sfCampaignName}" >
+					<apex:param name="sfCampaignId" value="{!linkedCampaign.sfCampaignId}" assignTo="{!sfCampaignId}"/>
+				</apex:commandLink>
+			</apex:column>
+			<apex:column >
+				<apex:facet name="header">Linked Campaign</apex:facet>
+				<apex:commandLink action="{!displayCampaign}" id="idDisplayCampaign"  value="{!linkedCampaign.cmCampaignName}" >
+					<apex:param name="campaignId" value="{!linkedCampaign.campaignId}" assignTo="{!campaignId}"/>
+				</apex:commandLink>
+			</apex:column>
+			<apex:column width="5%" style="white-space: nowrap;">
+				<apex:facet name="header">Action</apex:facet>
+				<apex:commandLink action="{!disconnectCampaign}" id="idDisconnectCampaign"  value="Disconnect" >
+					<apex:param name="sfCampaignId" value="{!linkedCampaign.sfCampaignId}" assignTo="{!sfCampaignId}"/>
+				</apex:commandLink>
+			</apex:column>
+		</apex:pageBlockTable>
+	</apex:pageBlock>
+</apex:form>
+</apex:page>

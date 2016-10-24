@@ -1,0 +1,61 @@
+<!-- Deprecated -->
+<apex:page Controller="wbsendit.CampaignMemberStatusController" tabStyle="SendIt_Options__tab" action="{!checkSetup}">
+
+	<apex:sectionHeader title="Campaign Member" subtitle="Configure Campaign Member Statuses" help="{!$Label.SupportLink_Map_Statuses}"/>
+
+	<apex:pageMessage severity="info"
+	    strength="2"
+	    title="Campaign Member Status Help"
+	    escape="false"
+	    rendered="true"
+	    summary="{!generalMessage}" />
+
+	<apex:form >
+		<apex:pageMessages escape="false" />
+		&nbsp;«&nbsp;<apex:commandLink action="{!back}" id="idBack"  value="Back to Settings" style="font-family: 'Verdana','Geneva',sans-serif;font-size: 91.3%;text-decoration: none;"/>
+		<apex:pageblock mode="detail" id="idStatuses">
+			<apex:pageMessages escape="false" />
+
+			<!-- Buttons -->
+			<apex:pageBlockButtons location="bottom" >
+				<apex:commandButton id="idSaveMemberStatus" value="Save Member Statuses" action="{!saveMemberStatus}" reRender="idStatuses"  rendered="{!inAddMode}"/>
+				<apex:commandButton id="idEditMemberStatus" value="Edit Member Statuses" action="{!editMemberStatus}" reRender="idStatuses"  rendered="{!NOT(inAddMode)}"/>
+				<apex:commandButton id="idCancelMemberStatus" value="Cancel" action="{!cancelMemberStatus}" reRender="idStatuses"  rendered="{!inAddMode}"/>
+			</apex:pageBlockButtons>
+
+			<!-- Campaign Member Status Mappings -->
+			<apex:PageBlockSection columns="2" collapsible="false" title="Campaign Member Status Configuration">
+				<apex:pageBlockTable value="{!memberStatuses}" var="MemberStatus" rowClasses="odd,even" styleClass="tableClass" id="idMemberStatuses" >
+					<apex:column >
+						<apex:facet name="header">Campaign Monitor Activity</apex:facet>
+						<apex:outputLabel value="{!MemberStatus.Name}" id="idCMName"/>
+					</apex:column>
+					<apex:column >
+						<apex:facet name="header">Salesforce Member Status</apex:facet>
+						<apex:inputText value="{!MemberStatus.wbsendit__Status_Label__c}" id="idSalesforceMemberStatus" disabled="{!NOT(inAddMode)}"/>
+					</apex:column>
+					<apex:column >
+						<apex:facet name="header">Responded</apex:facet>
+						<apex:inputCheckbox value="{!MemberStatus.wbsendit__HasResponded__c}" disabled="{!NOT(inAddMode)}"/>
+					</apex:column>
+				</apex:pageBlockTable>
+
+				<!-- Refresh behaviour options -->
+               <apex:pageBlockSectionItem >
+
+                    <apex:selectRadio value="{!refrehBehaviour}" layout="pageDirection" legendText="Member Status Refresh Behaviour" disabled="{!NOT(inAddMode)}">
+            			<apex:selectOptions value="{!refrehBehaviours}"/>
+            		</apex:selectRadio>
+
+                </apex:pageBlockSectionItem>
+
+				<!-- Auto create member statuses option -->
+               <apex:pageBlockSectionItem >
+               		<apex:outputLabel value="Auto create missing statuses"/><apex:inputCheckbox value="{!autoCreateStatuses}" disabled="{!NOT(inAddMode)}"/>
+                </apex:pageBlockSectionItem>
+			</apex:PageBlockSection>
+
+		</apex:pageBlock>
+
+	</apex:form>
+</apex:page>

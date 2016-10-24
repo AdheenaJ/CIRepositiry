@@ -1,0 +1,44 @@
+<apex:page controller="shoponklik.MyLoginController" action="{! doLogin}" standardStylesheets="false" showHeader="false">
+    
+    <h1>ShopOnKlik</h1>
+    
+    <style>
+        #myHiddenDiv{
+        display:none !important;
+        }
+    </style>
+    
+    <div id="myHiddenDiv">
+        {!$Label.ACCOUNT}
+        {!$Label.ADDEDTOCART}
+        {!$Label.ADDREMOVE}
+        {!$Label.ADDTOCART}
+        {!$Label.APPLYCODE}
+        {!$Label.CART}
+        {!$Label.CHECKOUT}
+        {!$Label.CLOSE}
+        {!$Label.CONTINUESHOPPING}
+        {!$Label.COUPONAPPLIED}
+        {!$Label.COUPONCODE}
+        {!$Label.DATE}
+        {!$Label.DOYOUREALLYWANTTOCHECKOUT}
+        {!$Label.EDIT}
+        {!$Label.HAPPYSHOPPING}
+        {!$Label.HOME}
+        {!$Label.INVALIDCOUPONCODE}
+        {!$Label.ITEM}
+        {!$Label.LOGOUT}
+        {!$Label.MYORDERS}
+        {!$Label.MYPROFILE}
+        {!$Label.PLEASETRYWITHAVALIDCOUPONCODE}
+        {!$Label.PRICE}
+        {!$Label.PROCEEDTOCHECKOUT}
+        {!$Label.QUANTITY}
+        {!$Label.SAVE}
+        {!$Label.STORES}
+        {!$Label.SUBTOTAL}
+        {!$Label.TOTAL}
+        {!$Label.WISHLIST}       
+    </div>
+    
+</apex:page>

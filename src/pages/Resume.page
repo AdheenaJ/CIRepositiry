@@ -1,0 +1,90 @@
+<apex:page >
+    <body>        
+        <br/> <b> <h1>        
+        <div align="center">        ADHEENA JACOB </div> </h1> </b> <br/> <hr/> <br/>
+        <div style="border-left: 6px; left: 150px; position=absolute;">
+
+    <b align="left"> 
+        Lucy Dale<br/> 
+        Millupady<br/>
+        U C College<br/>
+        adheena.jacob@gmail.com<br/>
+        ph: 8080903761<br/> </b><br/><hr/>
+    <b> <u> <h1> <div align="left">
+        CAREER  OBJECTIVE
+        </div> </h1></u> </b> <br/>
+        Seeking a position as an engineer or related positions in a reputed organization where I can use the best of my skills and knowledge for the growth of the company I work for, and enhance my abilities. <br/>
+        <br/> <b> <u><h1> <div align="left">
+        STRENGTHS
+        </div> </h1> </u></b> <br/> 
+        	Ability to adapt to a new working environment<br/>
+        	Good team spirit<br/>
+        	Honest<br/>
+			Optimistic<br/>
+			Easy going<br/>
+		<br/> <b> <u> <h1> <div align="left">
+        PROJECTS
+        </div> </h1> </u></b> <br/>
+        <b> Mini Project: Pilgrim Management Application</b><br/>
+            Pilgrim management is an Android application that provides a user friendly interface to do bookings for poojas and masses at various pilgrim centers in Kerala. It also provides virtual queue booking.<br/>
+        <b>Main Project: iSenior- a support for elderly citizens</b><br/>
+        iSenior is an embedded system and the main purpose of iSenior system is to provide health and safety monitoring to elder citizen who lives at rest homes. The iSenior system provides an Elderly Monitoring Device (EMD) for the user which is a wearable device. It performs functions like monitor and alert on parameters like abnormal heart beat and blood pressure level. The user can request for assistance through this system. It can also be used to localize the user.
+        <br/> <b> <u><h1> <div align="left"><br/>
+        INTERNSHIP
+        </div> </h1></u> </b> <br/>
+        <b>Company name: Pepperpot Systems and Solutions Pvt. Ltd.</b><br/>
+        Learned the basics of web page design and the software development method used by the company through 9 days of internship.
+  		<br/> <b> <u><h1> <div align="left"><br/>
+        COMPUTER SKILLS
+        </div> </h1></u> </b> <br/>
+        	Language : C, C++, JAVA <br/>
+	DBMS<br/>
+	Networking<br/>
+	Basic computer knowledge<br/>
+        <br/> <b> <u><h1> <div align="left"><br/>
+        Co-CURRICULAR ACTIVITIES
+        </div> </h1></u> </b> <br/>
+        	Participated Aspirations contest conducted by Infosys<br/>
+        	Participated in Campus commune soft skill program conducted by Infosys<br/>
+        	Completed training in android from Limra Institutions Pvt. Ltd.<br/>
+	<br/> <b> <u><h1> <div align="left"><br/>
+        EDUCATIONAL QUALIFICATION
+        </div> </h1></u> </b> <br/>
+<table border="1" style="width:100%">
+    
+  <tr>
+      <td><b><div align="center"> Degree </div></b></td>
+      <td><b><div align="center">Name ofInstitution</div></b></td>		
+      <td><b><div align="center">University</div></b></td>
+      <td><b><div align="center">Percentage</div></b></td>
+  </tr>
+  <tr>
+      <td><div align="center">B-Tech IT</div></td>
+      <td><div align="center">ASIET</div></td>		
+        <td><div align="center">MGU</div></td>
+        <td><div align="center">70</div></td>
+  </tr>
+  <tr>
+      <td><div align="center">Higher Secondary</div></td>
+      <td><div align="center">St.Francis</div></td>		
+      <td><div align="center">State Board</div></td>
+      <td><div align="center">93</div></td>
+  </tr>
+    <tr>
+        <td><div align="center">SSLC</div></td>
+        <td><div align="center">VVBEMHSS</div></td>		
+        <td><div align="center">State Board</div></td>
+        <td><div align="center">93</div></td>
+  </tr>
+   
+</table>
+       <br/> <b> <u><h1> <div align="left"><br/>
+       DECLARATION
+        </div> </h1></u> </b> <br/> 
+        <i>I do hereby declare that all the particulars given above are true and correct to the best of my knowledge and belief and that I have not concealed or distorted any information in this regard.</i>
+        <br/><br/><b> PLACE: <br/> DATE:
+        <div align="right"> ADHEENA JACOB
+        </div></b> 
+        </div>
+    </body>
+</apex:page>

@@ -1,0 +1,45 @@
+<apex:page controller="wbsendit.OptionsController" showHeader="true" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" action="{!checkPageRedirect}">
+<link rel="stylesheet" href="{!URLFOR($Resource.SendItAssets, 'css/mapping.min.css')}" />
+<div class="b12-frame">
+<div class="b12-header">
+<h1>The Campaign Monitor Settings page has moved!</h1>
+</div>
+<div class="b12-content">
+
+<div align="centre">
+
+
+
+
+    <table width="100%">
+    <tr><td colspan="3" align="center" style=""><b>The Campaign Monitor Settings page has to it's own Salesforce App (Campaign Monitor Admin).</b></td></tr>
+    <tr><td colspan="3" align="center"><img src="{!URLFOR($Resource.SendItAssets, 'img/adminmoved.png')}"  width="293" height="250" /></td></tr>
+    <tr>
+        <td width="25%"></td>
+        <td width="50%" align="left">
+              <ol style="line-height:1.4;">
+                <li>1. Navigate to "Permission Sets" in Salesforce</li>
+                <li>2. Click on "Campaign Monitor - Full Access"</li>
+                <li>3. Click the button "Manage Assignments"</li>
+                <li>4. Add users and press save</li>
+                <li>5. Navigate to Create --> Apps in Salesforce</li>
+                <li>6. Click "Edit" next to "Campaign Monitor Admin"</li>
+                <li>7. Under "Assign to Profiles", tick the appropriate "Visible" checkbox next to the profile to enable</li>
+                <li>8. Press "Save"</li>
+              </ol>
+        </td>
+        <td width="25%"></td>
+
+    </tr>
+    </table>
+
+</div>
+
+</div>
+<div class="b12-footer">
+    <apex:messages />
+</div>
+
+</div>
+
+</apex:page>

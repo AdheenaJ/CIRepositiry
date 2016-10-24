@@ -1,0 +1,197 @@
+<apex:page showHeader="true" sidebar="false" controller="wbsendit.UpgradeWizardController">
+
+    <style type="text/css">
+
+        table {
+          border-collapse: collapse;
+          border-spacing: 0; }
+
+        .b12-frame {
+            font-family:"HelveticaNeue",Arial,sans-serif;
+            color: #3c3d3e;
+            width: inherit;
+            margin: -10px;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+          padding: 0;
+          border: 0;
+          vertical-align: baseline;
+        }
+        .b12-header {
+            height: 1%;
+            overflow: hidden;
+            clear: both;
+            border-bottom: 1px solid #ffffff;
+            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
+            background-color: #f3f5f6;
+            padding: 20px;
+            line-height: 1.5em;
+        }
+        .b12-header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            display: block;
+            font-family:"HelveticaNeue-Light",Arial,sans-serif;
+            float: left;
+            color: #404C5B;
+            margin-right: 20px;
+        }
+        .b12-header p {
+            font-size: 0.9em;
+            color: #404C5B;
+            float: left;
+            display: inline-block;
+            padding: 0px;
+            margin: 2px;
+        }
+        .b12-centered-list {
+            float: left;
+            color: #7f7f7f;
+            padding-right: 20px;
+        }
+        .b12-help {
+            float: right;
+            display: inline-block;
+            padding-top: 3px;
+        }
+        .b12-help i {
+            color: #D7A11E;
+            font-size: 16px;
+        }
+        a {
+            color: #2a94d6;
+            text-decoration: none;
+        }
+        a:hover,
+        a.b12-action-link:hover {
+            color: #005c94;
+            text-decoration: underline;
+            cursor: pointer; cursor: hand;
+        }
+        a i {
+            padding-right: 5px;
+        }
+        .b12-content {
+            box-sizing: border-box;
+            overflow: auto;
+            padding: 20px 20px 30px 20px;
+            clear: both;
+        }
+        .b12-footer {
+            position: relative;
+            bottom: 0;
+            padding: 14px;
+            border-top: 1px solid #ffffff;
+            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
+            background-color: #f3f5f6;
+            width: 100%;
+            box-sizing: border-box;
+            height: 65px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .b12-tooltip {
+            cursor: pointer;
+            color: rgba(144, 144, 144, 0.32);
+            margin-left: 3px;
+        }
+        .b12-tooltip-dynamic {
+            cursor: pointer;
+            color: rgba(144, 144, 144, 0.32);
+            margin-left: 3px;
+        }
+        .b12-tooltip-tip {
+            background: #fefedc !important;
+            box-shadow: 0px 0px 9px 0px rgba(97,97,97,0.5);
+            width: 200px;
+            padding: 10px;
+            border-radius: 4px;
+            line-height: 16px;
+            border: solid 1px #ffd577;
+            color: #3c3d3e;
+            opacity: 1 !important;
+        }
+
+        .b12-messages {
+            padding: 0 40px 0 20px;
+            margin: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            height: 1%;
+            overflow: hidden;
+        }
+        .b12-messages-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+        .b12-messages-info {
+            color: #31708f;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }
+        .b12-messages-warning {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+        .b12-message-close {
+            float: right;
+            position: relative;
+            top: 13px;
+            right: -25px;
+        }
+        a.b12-message-close {
+          color: inherit;
+          opacity: 0.5;
+        }
+        a.b12-message-close:hover {
+          color: inherit;
+          opacity: 0.7;
+        }
+        .b12-message-info-icon {
+            float: right;
+            position: relative;
+            top: 13px;
+            right: -25px;
+        }
+        a.b12-message-info-icon {
+          color: inherit;
+          opacity: 0.5;
+        }
+
+    </style>
+
+    <div class="b12-frame">
+
+
+        <div class='b12-overlay'></div>
+
+        <div class="b12-header">
+            <h1>{!$Label.UpgradeWizard_Upgrade_to_Premium_Header}</h1>
+            <!-- Help -->
+            <div class="b12-help"><a href="{!$Label.SupportLink_Upgrade_Help}" target="_blank">{!$Label.UpgradeWizard_Help_for_this_Page} <i class="fa fa-question-circle"></i></a></div>
+        </div>
+        <apex:outputPanel layout="block" rendered="{!UPPER(licenceDetail.status) != 'ACTIVE'}">
+            <div class="b12-messages b12-messages-info" style="">
+                <a class="b12-message-info-icon"><i class="fa fa-info"></i></a>
+                <p class="b12-messages-text">{!$Label.UpgradeWizard_Premium_Features} <a href="{!$Label.SupportLink_Premium_Features_Link}" target="_blank">{!$Label.UpgradeWizard_Read_More_Here}</a></p>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="block" rendered="{!UPPER(licenceDetail.status) == 'ACTIVE'}">
+            <div class="b12-messages b12-messages-info" style="">
+                <a class="b12-message-info-icon"><i class="fa fa-info"></i></a>
+                <p class="b12-messages-text">{!$Label.UpgradeWizard_Thanks_for_Purchasing}</p>
+            </div>
+        </apex:outputPanel>
+
+
+        <!-- Display the upgrard wizard component -->
+        <c:UpgradeWizard />
+
+        <div class="b12-footer">
+        </div>
+    </div>
+</apex:page>

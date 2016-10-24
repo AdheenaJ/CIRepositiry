@@ -1,0 +1,84 @@
+<apex:page showHeader="true" sidebar="false" controller="wbsendit.BillingSettingsController" action="{!checkSetup}">
+
+    <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+    <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+    <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/settings.min.js')}" />
+
+	<script>
+
+		var j$ = j$ || jQuery.noConflict();
+
+		settings.billing.inTrial = {!InTrial};
+		settings.billing.trialMessage = '{!BillingTrial}';
+
+		j$(document).ready(settings.billing.documentReady);
+
+	</script>
+
+    <div class="b12-frame">
+
+        <div class="b12-header">
+            <h1>{!HTMLENCODE($Label.Billing_Header)}</h1>
+            <div class="b12-help"><a href="{!$Label.Help_Url_Billing_Settings}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+        </div>
+
+        <apex:outputPanel >
+
+	        <div class="b12-messages b12-messages-info" style="display: none;">
+	            <p class="b12-messages-text"></p>
+
+	            <a href="#" class="b12-message-close"><i class="fa fa-times"></i></a>
+	        </div>
+
+	        <div class="b12-content">
+	        	<div class="b12-layout b12-layout-30">
+					<div class="b12-layout-col">
+						<div class="b12-layout-group">
+							<div class="b12-layout-group-header">
+								<p>{!HTMLENCODE($Label.Billing_Active_Subscribers)}</p>
+							</div>
+							<div class="b12-layout-group-content">
+								<p>{!ActiveSubscribers}</p>
+							</div>
+						</div>
+					</div>
+					<div class="b12-layout-col">
+						<div class="b12-layout-group">
+							<div class="b12-layout-group-header">
+								<p>{!HTMLENCODE($Label.Billing_Current_Band)}</p>
+							</div>
+							<div class="b12-layout-group-content">
+								<p>{!CurrentBand}</p>
+							</div>
+						</div>
+					</div>
+					<div class="b12-layout-col">
+						<div class="b12-layout-group">
+							<div class="b12-layout-group-header">
+								<p>{!HTMLENCODE($Label.Billing_Monthly_Cost)}</p>
+							</div>
+							<div class="b12-layout-group-content">
+								<p>{!MonthlyCost}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+	    	</div>
+
+	        <!-- Display the upgrard wizard component -->
+        	<c:UpgradeWizard />
+
+	        <div class="b12-footer">
+	        	{!LicenceStatus}
+	        </div>
+
+        </apex:outputPanel>
+
+	</div>
+
+
+
+
+
+</apex:page>

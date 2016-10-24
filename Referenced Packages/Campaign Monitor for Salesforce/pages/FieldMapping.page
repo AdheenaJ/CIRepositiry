@@ -1,0 +1,233 @@
+<apex:page controller="wbsendit.CustomMappingRemoteController" showheader="true" sidebar="false" standardStylesheets="true" tabStyle="Custom_Field_Mappings__tab">
+
+    <link rel="stylesheet" href="{!URLFOR($Resource.SendItAssets, 'css/mapping.min.css')}" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="{!URLFOR($Resource.SendItAssets, 'js/mapping.min.js')}" />
+
+    <script>
+
+        var j$ = j$ || jQuery.noConflict();
+
+        // Declare remote action names including any namespaces
+        var RemoteActions = {};
+        RemoteActions.salesforceFields = '{!$RemoteAction.CustomMappingRemoteController.getSalesforceFields}';
+        RemoteActions.customMappings = '{!$RemoteAction.CustomMappingRemoteController.getCustomMappings}';
+        RemoteActions.subscriberLists = '{!$RemoteAction.CustomMappingRemoteController.getSubscriberLists}';
+        RemoteActions.saveMappings = '{!$RemoteAction.CustomMappingRemoteController.saveMappings}';
+        RemoteActions.exampleData = '{!$RemoteAction.CustomMappingRemoteController.getExampleData}';
+
+
+        // Declare labels so we can use them in Javascript
+        var VFLabels = {};
+
+        VFLabels.Load_Mappings = '{!HTMLENCODE($Label.Load_Mappings)}';
+        VFLabels.Add_Field_Based_On = '{!HTMLENCODE($Label.Add_Field_Based_On)}';
+        VFLabels.Email_System = '{!HTMLENCODE($Label.Email_System)}';
+        VFLabels.None = '{!HTMLENCODE($Label.None)}';
+        VFLabels.Reached_Custom_Field_Limit = '{!$Label.Reached_Custom_Field_Limit}';
+        VFLabels.Invalid_Date = '{!HTMLENCODE($Label.Invalid_Date)}';
+        VFLabels.Invalid_ID = '{!HTMLENCODE($Label.Invalid_ID)}';
+        VFLabels.Invalid_Number = '{!HTMLENCODE($Label.Invalid_Number)}';
+        VFLabels.Delete_Field_Mapping = '{!HTMLENCODE($Label.Delete_Field_Mapping)}';
+        VFLabels.Select_a_Field = '{!HTMLENCODE($Label.Select_a_Field)}';
+        VFLabels.Select_Link = '{!HTMLENCODE($Label.Select_Link)}';
+        VFLabels.Related_Field_Update = '{!HTMLENCODE($Label.Related_Field_Update)}';
+        VFLabels.Subscriber_List_Not_Setup = '{!HTMLENCODE($Label.Subscriber_List_Not_Setup)}';
+        VFLabels.Edit_Link = '{!HTMLENCODE($Label.Edit_Link)}';
+        VFLabels.Switch_Mapping_Warning = '{!$Label.Switch_Mapping_Warning}';
+        VFLabels.Example_Contact = '{!$Label.Example_Contact}';
+        VFLabels.Example_Lead = '{!$Label.Example_Lead}';
+        VFLabels.Default_Lead = '{!$Label.Default_Lead}';
+        VFLabels.Default_Contact = '{!$Label.Default_Contact}';
+        VFLabels.Required_Mapping_Field = '{!$Label.Required_Mapping_Field}';
+        VFLabels.Default_Field_Too_Long = '{!$Label.Default_Field_Too_Long}';
+        VFLabels.Restricted_Mapping_Field = '{!$Label.Restricted_Mapping_Field}';
+
+
+        // Page references
+        var PageRef = {};
+        PageRef.CreateSubscriberListPageUrl = '{!CreateSubscriberListUrl}';
+        PageRef.FieldMappingUrl = '{!FieldMappingUrl}';
+
+        j$(document).ready(mappings.general.documentReady);
+
+    </script>
+
+
+    <div class="b12-frame">
+
+        <!-- Main Custom Field Mapping Body -->
+
+        <div class='b12-overlay'></div>
+
+        <div class='b12-modal' data-action='select'>
+
+            <div class='b12-modal-section b12-modal-add-field'>
+                <div class='b12-modal-header'>
+                    <h2><div class='ui-dialog-title'>...</div></h2>
+                    <div class='b12-modal-add-field-type' id='selected-object-type' data-object-type='Contact'>
+                        <label>
+                            <input type='radio' name='radio-field-type' id='radio-contact' value='Contact' checked='true'><apex:outputLabel value="{!$Label.Contact}"/></input>
+                        </label>
+                        <label>
+                            <input type='radio' name='radio-field-type' id='radio-lead' value='Lead' ><apex:outputLabel value="{!$Label.Lead}"/></input>
+                        </label>
+
+                    </div>
+                    <a href='' class='b12-modal-close'><i class='fa fa-times'></i></a>
+                </div>
+                <div class="b12-modal-content">
+                    <p>
+                        <!-- Content -->
+                        <div class="b12-mc-breadcrumbs"><a href="" id="nav-label-base" data-type=""></a><i class="fa fa-chevron-right"></i><p id="nav-label-parent"></p></div>
+
+                        <select id='b12-salesforce-fields'>
+                            <option value=""><apex:outputLabel value="{!$Label.Loading}"/></option>
+                        </select>
+                        <div class="b12-form-group b12-default-value-label" style="display: none;">
+                            <label>{!$Label.FieldMapping_Default_Value}</label>
+                            <div class="b12-input-group b12-margin-bottom-sm">
+                                <span class="b12-input-group-addon"><i class="fa fa-pencil-square-o fa-fw"></i></span>
+                                <input class="b12-form-control" type="text" name="defaultValue" placeholder="Enter default value"/>
+                            </div>
+                        </div>
+                        <label class="b12-validation-msg"></label>
+                        <label class="b12-checkbox b12-create-only">
+                            <input name="createOnly" type="checkbox" value="createOnly"><apex:outputLabel value="{!$Label.Create_Only}"/></input>
+                        </label>
+                    </p>
+                </div>
+                <div class="b12-modal-footer">
+                    <button class="b12-btn b12-btn-do" id="save-modal"><apex:outputLabel value="{!$Label.Select}"/></button>
+                    <button class="b12-btn b12-action-link" data-action="closeModal"><apex:outputLabel value="{!$Label.Cancel}"/></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="b12-header">
+            <!-- Subscriber List Name -->
+            <h1>{!$Label.FieldMapping_Header}</h1>
+            <p id="b12-listname"><apex:outputLabel value="{!$Label.Loading}"/></p>
+
+            <!-- Help -->
+            <div class="b12-help"><a href="{!$Label.SupportLink_Field_Mappings_Help_Link}" target="_blank">{!$Label.FieldMapping_Help_for_this_Page} <i class="fa fa-question-circle"></i></a></div>
+
+        </div>
+
+        <apex:outputPanel layout="block" rendered="{!UPPER(licenceDetail.status) == 'TRIAL'}">
+            <div class="b12-messages-system b12-messages-info" style="">
+                <a class="b12-message-info-icon"><i class="fa fa-info"></i></a>
+                <p class="b12-messages-system">{!$Label.FieldMapping_Premium_Message} <a href="{!UpgradeUrl}">{!$Label.FieldMapping_Upgrade_Now}</a></p>
+            </div>
+        </apex:outputPanel>
+
+        <div class="b12-messages b12-messages-info" style="display: none;">
+            <a href="" class="b12-message-close"><i class="fa fa-times"></i></a>
+            <p class="b12-messages-text"></p>
+        </div>
+
+        <div class="b12-content">
+
+            <!-- Mapping direction -->
+            <div class="b12-mapping-selection">
+                <select id="b12-direction">
+                    <option value="sf2cm"><apex:outputLabel value="{!$Label.Map_SF_to_MS}"/></option>
+                    <option value="cm2sf"><apex:outputLabel value="{!$Label.Map_MS_to_SF}"/></option>
+                </select>
+
+                <!-- Salesforce record create action -->
+                <div class="b12-new-rule"><apex:outputLabel value="{!$Label.New_Subscriber_Rule}"/>
+                    <label class="b12-radio-button b12-radio-button-left radio-selected" for="ACTION_DO_NOTHING">{!$Label.New_Sub_None}
+                        <input id="ACTION_DO_NOTHING" class="b12-radio-button" type="radio" name="newsubs" value="none"></input>
+                    </label>
+
+                    <label class="b12-radio-button b12-radio-button-center" for="ACTION_CREATE_LEAD">{!HTMLENCODE($Label.New_Sub_Lead)}
+                        <input id="ACTION_CREATE_LEAD" class="b12-radio-button" type="radio" name="newsubs" value="none"></input>
+                    </label>
+
+                    <label class="b12-radio-button b12-radio-button-right" for="ACTION_CREATE_CONTACT">{!HTMLENCODE($Label.New_Sub_Contact)}
+                        <input id="ACTION_CREATE_CONTACT" class="b12-radio-button" type="radio" name="newsubs" value="none" ></input>
+                    </label>
+
+                    <i class="fa fa-info-circle b12-tooltip" title="{!HTMLENCODE($Label.Tooltip_New_Sub_Rules)}"></i>
+                </div>
+
+                <!-- Loading -->
+                <div class="b12-messages-subscriberlist">
+                    <p class="b12-messages-subscriberlist-text"></p>
+                </div>
+
+            </div>
+
+            <div id="customMappingContainer" class="b12-table-container">
+                <table class="b12-table">
+                    <tr>
+                        <th><apex:outputLabel value="{!$Label.Lead}"/></th>
+                        <th><apex:outputLabel value="{!$Label.Contact}"/></th>
+                        <th><apex:outputLabel value="{!$Label.Email_System}"/></th>
+                        <th class="b12-example b12-header-example-lead"><apex:outputLabel value="{!$Label.Example_Lead}"/></th>
+                        <th class="b12-example b12-header-example-contact"><apex:outputLabel value="{!$Label.Example_Contact}"/></th>
+                    </tr>
+                    <tr class="b12-standard-field">
+                        <td><div data-type="Lead" data-field="Name">{!$Label.FieldMapping_Full_Name}</div></td>
+                        <td><div data-type="Contact" data-field="Name">{!$Label.FieldMapping_Full_Name}</div></td>
+                        <td class="b12-cell-cm">
+                            <span>{!$Label.FieldMapping_Name_Label}</span>
+                            <div class="b12-cell-actions">
+                                <a href="" class="b12-cell-info"><i class="fa fa-info-circle b12-tooltip-dynamic" title="{!$Label.Standard_Mapped_Field}"></i></a>
+                            </div>
+                        </td>
+                        <td class="b12-example sf-lead"></td>
+                        <td class="b12-example sf-contact"></td>
+                    </tr>
+                    <tr class="b12-standard-field">
+                        <td><div data-type="Lead" data-field="Email">{!$Label.FieldMapping_Email_Label}</div></td>
+                        <td><div data-type="Contact" data-field="Email">{!$Label.FieldMapping_Email_Label}</div></td>
+                        <td class="b12-cell-cm">
+                            <span>{!$Label.FieldMapping_Email_Label}</span>
+                            <div class="b12-cell-actions">
+                                <a href="" class="b12-cell-info"><i class="fa fa-info-circle b12-tooltip-dynamic" title="{!$Label.Standard_Mapped_Field}"></i></a>
+                            </div>
+                        </td>
+                        <td class="b12-example sf-lead"></td>
+                        <td class="b12-example sf-contact"></td>
+                    </tr>
+                    <!-- Dynamic rows go here -->
+
+                </table>
+                <a href="" class="b12-action-link" data-action="addFieldUnknown"><i class="fa fa-plus"></i><apex:outputLabel value="{!$Label.Add_Row}"/></a>
+            </div>
+
+            <hr class="b12-hrline"></hr>
+            <div class="b12-multiselect">
+                <a href="" class="b12-action-link" data-action="applyToList"><i class="fa fa-plus-square"></i><apex:outputLabel value="{!$Label.Apply_Lists}"/></a>
+                <i class="fa fa-info-circle b12-tooltip" title="{!$Label.Tooltip_Apply_Lists}"></i>
+                <div id="multiple-lists" style="display: none;">
+                    <select id="selSubscriberlistsMultiple" multiple="true" style="display: block;">
+                        <option value=""><apex:outputLabel value="{!$Label.Loading}"/></option>
+                    </select>
+                    <label class="b12-checkbox">
+                        <input name="deletecmfields" type="checkbox" value="deletecmfields"><apex:outputLabel value="{!$Label.Delete_Field}"/></input>
+                    </label>
+                    <i class="fa fa-info-circle b12-tooltip" title="{!HTMLENCODE($Label.Tooltip_Delete_Field)}"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="b12-footer">
+            <div class="b12-action">
+                <div class="b12-action-save">
+                    <label class="b12-checkbox b12-retro">
+                        <input name="retrospective" type="checkbox" checked="checked" value="retrospective"><apex:outputLabel value="{!$Label.Retrospective_Save}"/></input>
+                    </label>
+                    <button class="b12-btn b12-btn-do" id="save-form" type="button"><apex:outputLabel value="{!$Label.Save}"/></button>
+                    <button class="b12-btn b12-btn-cancel" type="button"><apex:outputLabel value="{!$Label.Cancel}"/></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</apex:page>

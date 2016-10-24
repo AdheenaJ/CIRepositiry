@@ -1,0 +1,17 @@
+<apex:page controller="wbsendit.SubscriberActionController" >
+
+	<apex:sectionHeader title="Manage Campaign Monitor Subscribers" subtitle="Manage subscribers" help="{!$Label.SupportLink_Unsubscribe}"/>
+
+    <apex:form >
+
+    <apex:pageBlock title="{!title}">
+        <apex:pageMessages escape="false"/>
+        <apex:pageBlockButtons location="bottom">
+            <apex:commandButton action="{!save}" value="Confirm"  rendered="{!showAddButton}"/>
+            <apex:commandButton action="{!cancel}" value="Cancel"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

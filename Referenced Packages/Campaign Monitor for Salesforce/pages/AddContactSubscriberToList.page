@@ -1,0 +1,73 @@
+<apex:page standardController="Contact" tabStyle="Contact" extensions="wbsendit.AddSubscriberToListController" action="{!checkSetup}">
+<apex:sectionHeader title="Campaign Monitor Subscriber Lists" subtitle="Contact Subscriber" help="{!$Label.SupportLink_Add_Contacts_or_Leads}" />
+
+    <apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
+    <script>
+
+        j$ = jQuery.noConflict();
+
+        var addSubscriberToListController = {};
+
+        addSubscriberToListController.missingIds = JSON.parse('{!JSONMissingListIds}');
+
+        addSubscriberToListController.startRefresh = function(){
+
+            var link = j$("a[id$='refreshLink']");
+            var con = link.parent();
+
+            link.remove();
+            con.append('<div>Updating. The page will refresh when complete.</div>').css('color', 'grey');
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.AddSubscriberToListController.refreshLists}',
+                addSubscriberToListController.missingIds,
+                function(result, event){
+                    refresh();
+                });
+        };
+
+    </script>
+
+    <apex:form >
+
+        <apex:pageBlock title="Campaign Monitor Subscriber Lists">
+            <apex:pageMessages escape="false" />
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!addToList}" value="Add Contact to Email List" rendered="{!showAddButton}"/>
+                <apex:commandButton action="{!cancel}" value="Cancel" rendered="{!NOT(showingError)}"/>
+                <apex:commandButton action="{!cancel}" value="OK" rendered="{!showingError}"/>
+            </apex:pageBlockButtons>
+
+            <apex:actionFunction name="refresh" action="{!refreshPage}" reRender="details"/>
+            <apex:pageBlockSection id="details" columns="2" rendered="{!showAddButton}" >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Select Email Lists" for="pro"></apex:outputLabel>
+                    <apex:selectList id="pro" value="{!SelectedSubscriberLists}" multiselect="true" title="Email Lists" size="10">
+                        <apex:selectOptions value="{!SubscriberLists}"></apex:selectOptions>
+                    </apex:selectList>
+
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel style="color:grey">This contact will be added to these lists in Campaign Monitor.</apex:outputlabel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!MissingListIds.size > 0}">
+                    <apex:outputText value="" />
+                    <apex:outputLink id="refreshLink" value="#" onclick="addSubscriberToListController.startRefresh()">Refresh subscriber lists</apex:outputLink>
+                </apex:pageBlockSectionItem>
+                <apex:outputlabel rendered="{!MissingListIds.size > 0}" style="color:grey">Some subscriber lists from Campaign Monitor aren't currently shown in this list.</apex:outputlabel>
+
+                <apex:pageblockSectionItem >
+                  <apex:outputlabel >Resubscribe</apex:outputlabel>
+                  <apex:inputCheckBox value="{!resubscribe}" style="width:150px"  rendered="{!showAddButton}"/>
+                </apex:pageblockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                  <apex:outputlabel style="color:grey">When this field is ticked previously unsusbcribed emails will be resubscribed.</apex:outputlabel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

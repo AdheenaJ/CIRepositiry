@@ -1,0 +1,436 @@
+<apex:page showHeader="true" sidebar="false" standardController="wbsendit__Smart_Email__c" extensions="wbsendit.SmartEmailEditorExtension" action="{!checkSetup}">
+	
+    <html ng-app="SEApp">
+
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.wbsendit__slds080, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/smartemail-tmp/angucomplete-alt.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.css')}" />
+            <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+
+            <apex:includeScript value="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"/>
+            <apex:includeScript value="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"/>
+            <apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"/>
+            <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/smartemail/ui.js')}" />
+            <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/smartemail/remoting.js')}" />
+            <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/smartemail/filters.js')}" />
+            <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/smartemail/ng-clip.js')}" />
+            <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/smartemail/zeroclipboard.min.js')}" />
+            <apex:includeScript value="{!URLFOR($Resource.wbsendit__SendItAssets, 'js/smartemail/angucomplete-alt.min.js')}" />
+
+            <script>
+                var RemoteActions = {};
+                RemoteActions.getSObjects = '{!$RemoteAction.SmartEmailEditorExtension.getSObjects}';
+                RemoteActions.getFieldsForSObject = '{!$RemoteAction.SmartEmailEditorExtension.getFieldsForSObject}';
+                RemoteActions.getFieldsForCurrentMappings = '{!$RemoteAction.SmartEmailEditorExtension.getFieldsForCurrentMappings}';
+                RemoteActions.getRecordDetails = '{!$RemoteAction.SmartEmailEditorExtension.getRecordDetails}';
+                RemoteActions.getNewRecordDetails = '{!$RemoteAction.SmartEmailEditorExtension.getNewRecordDetails}';
+                RemoteActions.refreshExamples = '{!$RemoteAction.SmartEmailEditorExtension.refreshExamples}';
+                
+                var VFBindings = {};
+                VFBindings.recordId = '{!$CurrentPage.parameters.id}';
+                VFBindings.parentId = '{!Smart_Email__c.Smart_Email__c}';
+                VFBindings.listUrl = '{!URLFOR($Action.Smart_Email__c.List, $ObjectType.Smart_Email__c)}';
+                VFBindings.retUrl = '{!retUrl}';
+                VFBindings.deleteUrl = '{!URLFOR($Action.Smart_Email__c.Delete, $CurrentPage.parameters.id)}';
+
+                var VFLabels = {};
+                VFLabels.Loading = '{!HTMLENCODE($Label.Loading)}';
+                VFLabels.None = '{!HTMLENCODE($Label.None)}';
+                VFLabels.Smart_Default_Map = '(Map)';
+                VFLabels.Smart_Email_Ascending = '{!HTMLENCODE($Label.Smart_Email_Ascending)}';
+                VFLabels.Smart_Email_Descending = '{!HTMLENCODE($Label.Smart_Email_Descending)}';
+                VFLabels.Smart_Email_True = '{!HTMLENCODE($Label.Smart_Email_True)}';
+                VFLabels.Smart_Email_False = '{!HTMLENCODE($Label.Smart_Email_False)}';
+                VFLabels.Smart_Email_Recipient_Type_Text = '{!HTMLENCODE($Label.Smart_Email_Recipient_Type_Text)}';
+                VFLabels.Smart_Email_Recipient_Type_Reference = '{!HTMLENCODE($Label.Smart_Email_Recipient_Type_Reference)}';
+
+                
+                var Operators = {};
+                Operators.Boolean = {};
+                Operators.Boolean['equals'] = '{!HTMLENCODE($Label.Smart_Equals)}';
+                Operators.Boolean['notequal'] = '{!HTMLENCODE($Label.Smart_Not_Equals)}';
+                Operators.Number = {};
+                Operators.Number['equals'] = '{!HTMLENCODE($Label.Smart_Equals)}';
+                Operators.Number['notequal'] = '{!HTMLENCODE($Label.Smart_Not_Equals)}';
+                Operators.Number['null'] = '{!HTMLENCODE($Label.Smart_Null)}';
+                Operators.Number['greater'] = '{!HTMLENCODE($Label.Smart_Greater)}';
+                Operators.Number['greaterequal'] = '{!HTMLENCODE($Label.Smart_Greater_Equals)}';
+                Operators.Number['less'] = '{!HTMLENCODE($Label.Smart_Less)}';
+                Operators.Number['lessequal'] = '{!HTMLENCODE($Label.Smart_Less_Equals)}';
+                Operators.String = {};
+                Operators.String['equals'] = '{!HTMLENCODE($Label.Smart_Equals)}';
+                Operators.String['notequal'] = '{!HTMLENCODE($Label.Smart_Not_Equals)}';
+                Operators.String['null'] = '{!HTMLENCODE($Label.Smart_Null)}';
+                Operators.String['contains'] = '{!HTMLENCODE($Label.Smart_Contains)}';
+                Operators.String['starts'] = '{!HTMLENCODE($Label.Smart_Starts_With)}';
+                Operators.String['ends'] = '{!HTMLENCODE($Label.Smart_Ends_With)}';
+                Operators.Date = {};
+                Operators.Date['equals'] = '{!HTMLENCODE($Label.Smart_Equals)}';
+                Operators.Date['notequal'] = '{!HTMLENCODE($Label.Smart_Not_Equals)}';
+                Operators.Date['null'] = '{!HTMLENCODE($Label.Smart_Null)}';
+                Operators.Date['greater'] = '{!HTMLENCODE($Label.Smart_Greater)}';
+                Operators.Date['greaterequal'] = '{!HTMLENCODE($Label.Smart_Greater_Equals)}';
+                Operators.Date['less'] = '{!HTMLENCODE($Label.Smart_Less)}';
+                Operators.Date['lessequal'] = '{!HTMLENCODE($Label.Smart_Less_Equals)}';
+                Operators.DateTime = {};
+                Operators.DateTime['equals'] = '{!HTMLENCODE($Label.Smart_Equals)}';
+                Operators.DateTime['notequal'] = '{!HTMLENCODE($Label.Smart_Not_Equals)}';
+                Operators.DateTime['null'] = '{!HTMLENCODE($Label.Smart_Null)}';
+                Operators.DateTime['greater'] = '{!HTMLENCODE($Label.Smart_Greater)}';
+                Operators.DateTime['greaterequal'] = '{!HTMLENCODE($Label.Smart_Greater_Equals)}';
+                Operators.DateTime['less'] = '{!HTMLENCODE($Label.Smart_Less)}';
+                Operators.DateTime['lessequal'] = '{!HTMLENCODE($Label.Smart_Less_Equals)}';
+                Operators.Picklist = {};
+                Operators.Picklist['equals'] = '{!HTMLENCODE($Label.Smart_Equals)}';
+                Operators.Picklist['notequal'] = '{!HTMLENCODE($Label.Smart_Not_Equals)}';
+                Operators.Picklist['null'] = '{!HTMLENCODE($Label.Smart_Null)}';
+                Operators.Picklist['contains'] = '{!HTMLENCODE($Label.Smart_Contains)}';
+                Operators.Picklist['starts'] = '{!HTMLENCODE($Label.Smart_Starts_With)}';
+                Operators.Picklist['ends'] = '{!HTMLENCODE($Label.Smart_Ends_With)}';
+                Operators.MultiPicklist = {};
+                Operators.MultiPicklist['equals'] = '{!HTMLENCODE($Label.Smart_Equals)}';
+                Operators.MultiPicklist['notequal'] = '{!HTMLENCODE($Label.Smart_Not_Equals)}';
+                Operators.MultiPicklist['null'] = '{!HTMLENCODE($Label.Smart_Null)}';
+                Operators.MultiPicklist['contains'] = '{!HTMLENCODE($Label.Smart_Contains)}';
+
+
+
+            </script>
+
+            <style>
+
+                .b12-error{
+                    background-color: #f6e4e4 !important;
+                    border-color: #be554b !important;
+                }
+
+                .b12-error-text{
+                    color: #be554b;
+                }
+
+            </style>
+        </head>
+
+
+        <body ng-controller="MainCtrl">
+
+            <div class="b12-frame">
+
+                <div class="b12-overlay b12-overlay-ajs" ng-show="dialogs.overlay()"></div>
+
+                <div class="b12-header">
+                    <h1>{!$ObjectType.Smart_Email__c.Label}</h1>
+                    <div class="b12-help"><a href="{!$Label.Help_Url_Smart_Email_View}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+                </div>
+
+                <div class="b12-messages b12-messages-{{messageBox.level}}" ng-show="messageBox.show">
+                    <p class="b12-messages-text">{{messageBox.message}}</p>
+                    <a href="#" class="b12-message-close" ng-click="hideMessage()"><i class="fa fa-times"></i></a>
+                </div>
+
+                <apex:variable rendered="{!IsTrial}" value="p" var="o">
+                    <div class="b12-messages b12-messages-info ng-hide" ng-show="!stencil">
+                        <a class="b12-message-info-icon"><i class="fa fa-info"></i></a>
+                        <p class="b12-messages-text">{!$Label.Smart_Email_Premium_Message} <a href="{!$Page.UpgradeWizard}">{!$Label.Smart_Email_Upgrade_Now}</a></p>
+                    </div>
+                </apex:variable>                
+
+                <div class="b12-content ng-hide" ng-show="!stencil">
+
+                    <div class="b12-layout b12-layout-30">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email__c.fields.Name.Label}</p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <p ng-bind-html="record.Name"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email__c.fields.Smart_Email__c.Label}</p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <p><a href="{!URLFOR($Action.Smart_Email_Template__c.View, Smart_Email__c.Smart_Email__c)}">{!Smart_Email__c.Smart_Email__r.Name__c}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds b12-layout-col b12-slds-button-group">
+                            <div class="slds-button-group" role="group">
+                                <apex:variable rendered="{!CanUpdate}" value="p" var="o">
+                                    <a class="slds-button slds-button--neutral" href="{!URLFOR($Action.Smart_Email__c.Edit, $CurrentPage.parameters.id)}">{!$Label.Smart_Email_Action_Edit}</a>
+                                    <a class="slds-button slds-button--neutral" href="{!URLFOR($Action.Smart_Email__c.Clone, $CurrentPage.parameters.id)}">{!$Label.Smart_Email_Action_Clone}</a>
+                                </apex:variable>
+                                <apex:variable rendered="{!CanDelete}" value="p" var="o">
+                                    <a class="slds-button slds-button--neutral" href="" ng-click="doDelete()" ng-confirm-click="{!$Label.Smart_Email_Action_Delete_Confirm}">{!$Label.Smart_Email_Action_Delete}</a>
+                                </apex:variable>
+                                <a class="slds-button slds-button--neutral" href="" clip-click="showMessage('{!$Label.Smart_Email_Id_Copy}', 'success')" clip-copy="'{!Smart_Email__c.Id}'">{!$Label.Smart_Email_Action_Copy_Id}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b12-layout b12-layout-30">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email__c.fields.Description__c.Label}</p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p ng-bind-html="record.Description"></p>
+                                </div>
+                            </div>
+                        </div>              
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email__c.fields.Create_Tasks__c.Label}</p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <p>{{record.CreateTasks}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b12-layout">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$ObjectType.Smart_Email__c.fields.Root_Object__c.Label}</p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p ng-bind-html="selectedSObject().Label"></p>
+                                </div>
+                            </div>
+                        </div>              
+                    </div>                    
+
+                    <div class="b12-layout">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$Label.Smart_Email_Field_Mappings}</p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <div id="customMappingContainer">
+                                        <table class="b12-table">
+                                            <tr>
+                                                <th>{!$Label.Smart_Email_Header_SF_Field}</th>
+                                                <th>{!$Label.Smart_Email_Header_Email_Field}</th>
+                                                <th class="b12-example b12-header-example-lead">{!$Label.Smart_Email_Header_Example}</th>
+                                            </tr>
+                                            <tr ng-repeat="v in record.Variables | orderBy:'CMName'">
+                                                <td>
+                                                    <div ng-bind-html="setFieldDisplayName(v.FieldName)"></div>
+                                                </td>
+                                                <td class="b12-cell-cm">
+                                                    <span>{{v.CMName}}</span>
+                                                </td>
+                                                <td class="b12-example">{{v.Example}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+                    <div class="b12-layout">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p>{!$Label.Smart_Email_Recipients_Title}</p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <div id="recipientContainer">
+                                        <table class="b12-table">
+                                            <tr>
+                                                <th>{!$Label.Smart_Email_Recipients_Category}</th>
+                                                <th>{!$Label.Smart_Email_Recipients_Type}</th>
+                                                <th>{!$Label.Smart_Email_Recipients_Value}</th>
+                                            </tr>
+                                            <tr ng-repeat="r in record.Recipients">
+                                                <td>{{r.Type}}</td>
+                                                <td class="b12-cell-cm">{{getEmailTypeOption(r.IsField)}}</td>
+                                                <td class="b12-cell-cm">
+                                                    <div ng-if="!r.IsField">{{r.Value}}</div>
+                                                    <div ng-if="r.IsField" ng-bind-html="setFieldDisplayName(r.FieldName)"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+
+                <div class="b12-content b12-stencil" ng-show="stencil">
+
+                    <div class="b12-layout b12-layout-30">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p></p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p></p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b12-layout b12-layout-30">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p></p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>              
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p></p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b12-layout">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p></p>
+                                </div>
+                                <div class="b12-layout-group-content">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>              
+                    </div>                    
+
+                    <div class="b12-layout">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p></p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <div id="customMappingContainer">
+                                        <table class="b12-table">
+                                            <tr>
+                                                <th><p></p></th>
+                                                <th><p></p></th>
+                                                <th><p></p></th>
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>                                       
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>                                       
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>               
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>               
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>                                                                                                                           
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+                    <div class="b12-layout">
+                        <div class="b12-layout-col">
+                            <div class="b12-layout-group">
+                                <div class="b12-layout-group-header">
+                                    <p></p>
+                                </div>  
+                                <div class="b12-layout-group-content">
+                                    <div id="recipientContainer">
+                                        <table class="b12-table">
+                                            <tr>
+                                                <th><p></p></th>
+                                                <th><p></p></th>
+                                                <th><p></p></th>
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>                                   
+                                            <tr>
+                                                <td><p></p></td>
+                                                <td><p></p></td>
+                                                <td><p></p></td>                                        
+                                            </tr>
+                                        </table>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+
+                <div class="b12-footer">
+                    <div class="b12-action">
+                        <div class="b12-action-save">
+                            <a class="b12-btn b12-btn-cancel" ng-href="{{retUrl()}}">{!$Label.Cancel}</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </body>
+
+    </html>
+
+</apex:page>

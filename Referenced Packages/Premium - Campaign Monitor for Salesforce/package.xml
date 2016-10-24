@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Premium - Campaign Monitor for Salesforce</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
+    <namespacePrefix>cmfsf</namespacePrefix>
+    <types>
+        <members>CMPremium</members>
+        <name>ApexPage</name>
+    </types>
+    <version>36.0</version>
+</Package>

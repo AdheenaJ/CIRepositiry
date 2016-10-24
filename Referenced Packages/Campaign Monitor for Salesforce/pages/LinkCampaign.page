@@ -1,0 +1,26 @@
+<apex:page standardController="Campaign" tabStyle="Campaign" extensions="wbsendit.LinkCampaignController"  action="{!checkSetup}">
+    <apex:sectionHeader title="Link Campaigns" subtitle="Manage linked Campaigns" help="{!$Label.SupportLink_Link_Campaign}"/>
+
+    <apex:form >
+    <apex:pageMessages escape="false" />
+
+    <apex:pageBlock title="Link a Salesforce Campaign to Campaign Monitor" rendered="{!showAddButton}">
+        <apex:pageBlockButtons location="bottom" >
+            <apex:commandButton action="{!linkCampaign}" value="Link Campaign"/>
+            <apex:commandButton action="{!cancel}" value="Cancel"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Select a Campaign to Link" for="pro"></apex:outputLabel>
+                    <apex:selectList id="pro" value="{!CampaignList}" size="1" title="Campaign Lists">
+                        <apex:selectOptions value="{!CampaignLists}"></apex:selectOptions>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+
+    </apex:form>
+
+    <apex:include pageName="{!linkedCampaigns}"/>
+
+</apex:page>

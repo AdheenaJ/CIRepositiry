@@ -1,0 +1,65 @@
+<apex:page showHeader="true" sidebar="false" controller="wbsendit.SendItMessagesController" action="{!checkSetup}">
+
+    <apex:stylesheet value="{!URLFOR($Resource.wbsendit__SendItAssets, 'css/mapping.min.css')}" />
+    <apex:stylesheet value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+
+    <div class="b12-frame">
+
+        <div class="b12-header">
+            <h1>{!HTMLENCODE($Label.Messages_Header)}</h1>
+            <div class="b12-help"><a href="{!$Label.Help_Url_Messages}" target="_blank">{!HTMLENCODE($Label.Help_Header)}&nbsp;<i class="fa fa-question-circle"></i></a></div>
+        </div>
+
+        <apex:outputPanel >
+
+	        <div class="b12-messages b12-messages-info" style="display: none;">
+	            <p class="b12-messages-text"></p>
+	            <a href="" class="b12-message-close"><i class="fa fa-times"></i></a>
+	        </div>
+
+	        <div class="b12-content">
+	            <div class="b12-table-container">
+					<table class="b12-table">
+						<tr>
+							<th>
+								{!HTMLENCODE($Label.Message_Settings_Code)}
+							</th>
+							<th>
+								{!HTMLENCODE($Label.Message_Settings_Date)}
+							</th>
+							<th>
+								{!HTMLENCODE($Label.Message_Settings_Message)}
+							</th>
+						</tr>
+						<apex:repeat value="{!Messages}" var="msg">
+							<tr>
+								<td nowrap="nowrap">
+									<a href="{!msg.HelpURL}" target="_blank">{!msg.Code}</a>
+								</td>
+								<td nowrap="nowrap">
+									{!msg.MessageTimeFormat}
+								</td>
+								<td>
+									{!msg.Message}
+								</td>
+							</tr>
+						</apex:repeat>
+					</table>
+
+	            </div>
+
+	        </div>
+
+	        <div class="b12-footer">
+	        	{!DiagStatus}
+	        </div>
+
+        </apex:outputPanel>
+    </div>
+
+
+
+
+
+
+</apex:page>
